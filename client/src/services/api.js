@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000/api'
+const API_BASE_URL = 'http://localhost:3234/api'
 
 const mockHotels = [
   { 
@@ -78,11 +78,12 @@ export const searchHotels = async (searchParams) => {
             throw new Error(`Ошибка сервера: ${response.status}`)
         }
 
-        const data = await response.json()
-        return data.hotels;
+        const data = await response.json();
+        console.log(data);
+        return data;
     }
-    catch {
-        console.log("Ошибка подключения");
+    catch (error) {
+        console.error("Ошибка подключения", error.message);
         return mockHotels;
     }
 }

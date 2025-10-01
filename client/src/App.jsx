@@ -1,24 +1,13 @@
-import React, { useState } from 'react'
-import { SearchForm } from './components/SearchForm';
-import { searchHotels } from './services/api';
+import { HomePage } from './pages/homePage/HomePage';
+import { SearchResultsPage } from './pages/searchResultsPage/searchResultsPage';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
-  const [ hotels, setHotels ] = useState([]);
-  const handleSearch = async ( SearchParams ) => {
-    try {
-      const result = await searchHotels(SearchParams);
-      setHotels(result);
-      console.log(result);
-    }
-    catch (err) {
-      console.error('Ошибка поиска');
-    }
-  }
   return (
-    <div>
-      <SearchForm onSearch = {handleSearch}/>  
-        
-    </div>
+      <Routes>
+        <Route path='/' element={<HomePage/>}/>
+        <Route path='/search' element={<SearchResultsPage/>}/>  
+      </Routes>        
   )
 }
 
