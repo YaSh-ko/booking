@@ -1,0 +1,29 @@
+@import '../../assets/styles/variables';
+
+.hotels-list-page_container {
+    min-height: 100vh;
+    width: 100%;
+    background-color: $color-secondary;
+
+    header {
+        margin-bottom: 40px;
+    }
+    main {
+        padding-inline: 20px;
+        display: flex;
+        .filters-bar {
+            flex: 2;
+        }
+
+        .content {
+            flex: 5;
+
+            .hotels-list {
+                margin-top: 40px;
+            }
+        }
+
+        
+    }
+    
+}

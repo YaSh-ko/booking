@@ -12,12 +12,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@a1rth/css-normalize": "^1.2.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.3"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.4",
+    "sass-embedded": "^1.93.2",
     "vite": "^7.1.7"
   }
 }

@@ -1,0 +1,21 @@
+.hotels-list-page_container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #E5E5E5;
+}
+.hotels-list-page_container header {
+  margin-bottom: 40px;
+}
+.hotels-list-page_container main {
+  padding-inline: 20px;
+  display: flex;
+}
+.hotels-list-page_container main .filters-bar {
+  flex: 2;
+}
+.hotels-list-page_container main .content {
+  flex: 5;
+}
+.hotels-list-page_container main .content .hotels-list {
+  margin-top: 40px;
+}/*# sourceMappingURL=hotelsListPage.css.map */

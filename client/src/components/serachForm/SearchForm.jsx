@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import './searchForm.scss';
 
-export const SearchForm = ({onSearch}) => {
+export const SearchForm = ({onSearch, selectedType}) => {
+    
     const [formData, setFormData] = useState({
         city: '',
         checkIn: '',
         checkOut: '',
-        guests: 1
+        guests: 1,
+        type: selectedType || "hotel"
     });
+
+    useEffect(()=>{
+        setFormData(prev => ({...prev, type: selectedType})); 
+    }, [selectedType])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,53 +36,57 @@ export const SearchForm = ({onSearch}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Найти отель</h2>
-
-            <div className="from-group">
-                <label htmlFor=''>Город</label>
+        <form onSubmit={handleSubmit} className='searchForm'>
+            <div className="form-group city">
+                <label htmlFor="">Город</label>
                 <input 
                     type="text" 
                     name='city'
+                    id='cityValue'
                     placeholder='Введите город'
                     value={formData.city}
                     onChange={handleChange}
                     required    
                 />
             </div>
-
+            <span className='form-line'></span>
             
-            <div className="from-group">
-                <label htmlFor=''>Дата заезда</label>
+            <div className="form-group">
+                <label htmlFor="checkInValue">Заезд</label>
                 <input 
                     type="date" 
                     name='checkIn'
+                    id='checkInValue'
                     placeholder='Заезд'
                     value={formData.checkIn}
                     onChange={handleChange}
                     required    
                 />
             </div>
+            <span className='form-line'></span>
 
             
-            <div className="from-group">
-                <label htmlFor=''>Дата выезда</label>
+            <div className="form-group">
+                <label htmlFor="checkOutValue">Выезд</label>
                 <input 
                     type="date" 
                     name='checkOut'
+                    id='checkOutValue'
                     placeholder='Выезд'
                     value={formData.checkOut}
                     onChange={handleChange}
                     required    
                 />
             </div>
+            <span className='form-line'></span>
 
             
-            <div className="from-group">
-                <label htmlFor=''>Гости</label>
+            <div className="form-group guests">
+                <label htmlFor="guestsValue">Гости</label>
                 <input 
-                    type="text" 
-                    name='city'
+                    type="number" 
+                    name='guests'
+                    id='guestsValue'
                     placeholder='Введите количество гостей'
                     value={formData.guests}
                     onChange={handleChange}
@@ -87,7 +98,7 @@ export const SearchForm = ({onSearch}) => {
                 type='submit'
                 className='search-button'
             >
-                Найти отель
+                Найти
             </button>
 
         </form>

@@ -1,0 +1,38 @@
+.hotel-card {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+.hotel-card img {
+  width: 40%;
+  border-radius: 20px;
+}
+.hotel-card_desrciption {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hotel-card_desrciption h1 {
+  margin: 0;
+  font-size: 3rem;
+}
+.hotel-card_desrciption h2 {
+  margin-top: 10px;
+}
+.hotel-card_desrciption-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+.hotel-card_desrciption-bottom .hotel-card_price {
+  font-weight: 500;
+  font-size: 32px;
+}
+.hotel-card_desrciption-bottom button {
+  width: 150px;
+}/*# sourceMappingURL=hotelCard.css.map */
