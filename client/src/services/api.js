@@ -16,7 +16,10 @@ export const searchHotels = async (searchParams) => {
 
           switch(response.status) {
             case 400: 
-              throw new BadRequestError("неверные параметры поиска");
+              throw new BadRequestError("Неверные параметры поиска");
+            
+            case 404:
+              throw new NotFoundError('Отели', "Данных не найдено");
   
             case 500:
               throw new ServerError("Внутренняя ошибка сервера");
@@ -30,12 +33,7 @@ export const searchHotels = async (searchParams) => {
 
           }
         }
-
-        const data = await response.json();
-        if(Array.isArray(data) && data.length === 0) {
-          throw new NotFoundError("отели", "Отели не найдены");
-        }
-        return data;
+        return await response.json();
     }
     catch (error) {
 

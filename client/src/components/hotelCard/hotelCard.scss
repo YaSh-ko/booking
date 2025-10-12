@@ -5,7 +5,8 @@
     background-color: $color-background;
     border-radius: $border-radius;
     box-shadow: $shadow-default;
-    margin-top: 20px;
+    color: black;
+    margin-bottom: 20px;
     display: flex;
     gap: 20px;
     padding: 20px;
@@ -23,10 +24,11 @@
         
         h1 {
             margin: 0;
-            font-size: 3rem;
+            font-size: 2rem;
         }
 
         h2 {
+            font-size: 1rem;
             margin-top: 10px;
         }
         
@@ -36,11 +38,11 @@
 
             .hotel-card_price {
                 font-weight: 500;
-                font-size: 32px;
+                font-size: 1.5rem;
             }
 
             button {
-                width: 150px;
+                width: 30%;
             }
         }
     }

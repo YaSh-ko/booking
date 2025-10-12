@@ -14,8 +14,8 @@ export const HotelCard = ({hotel}) => {
                 <p>{hotel.description}</p>
                 
                 <div className="hotel-card_desrciption-bottom">
-                    <span className="hotel-card_price">От {hotel.price.toFixed(3)}</span>
-                    <button>Наличие мест</button>
+                    <span className="hotel-card_price">От {hotel.price.toFixed(3)} Р</span>
+                    <button>Выбрать места</button>
                 </div>
             </div>
         </div>
