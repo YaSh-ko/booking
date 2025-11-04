@@ -2,7 +2,7 @@ import supabase from "../connect.js";
 
 export const getHotels = async (req, res) => {
   try {
-    const { city, checkIn, checkOut, type } = req.query
+    const { city, type } = req.query
     
     const { data, error } = await supabase
       .from('hotels')
