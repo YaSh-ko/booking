@@ -2,15 +2,13 @@ import supabase from "../connect.js";
 
 export const getHotels = async (req, res) => {
   try {
-    const { city, type } = req.query
+    const { city, checkIn, checkOut, type } = req.query
     
-    console.log(city);
     const { data, error } = await supabase
       .from('hotels')
       .select('*')
       .eq('city', city)
-      // .gte('guests', parseInt(guests))
-      // .eq('type', type);
+      .eq('type', type);
 
     if (error) {
       // 500 - только для внутренних ошибок БД
@@ -20,6 +18,7 @@ export const getHotels = async (req, res) => {
 
     if (!data || data.length === 0) {
       // 404 - нет отелей по запросу
+      console.log("Ничего не найдено");
       return res.status(404).json({ error: 'Отели не найдены' })
     }
 
