@@ -35,13 +35,15 @@ export const SearchForm = ({onSearch, selectedType}) => {
         }))
     }
 
+
     return (
-        <form onSubmit={handleSubmit} className='searchForm'>
-            <div className="form-group city">
-                <label htmlFor="">Город</label>
+        <form onSubmit={handleSubmit} className='search-form'>
+            <div className="search-form__group search-form__group-city">
+                <label className="search-form__label" htmlFor="cityValue">Город</label>
                 <input 
                     type="text" 
                     name='city'
+                    className='search-form__input'
                     id='cityValue'
                     placeholder='Введите город'
                     value={formData.city}
@@ -49,28 +51,28 @@ export const SearchForm = ({onSearch, selectedType}) => {
                     required    
                 />
             </div>
-            <span className='form-line'></span>
             
-            <div className="form-group">
-                <label htmlFor="checkInValue">Заезд</label>
+            <div className="search-form__group search-form__group-checkin">
+                <label className="search-form__label"  htmlFor="checkInValue">Заезд</label>
                 <input 
                     type="date" 
                     name='checkIn'
                     id='checkInValue'
+                    className='search-form__input'
                     placeholder='Заезд'
                     value={formData.checkIn}
                     onChange={handleChange}
                     required    
                 />
             </div>
-            <span className='form-line'></span>
 
             
-            <div className="form-group">
-                <label htmlFor="checkOutValue">Выезд</label>
+            <div className="search-form__group search-form__group-checkout">
+                <label className="search-form__label" htmlFor="checkOutValue">Выезд</label>
                 <input 
                     type="date" 
                     name='checkOut'
+                    className='search-form__input'
                     id='checkOutValue'
                     placeholder='Выезд'
                     value={formData.checkOut}
@@ -78,14 +80,14 @@ export const SearchForm = ({onSearch, selectedType}) => {
                     required    
                 />
             </div>
-            <span className='form-line'></span>
 
             
-            <div className="form-group guests">
-                <label htmlFor="guestsValue">Гости</label>
+            <div className="search-form__group search-form__group-guests">
+                <label className="search-form__label" htmlFor="guestsValue">Гости</label>
                 <input 
                     type="number" 
                     name='guests'
+                    className='search-form__input'
                     id='guestsValue'
                     placeholder='Введите количество гостей'
                     value={formData.guests}
@@ -96,7 +98,7 @@ export const SearchForm = ({onSearch, selectedType}) => {
 
             <button
                 type='submit'
-                className='search-button'
+                className='search-form__button'
             >
                 Найти
             </button>

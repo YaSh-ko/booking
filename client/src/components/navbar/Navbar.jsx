@@ -7,8 +7,8 @@ export const Navbar = ()=> {
                     <Link to ='/' className='nav-logo'>
                         <img 
                             src="./public/navbar/logo.png" 
-                            alt="" 
-                            style={{ width: '70px', height: '70px' }}
+                            alt="Логотип компании" 
+                            style={{ width: '50px' }}
                         />
                     </Link>
                     <ul className="nav-menu">
@@ -29,6 +29,9 @@ export const Navbar = ()=> {
                     <Link className="nav-btn">
                         <button class='nav-btn-item'>Войти</button>
                     </Link>
+                    <button className="burger-menu">
+                        <img src="./public/navbar/menu.png" alt="" />
+                    </button>
             </div>
         </nav>
     )

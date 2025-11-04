@@ -7,7 +7,6 @@ export const searchHotels = async (searchParams) => {
             city: searchParams.city || '',
             checkIn: searchParams.checkIn || '',
             checkOut: searchParams.checkOut || '',
-            guests: searchParams.guests || 1,
             type: searchParams.type || 'hotel'
         })
         const url = `${API_BASE_URL}/hotels?${urlParams}`;

@@ -7,6 +7,7 @@ export const useHotelsSearch = ()=> {
 
   const handleSearch = async (SearchParams) => {
     try {
+      console.log(SearchParams);
       const result = await searchHotels(SearchParams);
       setHotels(result);
     }

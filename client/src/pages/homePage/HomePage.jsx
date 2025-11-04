@@ -16,20 +16,23 @@ export const HomePage = ()=> {
     }
 
     return (
-        <div className="home-page_container">
+        <div className="home-page">
             <header>
                 <Navbar/>
             </header>
-            <main className="content">
-                <section className="hero-section">
-                    <div className="hero-section_search-container">
-                        <div className="hero-section_search-container_text">
-                            <h1>ИСКАТЬ</h1>
-                            <div className="hero-section_search-container_type-tabs">
+            <main className="home-page__content">
+                <section className="home-page__search-section">
+                    <h1 className="visually-hidden">Найти отель</h1>
+                    <div className="home-page__search-container">
+                        <div className="home-page__search-text">
+                            <h2 className="home-page__search-title">ИСКАТЬ</h2>
+                            <div className="home-page__search-tabs">
                                 {["hotel", "hostel", "apartment"].map(type => (
                                     <button
                                         key={type}
-                                        className={placeType === type ? "active" : ""}
+                                        className={placeType === type 
+                                            ? "home-page__search-tab home-page__search-tab--active" 
+                                            : "home-page__search-tab"}
                                         onClick={() => setPlaceType(type)}
                                     >  
                                         {type === "hotel" ? "Отели" : type === "apartment" ? "Квартиры" : "Хостелы"}
