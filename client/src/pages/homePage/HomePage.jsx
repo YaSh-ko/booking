@@ -1,4 +1,4 @@
-import { Navbar } from "../../components/navbar/Navbar"
+import { Header } from "../../components/navbar/Navbar"
 import { SearchForm } from "../../components/serachForm/SearchForm"
 import { useNavigate } from 'react-router-dom';
 import './homePage.scss';
@@ -16,10 +16,10 @@ export const HomePage = ()=> {
     }
 
     return (
-        <div className="home-page">
-            <header>
-                <Navbar/>
-            </header>
+        <div className="home-page">    
+            
+            <Header/>
+
             <main className="home-page__content">
                 <section className="home-page__search-section">
                     <h1 className="visually-hidden">Найти отель</h1>

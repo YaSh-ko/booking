@@ -16,7 +16,7 @@
   border-radius: $border-radius-secondary;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
 
     
@@ -95,7 +95,6 @@
     border: 1px solid transparent;
     border-radius: 18px;
     background-color: #fff;
-    font-size: 18px;
     transition: all 0.2s ease;
 
     &:focus {
@@ -120,7 +119,6 @@
     color: $color-text-secondary;
     border: none;
     padding: 14px 24px;
-    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.25s ease;
@@ -154,6 +152,8 @@
       "city city"
       "checkin checkout"
       "guests button";
+    font-size: 16px;
+    gap: 10px;
   }
 
   @include respond(sm) {

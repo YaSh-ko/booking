@@ -1,38 +1,42 @@
 import { Link } from "react-router-dom";
 import './navbar.scss'
-export const Navbar = ()=> {
-    return (
-        <nav className="nav">
-            <div className="nav-container">
-                    <Link to ='/' className='nav-logo'>
-                        <img 
-                            src="./public/navbar/logo.png" 
-                            alt="Логотип компании" 
-                            style={{ width: '50px' }}
-                        />
-                    </Link>
-                    <ul className="nav-menu">
-                        <li className="nav-menu_item">
-                            <Link to='/' className='nav-menu_item-link'>Главная</Link>
-                        </li>
-                        <li className="nav-menu_item">
-                            <Link to='/' className='nav-menu_item-link'>О нас</Link>
-                        </li>
-                        <li className="nav-menu_item">
-                            <Link to='/' className='nav-menu_item-link'>Контакты</Link>
-                        </li>
-                        <li className="nav-menu_item">
-                            <Link to='/' className='nav-menu_item-link'>Помощь</Link>
-                        </li>
-                    </ul>   
+import { useState } from "react";
+export const Header = ()=> {
 
-                    <Link className="nav-btn">
-                        <button class='nav-btn-item'>Войти</button>
+    const [ isMenuOpen, setIsMenuOpen ] = useState(false);
+
+    return (
+        <header className="header">
+            <div className="header__container">
+
+                <div className="header__logo">
+                    <Link to="/">
+                        <img src="/navbar/logo.png" alt="Логотип компании" className="header__logo-img" />
                     </Link>
-                    <button className="burger-menu">
-                        <img src="./public/navbar/menu.png" alt="" />
+                </div>
+
+                <nav className={`navbar ${isMenuOpen ? "navbar--vertical" : ""}`}>
+                    <ul className="navbar__menu">
+                        <li className="navbar__item"><Link to="/" className="navbar__link">Главная</Link></li>
+                        <li className="navbar__item"><Link to="/about" className="navbar__link">О нас</Link></li>
+                        <li className="navbar__item"><Link to="/contacts" className="navbar__link">Контакты</Link></li>
+                        <li className="navbar__item"><Link to="/help" className="navbar__link">Помощь</Link></li>
+                    </ul>
+                </nav>
+
+                <div className="header__actions">
+                    <Link to="/signin" className="header__signin-btn">Войти</Link>
+
+                    <button 
+                        className="header__open-menu-btn"
+                        onClick={() => setIsMenuOpen((prev) => !prev)}
+                        aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}>
+                        <img src="/navbar/menu.png" alt="" className="header__open-menu-icon" />
                     </button>
+                </div>
+
             </div>
-        </nav>
+        </header>
+
     )
 }
