@@ -2,7 +2,7 @@ import supabase from "../connect.js";
 
 export const getHotels = async (req, res) => {
   try {
-    const { city, type } = req.query
+    const { city, checkIn, checkOut, type } = req.query
     
     const { data, error } = await supabase
       .from('hotels')
@@ -39,7 +39,7 @@ export const getInfobyID = async(req, res) => {
 
     const {data, error} = await supabase
       .from('hotels')
-      .select('*')
+      .select('*, rooms(*)')
       .eq('id', parseInt(id))
       .single();
 
@@ -53,7 +53,7 @@ export const getInfobyID = async(req, res) => {
       // 404 - нет отелей по запросу
       return res.status(404).json({ error: 'Данные не найдены' })
     }
-
+    
     // 200 - успех
     console.log(data);
     res.json(data)
