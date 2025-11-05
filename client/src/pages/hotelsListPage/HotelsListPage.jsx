@@ -2,7 +2,7 @@ import {useLocation} from 'react-router-dom';
 import { useHotelsSearch } from '../../hooks/useHotelsSeach';
 import { useEffect } from 'react';
 import { SearchForm } from '../../components/serachForm/SearchForm';
-import { Navbar } from '../../components/navbar/Navbar';
+import { Header } from '../../components/navbar/Navbar';
 import './hotelsListPage.scss';
 import { HotelCard } from '../../components/hotelCard/HotelCard';
 
@@ -21,9 +21,7 @@ export const HotelsListPage = ()=> {
     
     return (
         <div className='hotels-list-page_container'>
-            <header>
-                <Navbar/>
-            </header>
+            <Header/>
             <main>
                 <div className='filters-bar'>
                     <div></div>
