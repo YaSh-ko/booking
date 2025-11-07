@@ -99,6 +99,7 @@
             z-index: 2;
             padding: 20px 30px;
             border-radius: $border-radius;
+            box-shadow: $shadow-default;
 
             .navbar__menu {
                 flex-direction: column;

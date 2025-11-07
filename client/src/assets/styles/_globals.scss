@@ -30,10 +30,8 @@ input {
 }
 
 button {
-    background-color: $color-button;
-    border-radius: $border-radius-secondary;
-    color: $color-text-secondary;
-    border: none;
+  color: currentColor;
+  border: none;
 }
 
 .visually-hidden {

@@ -116,8 +116,9 @@
 
   &__button {
     width: 100%;
+    background-color: $color-primary;
+    border-radius: $border-radius;
     color: $color-text-secondary;
-    border: none;
     padding: 14px 24px;
     font-weight: 600;
     cursor: pointer;

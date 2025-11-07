@@ -1,0 +1,94 @@
+@import '../../assets/styles/variables';
+@import '../../assets//styles/breakpoints';
+
+.small-hotel-card {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-background;
+    box-shadow: $shadow-default;
+    border-radius: $border-radius;
+    padding: 15px;
+    
+    @include respond(lg) {
+        padding: 10px;
+    }
+
+    @include respond(md) {
+        padding: 20px;
+    }
+
+    &__image {
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: $border-radius;
+        object-fit: cover;
+    }
+    &__description {
+        display: flex;
+        flex-direction: column;
+
+        &-top {
+            margin-top: 10px;
+            display: flex;
+            flex: 2;
+            justify-content: space-between;
+            min-height: 60px;
+
+            @include respond(xl) {
+                min-height:  85px;
+            }
+
+            @include respond(lg) {
+                min-height:  70px;
+            }
+
+        }   
+
+        &-bottom {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            align-items: flex-end;
+
+        }
+    }
+
+    &__title {
+        @include respond(lg) {
+            font-size: 16px;
+        }
+    }
+
+    &__like-button {
+        height: 30px;
+        padding-block: 5px;
+        background-color: transparent;
+        transition: all 0.2s ease;
+
+        &:hover {
+            svg path {
+                fill-rule: nonzero;
+            }
+        }
+
+        &--active {
+            svg path {
+                fill-rule: nonzero;
+            }
+        }
+    }
+
+    &__city {
+        flex: 1;
+        margin-block: 10px;
+
+        @include respond(xl) {
+            font-size: 14px;
+            min-height: 40px;
+        }
+    }
+
+    &__rate {
+        display: flex;
+    }
+}

@@ -16,7 +16,7 @@
         border-radius: $border-radius;
     }
 
-    &_desrciption {
+    &__desrciption {
         display: flex;
         flex-grow: 1;
         flex-direction: column;
@@ -36,14 +36,17 @@
             display: flex;
             justify-content: space-between;
 
-            .hotel-card_price {
-                font-weight: 500;
-                font-size: 1.5rem;
-            }
-
             button {
                 width: 30%;
+                border-radius: $border-radius;
+                background-color: #6B7280;
+                color: white;
             }
         }
+    }
+
+    &__price {
+        font-weight: 500;
+        font-size: 1.5rem;
     }
 }

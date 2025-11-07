@@ -3,6 +3,7 @@ import { SearchForm } from "../../components/serachForm/SearchForm"
 import { useNavigate } from 'react-router-dom';
 import './homePage.scss';
 import { useState } from "react";
+import { TopHotels } from "../../components/topHotels/TopHotels";
 
 export const HomePage = ()=> {
     const [placeType, setPlaceType] = useState("hotel");
@@ -45,6 +46,11 @@ export const HomePage = ()=> {
                         <SearchForm onSearch = {handleSearch} selectedType = {placeType} className="searchForm"/>
                     </div>
                     
+                </section>
+
+                <section className="home-page__top-hotels-section">
+                    <h2 className="section-title">Лучшие отели</h2>
+                    <TopHotels/>
                 </section>
             </main>
             

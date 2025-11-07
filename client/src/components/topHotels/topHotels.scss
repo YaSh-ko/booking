@@ -1,0 +1,22 @@
+@import '../../assets//styles/breakpoints';
+
+.top-hotels {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+
+    @include respond(lg)  {
+        grid-template-columns: repeat(4, 1fr);
+
+        & > *:last-child {
+            display: none;
+        }
+        gap: 15px;
+
+        @include respond(md) {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+    }
+}
