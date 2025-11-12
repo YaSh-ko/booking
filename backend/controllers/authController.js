@@ -30,7 +30,7 @@ export const sendCode = async (req, res) => {
 
 export const verifyCode = async (req, res) => {
   const { email, code } = req.body;
-  
+
 
   if (!email || !code || code.length !== 6) {
     return res.status(400).json({ error: 'Неверный код или email' });
@@ -47,13 +47,13 @@ export const verifyCode = async (req, res) => {
   }
 
   const {session, user} = data;
-  
+
   const { data: tempUser } = await supabase
     .from('users')
     .select('name')
     .eq('email', user.email)
     .single();
-  
+
   const finalName = tempUser?.name || 'User';
 
   res.cookie('auth-token', session.access_token, {
@@ -69,7 +69,7 @@ export const verifyCode = async (req, res) => {
       user_uuid: user.id,
       email: user.email,
       name: finalName
-    }, {onConflict: 'user_uuid' 
+    }, {onConflict: 'email' 
     });
 
   if (dbError) {
