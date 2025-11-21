@@ -1,0 +1,116 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/breakpoints';
+
+
+.aboutus-page {
+  width: 100%;
+}
+
+.aboutus-page__content {
+  padding-bottom: 4rem;
+}
+
+.about-us-section {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  gap: 2rem;
+  margin: 2rem 60px;
+  align-items: start;
+
+  @include respond(lg) {
+    grid-template-columns: 60% 40%;
+    margin: 2rem 40px;
+    gap: 1.5rem;
+  }
+
+  @include respond(md) {
+    grid-template-columns: 1fr;
+    margin: 1.5rem 30px;
+    text-align: center;
+
+    .about-us-text p {
+      text-indent: 0;
+      text-align: justify;
+    }
+
+    .about-us-images {
+      margin: 0 auto;
+      max-width: 350px;
+    }
+  }
+
+  @include respond(sm) {
+    margin: 1rem 20px;
+
+    .about-us-images {
+      max-width: 300px;
+    }
+  }
+}
+
+.about-us-text p {
+  text-align: justify;
+  text-indent: 40px;
+  margin: 0 0 1rem;
+
+  @include respond(md) {
+    text-indent: 20px;
+  }
+
+  @include respond(sm) {
+    text-indent: 15px;
+    font-size: 0.95rem;
+  }
+}
+
+.about-us-images {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 12px;
+  overflow: hidden;
+
+  @include respond(md) {
+    max-width: 380px;
+  }
+
+  @include respond(sm) {
+    max-width: 100%;
+  }
+}
+
+.about-us-img {
+  width: 100%;
+  height: auto;
+  max-height: 450px;
+  border-radius: 12px;
+  display: block;
+
+  @include respond(md) {
+    max-height: 350px;
+  }
+
+  @include respond(sm) {
+    max-height: none;
+  }
+}
+
+.about-us-next p {
+  text-align: justify;
+  text-indent: 30px;
+  margin: 1rem 55px;
+
+  @include respond(lg) {
+    margin: 1rem 40px;
+  }
+
+  @include respond(md) {
+    text-indent: 20px;
+    margin: 1rem 30px;
+  }
+
+  @include respond(sm) {
+    text-indent: 15px;
+    margin: 0.7rem 20px;
+    font-size: 0.95rem;
+  }
+}
