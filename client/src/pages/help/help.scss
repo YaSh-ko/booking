@@ -1,0 +1,234 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/breakpoints';
+
+.help-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  color: #0A2D59;
+
+  &__content {
+    width: 100%;
+    max-width: 920px;
+    margin: 20px auto;
+    padding: 0 20px;
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 32px;
+      color: #0A2D59;
+
+      @include respond(md) {
+        font-size: 28px;
+        margin-bottom: 24px;
+      }
+
+      @include respond(sm) {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+    }
+
+    details {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      border: 1px solid #e2e2e2;
+
+      &:hover {
+        border-color: #c9c9c9;
+      }
+
+      &[open] {
+        border-color: #b7b7b7;
+
+        summary {
+          color: #0A2D59;
+        }
+      }
+
+      summary {
+        font-size: 18px;
+        font-weight: 600;
+        list-style: none;
+        position: relative;
+        padding-right: 24px;
+
+        &:after {
+          content: "＋";
+          position: absolute;
+          right: 0;
+          top: 0;
+          font-size: 20px;
+          transition: 0.25s;
+        }
+
+        @include respond(md) {
+          font-size: 16px;
+          padding-right: 20px;
+
+          &:after {
+            font-size: 18px;
+          }
+        }
+
+        @include respond(sm) {
+          font-size: 15px;
+          padding-right: 16px;
+
+          &:after {
+            font-size: 16px;
+          }
+        }
+      }
+
+      &[open] summary:after {
+        transform: rotate(45deg);
+      }
+
+      p {
+        margin-top: 16px;
+        line-height: 1.55;
+        font-size: 16px;
+        color: #0A2D59;
+
+        @include respond(md) {
+          font-size: 15px;
+        }
+
+        @include respond(sm) {
+          font-size: 14px;
+        }
+      }
+
+      @include respond(sm) {
+        padding: 16px 18px;
+      }
+    }
+
+    @include respond(md) {
+      padding: 0 16px;
+    }
+
+    @include respond(sm) {
+      padding: 0 12px;
+    }
+  }
+}
+
+
+
+.footer {
+  width: 100%;
+  background: #e5e7eb; // светло-серый фон как на макете
+  padding: 60px 0 30px;
+
+  .footer__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 60px;
+
+  display: grid;
+  grid-template-columns: 320px 220px 220px 200px;
+  align-items: start;
+  gap: 24px;
+
+  justify-content: center; // <— ВОТ ЭТО ВЫРАВНИВАЕТ СЕТКУ ПО ЦЕНТРУ
+}
+
+  /* ЛОГО + текст справа */
+  .footer__logo {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+
+    p {
+      max-width: 240px;
+      font-size: 16px;
+      line-height: 1.4;
+      color: #0A2D59;
+    }
+
+    .footer__logo-img {
+      width: 85px;
+      height: auto;
+    }
+  }
+
+  /* Заголовки колонок */
+  h4 {
+    margin: 0 0 16px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0A2D59;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: #0A2D59;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  /* Контакты справа — на одном уровне с заголовками */
+  .footer__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    a {
+      font-size: 16px;
+      color: #0A2D59;
+      text-decoration: none;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  /* Линия */
+  hr {
+    margin: 40px auto 20px;
+    max-width: 1440px;
+    border: none;
+    border-top: 1px solid #bfc3c9;
+  }
+
+  /* © по центру */
+  > p {
+    text-align: center; 
+    font-size: 16px;
+    color: #0A2D59;
+  }
+
+  /* АДАПТИВ */
+  @media (max-width: 1024px) {
+    .footer__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .footer__logo {
+      flex-direction: row;
+    }
+  }
+}
