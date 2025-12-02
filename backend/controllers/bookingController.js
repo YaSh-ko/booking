@@ -106,3 +106,61 @@ export const createBooking = async (req, res) => {
     return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 };
+
+export const deleteBooking = async (req, res) => {
+  try {
+    const { booking_id } = req.body;
+    const user_id = req.user.id; 
+
+    if (!booking_id) {
+      return res.status(400).json({ error: 'booking_id обязателен' });
+    }
+
+    const bookingId = parseInt(booking_id, 10);
+    if (isNaN(bookingId)) {
+      return res.status(400).json({ error: 'booking_id должен быть числом' });
+    }
+
+    // 1. Ищем бронь 
+    const { data: booking, error: fetchError } = await supabase
+      .from('bookings')
+      .select('id, room_id, check_in')
+      .eq('id', bookingId)
+      .eq('user_id', user_id)
+      .single();
+
+    // Если не нашли или не своя бронь
+    if (fetchError || !booking) {
+      return res.status(404).json({
+        error: 'Бронь не найдена или вы не можете её отменить'
+      });
+    }
+
+    // 2. УДАЛЯЕМ бронь
+    const { error: deleteError } = await supabase
+      .from('bookings')
+      .delete()
+      .eq('id', bookingId);
+
+    if (deleteError) {
+      console.error('Ошибка удаления брони:', deleteError);
+      return res.status(500).json({ error: 'Не удалось отменить бронь' });
+    }
+
+    // 3. Освобождаем комнату
+    await supabase
+      .from('rooms')
+      .update({ is_available: true })
+      .eq('id', booking.room_id);
+
+    // Успех!
+    return res.status(200).json({
+      message: 'Бронь успешно отменена!',
+      cancelled_booking_id: bookingId
+    });
+
+  } catch (error) {
+    console.error('Server error при отмене брони:', error);
+    return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+  }
+};
