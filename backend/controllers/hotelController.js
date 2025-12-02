@@ -64,3 +64,64 @@ export const getInfobyID = async(req, res) => {
     res.status(500).json({ error: 'Внутренняя ошибка сервера' })
   }
 }
+
+export const searchHotels = async (req, res) => {
+  try {
+    const {
+      city,
+      min_price,
+      max_price,
+      sort = 'rating',
+      order = 'desc',
+      page = 1,
+      limit = 12
+    } = req.query;
+
+    if (!city) {
+      return res.status(400).json({ error: 'Параметр city обязателен' });
+    }
+
+    const offset = (page - 1) * limit;
+
+    let query = supabase
+      .from('hotels')
+      .select('id, name, city, type, img, price, rating, adress', { count: 'exact' }) // ← ИСПРАВЛЕНО!
+      .eq('city', city);
+
+    // Цена
+    if (min_price) query = query.gte('price', parseInt(min_price, 10));
+    if (max_price) query = query.lte('price', parseInt(max_price, 10));
+
+    // Сортировка
+    const validSort = ['price', 'rating', 'popularity'].includes(sort) ? sort : 'rating';
+    const validOrder = order === 'asc';
+
+    query = query.order(validSort, { ascending: validOrder });
+
+    // Пагинация
+    const { data, error, count } = await query.range(offset, offset + limit - 1);
+
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.status(500).json({ error: 'Ошибка базы данных' });
+    }
+
+    if (!data || data.length === 0) {
+      return res.status(404).json({ message: 'Отели не найдены' });
+    }
+
+    res.json({
+      hotels: data,
+      pagination: {
+        page: Number(page),
+        limit: Number(limit),
+        total: count,
+        pages: Math.ceil(count / limit)
+      }
+    });
+
+  } catch (err) {
+    console.error('SearchHotels server error:', err);
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+  }
+};
