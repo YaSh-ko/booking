@@ -1,6 +1,7 @@
 import { AboutUs } from './pages/aboutUs/AboutUs';
 import { HomePage } from './pages/homePage/HomePage';
 import { Contacts } from './pages/contacts/Contacts';
+import { Help } from './pages/help/Help';
 import { HotelsListPage } from './pages/hotelsListPage/HotelsListPage';
 import { Routes, Route } from 'react-router-dom';
 
@@ -11,6 +12,7 @@ function App() {
         <Route path='/search' element={<HotelsListPage/>}/>  
         <Route path='/about' element={<AboutUs/>}></Route>
         <Route path='/contacts' element={<Contacts/>}></Route>
+        <Route path='/help' element={<Help/>}></Route>
       </Routes>        
   )
 }
