@@ -1,25 +1,25 @@
-import { Header } from "../../components/navbar/Navbar"
-import { SearchForm } from "../../components/serachForm/SearchForm"
+import {Header} from "../../components/navbar/Navbar";
+import Footer from "../../components/footer/footer";
+import { SearchForm } from "../../components/serachForm/SearchForm";
 import { useNavigate } from 'react-router-dom';
 import './homePage.scss';
 import { useState } from "react";
 import { TopHotels } from "../../components/topHotels/TopHotels";
 
-export const HomePage = ()=> {
+export const HomePage = () => {
     const [placeType, setPlaceType] = useState("hotel");
 
     const navigate = useNavigate();
 
     const handleSearch = (searchParams) => {
         navigate('/search', {
-            state: {searchParams},
-        })
-    }
+            state: { searchParams },
+        });
+    };
 
     return (
         <div className="home-page">    
-            
-            <Header/>
+            <Header />
 
             <main className="home-page__content">
                 <section className="home-page__search-section">
@@ -37,23 +37,22 @@ export const HomePage = ()=> {
                                         onClick={() => setPlaceType(type)}
                                     >  
                                         {type === "hotel" ? "Отели" : type === "apartment" ? "Квартиры" : "Хостелы"}
-                                        
                                     </button>
                                 ))}
                             </div>
                         </div>
                         
-                        <SearchForm onSearch = {handleSearch} selectedType = {placeType} className="searchForm"/>
+                        <SearchForm onSearch={handleSearch} selectedType={placeType} className="searchForm" />
                     </div>
-                    
                 </section>
 
                 <section className="home-page__top-hotels-section">
                     <h2 className="section-title">Лучшие отели</h2>
-                    <TopHotels/>
+                    <TopHotels />
                 </section>
             </main>
             
+            <Footer />
         </div>
-    )
-}
+    );
+};

@@ -1,4 +1,5 @@
 import { Header } from "../../components/navbar/Navbar";
+import Footer from "../../components/footer/footer";
 import "./contacts.scss";
 
 export const Contacts = () => {
@@ -51,7 +52,7 @@ export const Contacts = () => {
         </div>
 
       </main>
-      <div>FOOTER</div>
+      <Footer />
     </div>
   );
 };

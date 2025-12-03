@@ -1,4 +1,5 @@
 import { Header } from "../../components/navbar/Navbar";
+import Footer from "../../components/footer/footer";
 import "./help.scss";
 
 export const Help = () => {
@@ -102,50 +103,5 @@ export const Help = () => {
   );
 };
 
-// ---------------------- ФУТЕР ----------------------
 
-const Footer = () => {
-  return (
-    <footer className="footer">
-      <div className="footer__inner">
 
-        <div className="footer__block footer__logo">
-          <img
-              src="/navbar/logo.png"
-              alt="YAP"
-              className="footer__logo-img"
-            />
-          <p>Мы помогаем находить лучшие места для отдыха по всему Миру</p>
-        </div>
-
-        <div className="footer__block">
-          <h4>Компания</h4>
-          <ul>
-            <li>О нас</li>
-            <li>Контакты</li>
-            <li>Помощь</li>
-          </ul>
-        </div>
-
-        <div className="footer__block">
-          <h4>Разделы</h4>
-          <ul>
-            <li>Поиск</li>
-            <li>Популярные направления</li>
-            <li>Недавнее</li>
-            <li>Отзывы</li>
-          </ul>
-        </div>
-
-        <div className="footer__block footer__contacts">
-          <a href="mailto:info@yap.travel">info@yap.travel</a>
-          <a href="tel:+79997533399">+7 (999) 753 - 33 - 99</a>
-        </div>
-      </div>
-
-      <hr />
-
-      <p>2025 YAP. Все права защищены</p>
-    </footer>
-  );
-};

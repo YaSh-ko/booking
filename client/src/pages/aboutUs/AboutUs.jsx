@@ -1,4 +1,5 @@
 import { Header } from "../../components/navbar/Navbar";
+import Footer from "../../components/footer/footer";
 import './AboutUs.scss';
 
 export const AboutUs = () => {
@@ -47,7 +48,7 @@ export const AboutUs = () => {
           </p>
         </div>
 
-        <div>Footer</div>
+        <Footer />
       </main>
     </div>
   );
