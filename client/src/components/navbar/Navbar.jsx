@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import './navbar.scss'
 import { useState } from "react";
+import { Modal } from "../modal/Modal";
 export const Header = ()=> {
 
     const [ isMenuOpen, setIsMenuOpen ] = useState(false);
+    const [isModalOpen, setIsModalOpen ] = useState(false);
 
     return (
         <header className="header">
@@ -25,8 +27,8 @@ export const Header = ()=> {
                 </nav>
 
                 <div className="header__actions">
-                    <Link to="/signin" className="header__signin-btn">Войти</Link>
 
+                    <button className='header__signin-btn' onClick={()=>setIsModalOpen(true)}>Войти</button>
                     <button 
                         className="header__open-menu-btn"
                         onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -36,6 +38,8 @@ export const Header = ()=> {
                 </div>
 
             </div>
+
+            {isModalOpen && <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}/>}
         </header>
 
     )

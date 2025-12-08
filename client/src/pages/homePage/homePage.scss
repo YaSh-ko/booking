@@ -16,7 +16,6 @@
         
     &__search-section {
         position: relative;
-        width: 100vw; // на весь экран
         margin-left: calc(-1 * 60px); // компенсируем padding родителя
         margin-right: calc(-1 * 60px);
         height: calc(100vh - 60px);

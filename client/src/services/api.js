@@ -43,3 +43,24 @@ export const searchHotels = async (searchParams) => {
       throw error;
     }
 }
+
+export const authApi = {
+  sendCode: (email, name) => {
+    return fetch(`${API_BASE_URL}/auth/send-code`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // ← ОБЪЕКТ, а не строка!
+      },
+      body: JSON.stringify({name, email}),
+    })
+  },
+  verifyCode: (email, code) => {
+    return fetch(`${API_BASE_URL}/auth/verify-code`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // ← ОБЪЕКТ, а не строка!
+      },
+      body: JSON.stringify({email, code}),
+    })
+  }
+}

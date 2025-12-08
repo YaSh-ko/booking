@@ -48,8 +48,9 @@ export const AboutUs = () => {
           </p>
         </div>
 
-        <Footer />
       </main>
+        <Footer />
+
     </div>
   );
 };

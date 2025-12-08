@@ -46,10 +46,10 @@ export const HomePage = () => {
                     </div>
                 </section>
 
-                <section className="home-page__top-hotels-section">
+                {/* <section className="home-page__top-hotels-section">
                     <h2 className="section-title">Лучшие отели</h2>
                     <TopHotels />
-                </section>
+                </section> */}
             </main>
             
             <Footer />
