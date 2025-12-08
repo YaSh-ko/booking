@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import './navbar.scss'
 import { useState } from "react";
 import { Modal } from "../modal/Modal";
+import { useUserContext } from "../../context/userContext";
 export const Header = ()=> {
 
     const [ isMenuOpen, setIsMenuOpen ] = useState(false);
     const [isModalOpen, setIsModalOpen ] = useState(false);
+    const {user, logout} = useUserContext();
 
     return (
         <header className="header">
@@ -28,7 +30,18 @@ export const Header = ()=> {
 
                 <div className="header__actions">
 
+
+                    {user ? (
+                        
+                        <div style={{display: 'flex', alignItems: 'center', gap: '20px'}}>
+                            <span>{user.user.name}</span>
+                            <button className="header__signin-btn" onClick={()=>logout()}>Выйти</button>
+                        </div>
+                    ) : (
                     <button className='header__signin-btn' onClick={()=>setIsModalOpen(true)}>Войти</button>
+                    
+                    )
+                    }
                     <button 
                         className="header__open-menu-btn"
                         onClick={() => setIsMenuOpen((prev) => !prev)}

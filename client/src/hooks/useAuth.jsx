@@ -8,29 +8,33 @@ export const useAuth = () => {
         setIsLoading(true);
         try {
             const response = await authApi.sendCode(email, name);
-            if(response.ok) {
-                
-                return response.json();
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Ошибка при отправке кода");
             }
-        } catch(err) {
+
+            return data;
+        } catch (err) {
             setError(err.message);
             throw err;
         } finally {
             setIsLoading(false);
         }
-    }
+    };
+
 
     const verifyCode = async (email, code) => {
         setIsLoading(true);
         try {
             const response = await authApi.verifyCode(email, code);
-        
-            if(response.ok) {
-                const data = await response.json();
+            const data = await response.json();
 
-                console.log(data);
-                return data;
-            } 
+            if (!response.ok) {
+                throw new Error(data.error || "Ошибка при отправке кода");
+            }
+
+            return data;
 
         } catch(err) {
             setError(err.message);

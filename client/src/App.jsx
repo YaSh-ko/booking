@@ -4,16 +4,19 @@ import { Contacts } from './pages/contacts/Contacts';
 import { Help } from './pages/help/Help';
 import { HotelsListPage } from './pages/hotelsListPage/HotelsListPage';
 import { Routes, Route } from 'react-router-dom';
+import { UserProvider } from './context/userContext';
 
 function App() {
   return (
+    <UserProvider>
       <Routes>
         <Route path='/' element={<HomePage/>}/>
         <Route path='/search' element={<HotelsListPage/>}/>  
         <Route path='/about' element={<AboutUs/>}></Route>
         <Route path='/contacts' element={<Contacts/>}></Route>
         <Route path='/help' element={<Help/>}></Route>
-      </Routes>        
+      </Routes>   
+    </UserProvider>     
   )
 }
 

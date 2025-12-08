@@ -61,6 +61,15 @@ export const authApi = {
         'Content-Type': 'application/json', // ← ОБЪЕКТ, а не строка!
       },
       body: JSON.stringify({email, code}),
+      credentials: "include",
+    })
+  },
+  me: ()  => {
+    
+    return fetch(`${API_BASE_URL}/auth/me`, {
+      method: 'GET',
+      credentials: "include" ,
     })
   }
+
 }
