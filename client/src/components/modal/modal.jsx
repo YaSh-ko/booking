@@ -1,5 +1,5 @@
 import { useAuth } from '../../hooks/useAuth';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import './modal.scss';
 import { Loader } from '../loader/Loader';
 import { useUserContext } from '../../context/userContext';
@@ -14,11 +14,24 @@ export function Modal({ open, onClose }) {
   const { sendCode, verifyCode, isLoading, error: apiError, clearError } = useAuth();
   const { login } = useUserContext();
 
-  // Вынесем общую логику onChange
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+        onClose();
+      }
+    };
+
+    if (open) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [open, onClose]);
+
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
-    if (localError) setLocalError(''); // сбрасываем локальную ошибку сразу при вводе
-    if (apiError) clearError(); // сбрасываем ошибку API
+    if (localError) setLocalError('');
+    if (apiError) clearError();
   };
 
   const handleSubmit = async (e, resent = false) => {
