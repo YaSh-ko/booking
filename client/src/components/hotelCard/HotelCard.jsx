@@ -3,7 +3,7 @@ import './hotelCard.scss';
 
 export const HotelCard = ({ hotel }) => {
   const [imgError, setImgError] = useState(false);
-
+    console.log(hotel);
   return (
     <div className="hotel-card hotel-card--mobile">
       <img 

@@ -1,51 +1,41 @@
-import { authApi } from "../services/api";
 import { useState } from "react";
+import { authApi } from "../services/api";
+import { 
+  BadRequestError, 
+  NetworkError, 
+  NotFoundError, 
+  ServerError 
+} from "../services/error";
+
 export const useAuth = () => {
-    const [isLoading, setIsLoading ] = useState(false);
-    const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    const sendCode = async (email, name) => {
-        setIsLoading(true);
-        try {
-            const response = await authApi.sendCode(email, name);
-            const data = await response.json();
+  const handle = async (fn) => {
+    setIsLoading(true);
+    setError(null);
 
-            if (!response.ok) {
-                throw new Error(data.error || "Ошибка при отправке кода");
-            }
+    try {
+      return await fn();
+    } catch (err) {
+      if (err instanceof BadRequestError) setError("Неверные данные");
+      else if (err instanceof NetworkError) setError("Проблемы с сетью");
+      else if (err instanceof NotFoundError) setError("Не найдено");
+      else if (err instanceof ServerError) setError("Ошибка сервера");
+      else setError("Неизвестная ошибка");
 
-            return data;
-        } catch (err) {
-            setError(err.message);
-            throw err;
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-
-    const verifyCode = async (email, code) => {
-        setIsLoading(true);
-        try {
-            const response = await authApi.verifyCode(email, code);
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || "Ошибка при отправке кода");
-            }
-
-            return data;
-
-        } catch(err) {
-            setError(err.message);
-            throw err;
-        } finally {
-            setIsLoading(false)
-        }
-
+      throw err;
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    return { sendCode, verifyCode, isLoading, error, clearError: () => setError(null)}
-
-
-}
+  return {
+    sendCode: (email, name) => handle(() => authApi.sendCode(email, name)),
+    verifyCode: (email, code) => handle(() => authApi.verifyCode(email, code)),
+    me: () => handle(() => authApi.me()),
+    isLoading,
+    error,
+    clearError: () => setError(null),
+  };
+};

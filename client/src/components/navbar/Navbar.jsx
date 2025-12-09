@@ -39,9 +39,8 @@ export const Header = ()=> {
                         </div>
                     ) : (
                     <button className='header__signin-btn' onClick={()=>setIsModalOpen(true)}>Войти</button>
+                    )}
                     
-                    )
-                    }
                     <button 
                         className="header__open-menu-btn"
                         onClick={() => setIsMenuOpen((prev) => !prev)}
