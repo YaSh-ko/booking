@@ -72,34 +72,30 @@ export const searchHotels = async (req, res) => {
       min_price,
       max_price,
       sort = 'rating',
-      order = 'desc',
-      page = 1,
-      limit = 12
+      order = 'desc'
     } = req.query;
 
     if (!city) {
       return res.status(400).json({ error: 'Параметр city обязателен' });
     }
 
-    const offset = (page - 1) * limit;
-
     let query = supabase
       .from('hotels')
-      .select('id, name, city, type, img, price, rating, adress', { count: 'exact' }) // ← ИСПРАВЛЕНО!
+      .select('id, name, city, type, img, price, rating, adress')
       .eq('city', city);
 
-    // Цена
+    // Фильтры по цене
     if (min_price) query = query.gte('price', parseInt(min_price, 10));
     if (max_price) query = query.lte('price', parseInt(max_price, 10));
 
     // Сортировка
     const validSort = ['price', 'rating', 'popularity'].includes(sort) ? sort : 'rating';
-    const validOrder = order === 'asc';
+    const validOrder = order === 'asc'; // true → asc, false → desc
 
     query = query.order(validSort, { ascending: validOrder });
 
-    // Пагинация
-    const { data, error, count } = await query.range(offset, offset + limit - 1);
+    // Выполняем запрос БЕЗ .range() — получаем все записи
+    const { data, error } = await query;
 
     if (error) {
       console.error('Supabase error:', error);
@@ -110,14 +106,9 @@ export const searchHotels = async (req, res) => {
       return res.status(404).json({ message: 'Отели не найдены' });
     }
 
+    // Просто возвращаем массив отелей
     res.json({
-      hotels: data,
-      pagination: {
-        page: Number(page),
-        limit: Number(limit),
-        total: count,
-        pages: Math.ceil(count / limit)
-      }
+      hotels: data
     });
 
   } catch (err) {
