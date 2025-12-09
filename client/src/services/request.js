@@ -3,7 +3,7 @@ import {
   NotFoundError, 
   NetworkError, 
   ServerError 
-} from "./errors";
+} from "./error";
 
 const API_BASE_URL = "http://localhost:3234/api";
 
