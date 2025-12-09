@@ -39,10 +39,6 @@ export const createBooking = async (req, res) => {
       return res.status(404).json({ error: 'Комната не найдена' });
     }
 
-    if (!room.is_available) {
-      return res.status(400).json({ error: 'Комната уже забронирована' });
-    }
-
     // ПРОВЕРКА ПЕРЕСЕЧЕНИЙ 
     const { data: overlappingBookings } = await supabase
       .from('bookings')
@@ -78,12 +74,6 @@ export const createBooking = async (req, res) => {
       console.error('Booking error:', bookingError);
       return res.status(500).json({ error: 'Ошибка при сохранении брони' });
     }
-
-    // БЛОКИРУЕМ КОМНАТУ
-    await supabase
-      .from('rooms')
-      .update({ is_available: false })
-      .eq('id', roomId);
 
     // ОТВЕТ
     return res.status(201).json({
@@ -146,12 +136,6 @@ export const deleteBooking = async (req, res) => {
       console.error('Ошибка удаления брони:', deleteError);
       return res.status(500).json({ error: 'Не удалось отменить бронь' });
     }
-
-    // 3. Освобождаем комнату
-    await supabase
-      .from('rooms')
-      .update({ is_available: true })
-      .eq('id', booking.room_id);
 
     // Успех!
     return res.status(200).json({
