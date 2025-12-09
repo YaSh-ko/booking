@@ -4,8 +4,7 @@
 .search-form {
   display: grid;
   grid-template-columns: 3fr 2fr 2fr 1fr 1fr;
-  grid-template-areas: 
-    "city checkin checkout guests button";
+  grid-template-areas: 'city checkin checkout guests button';
 
   align-items: center;
   gap: 20px;
@@ -19,14 +18,13 @@
   font-size: 18px;
   font-weight: 500;
 
-    
   &__group {
     position: relative;
     min-height: 50px;
     padding-top: 20px;
     padding-right: 20px;
     box-sizing: border-box;
-    
+
     &:not(:nth-last-child(2)) {
       border-right: 3px solid $color-secondary;
     }
@@ -51,12 +49,12 @@
     &:focus-within .search-form__label {
       top: 14px;
     }
-    
+
     @include respond(xl) {
       &:first-child {
         padding-bottom: 5px;
         border-right: none;
-        border-bottom: 3px solid $color-secondary;        
+        border-bottom: 3px solid $color-secondary;
       }
     }
     @include respond(md) {
@@ -67,16 +65,16 @@
     @include respond(sm) {
       &:nth-child(2) {
         padding-bottom: 5px;
-        border-bottom: 3px solid $color-secondary; 
-        border-right: none; 
+        border-bottom: 3px solid $color-secondary;
+        border-right: none;
       }
       &:nth-child(3) {
         padding-bottom: 5px;
-        border-bottom: 3px solid $color-secondary; 
+        border-bottom: 3px solid $color-secondary;
       }
     }
   }
-    
+
   &__label {
     position: absolute;
     top: 20px;
@@ -98,17 +96,14 @@
     transition: all 0.2s ease;
 
     &:focus {
-        padding-inline: 10px;
-        outline: none;
-        border-color: $color-primary;
+      padding-inline: 10px;
+      outline: none;
+      border-color: $color-primary;
     }
   }
 
-  
-  
-
   &__decoration-line {
-    background-color: #C2C6CC;
+    background-color: #c2c6cc;
     width: 2px;
     height: 80%;
     border-radius: $border-radius;
@@ -137,10 +132,9 @@
 
   @include respond(xl) {
     grid-template-columns: 2fr 2fr 1fr 1fr;
-    grid-template-areas: 
-      "city city city city"
-      "checkin checkout guests button";
-    
+    grid-template-areas:
+      'city city city city'
+      'checkin checkout guests button';
   }
 
   @include respond(lg) {
@@ -149,25 +143,22 @@
 
   @include respond(md) {
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
-      "city city"
-      "checkin checkout"
-      "guests button";
+    grid-template-areas:
+      'city city'
+      'checkin checkout'
+      'guests button';
     font-size: 16px;
     gap: 10px;
   }
 
   @include respond(sm) {
     grid-template-columns: 1fr;
-    grid-template-areas: 
-      "city"
-      "checkin"
-      "checkout"
-      "guests"
-      "button";
+    grid-template-areas:
+      'city'
+      'checkin'
+      'checkout'
+      'guests'
+      'button';
     padding-inline: 20px;
   }
 }
-
-
-

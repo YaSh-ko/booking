@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { searchHotels } from "../services/api";
-import { 
-  BadRequestError, 
-  NetworkError, 
-  NotFoundError, 
-  ServerError 
-} from "../services/error";
+import { useState } from 'react';
+import { searchHotels } from '../services/api';
+import {
+  BadRequestError,
+  NetworkError,
+  NotFoundError,
+  ServerError,
+} from '../services/error';
 
 export const useHotelsSearch = () => {
   const [hotels, setHotels] = useState([]);
@@ -19,13 +19,13 @@ export const useHotelsSearch = () => {
       setHotels(result);
     } catch (err) {
       if (err instanceof BadRequestError) {
-        alert("Проверьте параметры поиска");
+        alert('Проверьте параметры поиска');
       } else if (err instanceof NetworkError) {
-        alert("Проверьте интернет-соединение");
+        alert('Проверьте интернет-соединение');
       } else if (err instanceof NotFoundError) {
-        alert("По вашему запросу ничего не найдено");
+        alert('По вашему запросу ничего не найдено');
       } else if (err instanceof ServerError) {
-        alert("Проблемы на сервере, попробуйте позже");
+        alert('Проблемы на сервере, попробуйте позже');
       }
     } finally {
       setIsLoading(false);

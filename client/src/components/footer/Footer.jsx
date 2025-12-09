@@ -1,30 +1,42 @@
-import { Link } from "react-router-dom";
-import './footer.scss'
-
+import { Link } from 'react-router-dom';
+import './footer.scss';
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer__container">
-
         <div className="footer__column footer__brand">
           <img
-              src="/navbar/logo.png"
-              alt="Логотип компании"
-              className="footer__logo-img"
-            />
-          <p>
-            Мы помогаем находить лучшие места для отдыха по всему Миру
-          </p>
+            src="/navbar/logo.png"
+            alt="Логотип компании"
+            className="footer__logo-img"
+          />
+          <p>Мы помогаем находить лучшие места для отдыха по всему Миру</p>
         </div>
 
         <div className="footer__column">
           <h4>Компания</h4>
           <ul>
-            <li className="navbar__item"><Link to="/" className="navbar__link">Главная</Link></li>
-            <li className="navbar__item"><Link to="/about" className="navbar__link">О нас</Link></li>
-            <li className="navbar__item"><Link to="/contacts" className="navbar__link">Контакты</Link></li>
-            <li className="navbar__item"><Link to="/help" className="navbar__link">Помощь</Link></li>
+            <li className="navbar__item">
+              <Link to="/" className="navbar__link">
+                Главная
+              </Link>
+            </li>
+            <li className="navbar__item">
+              <Link to="/about" className="navbar__link">
+                О нас
+              </Link>
+            </li>
+            <li className="navbar__item">
+              <Link to="/contacts" className="navbar__link">
+                Контакты
+              </Link>
+            </li>
+            <li className="navbar__item">
+              <Link to="/help" className="navbar__link">
+                Помощь
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -46,12 +58,9 @@ const Footer = () => {
             <span>📞</span> +7 (999) 753 - 33 - 99
           </div>
         </div>
-
       </div>
 
-      <div className="footer__bottom">
-        2025 YAP. Все права защищены
-      </div>
+      <div className="footer__bottom">2025 YAP. Все права защищены</div>
     </footer>
   );
 };

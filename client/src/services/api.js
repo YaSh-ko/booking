@@ -1,4 +1,4 @@
-import { request } from "./request";
+import { request } from './request';
 
 export function searchHotels(params) {
   const query = new URLSearchParams(params).toString();
@@ -7,20 +7,20 @@ export function searchHotels(params) {
 
 export const authApi = {
   sendCode(email, name) {
-    return request("/auth/send-code", {
-      method: "POST",
+    return request('/auth/send-code', {
+      method: 'POST',
       body: { email, name },
     });
   },
 
   verifyCode(email, code) {
-    return request("/auth/verify-code", {
-      method: "POST",
+    return request('/auth/verify-code', {
+      method: 'POST',
       body: { email, code },
     });
   },
 
   me() {
-    return request("/auth/me");
-  }
+    return request('/auth/me');
+  },
 };

@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { authApi } from "../services/api";
-import { 
-  BadRequestError, 
-  NetworkError, 
-  NotFoundError, 
-  ServerError 
-} from "../services/error";
+import { useState } from 'react';
+import { authApi } from '../services/api';
+import {
+  BadRequestError,
+  NetworkError,
+  NotFoundError,
+  ServerError,
+} from '../services/error';
 
 export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,11 +18,11 @@ export const useAuth = () => {
     try {
       return await fn();
     } catch (err) {
-      if (err instanceof BadRequestError) setError("Неверные данные");
-      else if (err instanceof NetworkError) setError("Проблемы с сетью");
-      else if (err instanceof NotFoundError) setError("Не найдено");
-      else if (err instanceof ServerError) setError("Ошибка сервера");
-      else setError("Неизвестная ошибка");
+      if (err instanceof BadRequestError) setError('Неверные данные');
+      else if (err instanceof NetworkError) setError('Проблемы с сетью');
+      else if (err instanceof NotFoundError) setError('Не найдено');
+      else if (err instanceof ServerError) setError('Ошибка сервера');
+      else setError('Неизвестная ошибка');
 
       throw err;
     } finally {
