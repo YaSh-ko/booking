@@ -1,4 +1,5 @@
 @import '../../assets/styles/variables';
+@import '../../assets/styles/breakpoints';
 
 .hotels-list-page_container {
     min-height: 100vh;
@@ -13,14 +14,25 @@
         display: flex;
         .filters-bar {
             flex: 2;
+
+            @include respond(md) {
+                display: none;
+            }
         }
 
         .content {
             flex: 5;
-
-            .hotels-list {
-                margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            @include respond(md) {
+                
             }
+            .search-form {
+                margin-bottom: 40px;
+            }
+        
         }
 
         

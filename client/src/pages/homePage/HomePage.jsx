@@ -12,9 +12,8 @@ export const HomePage = () => {
     const navigate = useNavigate();
 
     const handleSearch = (searchParams) => {
-        navigate('/search', {
-            state: { searchParams },
-        });
+        const queryParams = new URLSearchParams(searchParams).toString();
+        navigate(`/search?${queryParams}`);
     };
 
     return (

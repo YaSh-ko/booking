@@ -3,6 +3,7 @@ const API_BASE_URL = 'http://localhost:3234/api'
 
 export const searchHotels = async (searchParams) => {
     try {
+      console.log("Параметры в апи",searchParams)
         const urlParams = new URLSearchParams({
             city: searchParams.city || '',
             checkIn: searchParams.checkIn || '',

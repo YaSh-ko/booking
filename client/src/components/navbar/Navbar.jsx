@@ -34,7 +34,7 @@ export const Header = ()=> {
                     {user ? (
                         
                         <div style={{display: 'flex', alignItems: 'center', gap: '20px'}}>
-                            <span>{user.user.name}</span>
+                            <span>{user.name}</span>
                             <button className="header__signin-btn" onClick={()=>logout()}>Выйти</button>
                         </div>
                     ) : (

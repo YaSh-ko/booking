@@ -4,14 +4,19 @@ import { BadRequestError, NetworkError, NotFoundError, ServerError } from '../se
 
 export const useHotelsSearch = ()=> {
   const [ hotels, setHotels ] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = async (SearchParams) => {
+    setIsLoading(true);
+
     try {
-      console.log(SearchParams);
+      console.log('here');
       const result = await searchHotels(SearchParams);
+      setIsLoading(false);
       setHotels(result);
     }
     catch (err) {
+      setIsLoading(false);
       if (err instanceof BadRequestError) {
         alert("Проверьте параметры поиска");
       }
@@ -29,5 +34,5 @@ export const useHotelsSearch = ()=> {
       }
     }
   }
-  return [hotels, handleSearch];
+  return {hotels, isLoading, handleSearch};
 }

@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import './searchForm.scss';
 
-export const SearchForm = ({onSearch, selectedType}) => {
-    
+export const SearchForm = ({onSearch, selectedType, searchData}) => {
     const [formData, setFormData] = useState({
-        city: '',
-        checkIn: '',
-        checkOut: '',
-        guests: 1,
+        city: searchData?.city || '',
+        checkIn: searchData?.checkIn || '',
+        checkOut: searchData?.checkOut || '',
+        guests: searchData?.guests || 1,
         type: selectedType || "hotel"
     });
 
