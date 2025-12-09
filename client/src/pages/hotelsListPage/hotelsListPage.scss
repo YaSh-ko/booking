@@ -2,40 +2,35 @@
 @import '../../assets/styles/breakpoints';
 
 .hotels-list-page_container {
-    min-height: 100vh;
-    width: 100%;
-    background-color: $color-secondary;
+  min-height: 100vh;
+  width: 100%;
+  background-color: $color-secondary;
 
-    header {
+  header {
+    margin-bottom: 40px;
+  }
+  main {
+    padding-inline: 20px;
+    display: flex;
+    .filters-bar {
+      flex: 2;
+
+      @include respond(md) {
+        display: none;
+      }
+    }
+
+    .content {
+      flex: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      @include respond(md) {
+      }
+      .search-form {
         margin-bottom: 40px;
+      }
     }
-    main {
-        padding-inline: 20px;
-        display: flex;
-        .filters-bar {
-            flex: 2;
-
-            @include respond(md) {
-                display: none;
-            }
-        }
-
-        .content {
-            flex: 5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            
-            @include respond(md) {
-                
-            }
-            .search-form {
-                margin-bottom: 40px;
-            }
-        
-        }
-
-        
-    }
-    
+  }
 }

@@ -10,14 +10,14 @@ function App() {
   return (
     <UserProvider>
       <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='/search' element={<HotelsListPage/>}/>  
-        <Route path='/about' element={<AboutUs/>}></Route>
-        <Route path='/contacts' element={<Contacts/>}></Route>
-        <Route path='/help' element={<Help/>}></Route>
-      </Routes>   
-    </UserProvider>     
-  )
+        <Route path="/" element={<HomePage />} />
+        <Route path="/search" element={<HotelsListPage />} />
+        <Route path="/about" element={<AboutUs />}></Route>
+        <Route path="/contacts" element={<Contacts />}></Route>
+        <Route path="/help" element={<Help />}></Route>
+      </Routes>
+    </UserProvider>
+  );
 }
 
-export default App
+export default App;
