@@ -35,9 +35,9 @@ export const getHotels = async (req, res) => {
 
 export const getInfobyID = async(req, res) => {
   try {
-    const { id } = req.query
+    const { id, checkIn, checkOut } = req.query
 
-    const {data, error} = await supabase
+    const {data: hotel, error} = await supabase
       .from('hotels')
       .select('*, rooms(*)')
       .eq('id', parseInt(id))
@@ -49,14 +49,35 @@ export const getInfobyID = async(req, res) => {
       return res.status(500).json({ error: 'Ошибка базы данных' })
     }
 
-    if (!data || data.length === 0) {
+    if (!hotel) {
       // 404 - нет отелей по запросу
       return res.status(404).json({ error: 'Данные не найдены' })
     }
+
+    if (!checkIn || !checkOut) {
+      return res.json(hotel);
+    }
+
+    const roomIds = hotel.rooms.map(room => room.id);
+
+    const { data: bookings, error: bookingError } = await supabase
+      .from('bookings')
+      .select('room_id')
+      .in('room_id', roomIds)
+      .lt('check_in', checkOut)
+      .gt('check_out', checkIn);
+
+    if (bookingError) {
+      console.error(bookingError);
+    }
+
+    const bookedRoomIds = new Set(bookings?.map(b => b.room_id) || []);
+
+    hotel.rooms = hotel.rooms.filter(room => !bookedRoomIds.has(room.id));
     
     // 200 - успех
-    console.log(data);
-    res.json(data)
+    console.log(hotel);
+    res.json(hotel)
     
   } catch (error) {
     // 500 - непредвиденные ошибки сервера
