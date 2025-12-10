@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 export const HotelCard = ({ hotel }) => {
   const [imgError, setImgError] = useState(false);
-  const navigate = useNavigate();
+
+  const openHotel = (id) => {
+    window.open(`/hotel/details/${id}`, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <div className="hotel-card hotel-card--mobile">
@@ -25,9 +28,7 @@ export const HotelCard = ({ hotel }) => {
 
         <div className="hotel-card__desrciption-bottom">
           <span className="hotel-card__price">От {hotel.price} Р</span>
-          <button onClick={() => navigate(`/hotel/details/${hotel.id}`)}>
-            Подробнее
-          </button>
+          <button onClick={() => openHotel(hotel.id)}>Подробнее</button>
         </div>
       </div>
     </div>

@@ -21,7 +21,7 @@ export const HomePage = () => {
     <div className="home-page">
       <Header />
 
-      <main className="home-page__content">
+      <main className="home-page__content main-content">
         <section className="home-page__search-section">
           <h1 className="visually-hidden">Найти отель</h1>
           <div className="home-page__search-container">

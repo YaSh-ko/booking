@@ -29,3 +29,10 @@ export const authApi = {
     return request('/auth/me');
   },
 };
+
+export const toggleFavorites = (id) => {
+  return request('/favorites/toggle', {
+    method: 'POST',
+    body: { id },
+  });
+};
