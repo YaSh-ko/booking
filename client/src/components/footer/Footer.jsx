@@ -8,6 +8,7 @@ const Footer = () => {
         <div className="footer__column footer__brand">
           <img
             src="/navbar/logo.png"
+            loading="lazy"
             alt="Логотип компании"
             className="footer__logo-img"
           />

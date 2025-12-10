@@ -9,6 +9,7 @@ export const HotelCard = ({ hotel }) => {
       <img
         src={!imgError && hotel.img ? hotel.img : '/images/placeholder-hotel-house.png'}
         alt="Фото отеля"
+        loading="lazy"
         onError={() => setImgError(true)}
       />
 

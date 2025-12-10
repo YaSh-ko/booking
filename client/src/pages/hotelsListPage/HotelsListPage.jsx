@@ -12,7 +12,7 @@ export const HotelsListPage = () => {
   const location = useLocation();
   const searchParams = Object.fromEntries(new URLSearchParams(location.search));
   const { hotels, isLoading, handleSearch } = useHotelsSearch();
-  const [selectType, setSelestType] = useState('hotel');
+  const [selectType, setSelestType] = useState(searchParams);
 
   useEffect(() => {
     if (Object.keys(searchParams).length > 0) {

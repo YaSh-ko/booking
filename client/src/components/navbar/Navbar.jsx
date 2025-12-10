@@ -71,7 +71,12 @@ export const Header = () => {
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
           >
-            <img src="/navbar/menu.png" alt="" className="header__open-menu-icon" />
+            <img
+              loading="lazy"
+              src="/navbar/menu.png"
+              alt=""
+              className="header__open-menu-icon"
+            />
           </button>
         </div>
       </div>
