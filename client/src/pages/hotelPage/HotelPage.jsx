@@ -8,6 +8,7 @@ import { useToggleFavorites } from '../../hooks/useToggleFavorites';
 import { Modal } from '../../components/modal/Modal';
 import { formatPrice } from '../../utils/formatPrice';
 import { RoomsCardsList } from '../../components/roomCardsList/RoomsCardsList';
+import { getImageUrl } from '../../utils/getImageUrl';
 
 export function HotelPage() {
   const { id } = useParams();
@@ -75,7 +76,11 @@ export function HotelPage() {
 
           {/* Картинка */}
           <div className="hotelpage__image-container">
-            <img src={hotel.img} alt={hotel.name} className="hotelpage__image" />
+            {getImageUrl(hotel.img, true).map((image) => (
+              <div className="hotelpage__image-item">
+                <img src={image} />
+              </div>
+            ))}
           </div>
 
           {/* Данные о заезде */}

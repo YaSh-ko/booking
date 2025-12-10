@@ -2,22 +2,17 @@ import { useState } from 'react';
 import './hotelCard.scss';
 import { useNavigate } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatPrice';
+import { getImageUrl } from '../../utils/getImageUrl';
 
 export const HotelCard = ({ hotel }) => {
-  const [imgError, setImgError] = useState(false);
-
   const openHotel = (id) => {
     window.open(`/hotel/details/${id}`, '_blank', 'noopener,noreferrer');
   };
 
+  console.log(getImageUrl(hotel.img));
   return (
     <div className="hotel-card hotel-card--mobile">
-      <img
-        src={!imgError && hotel.img ? hotel.img : '/images/placeholder-hotel-house.png'}
-        alt="Фото отеля"
-        loading="lazy"
-        onError={() => setImgError(true)}
-      />
+      <img src={getImageUrl(hotel.img)} alt="Фото отеля" loading="lazy" />
 
       <div className="hotel-card__desrciption">
         <div className="hotel-card__description-top">
