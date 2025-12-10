@@ -6,6 +6,8 @@ import { Header } from '../../components/navbar/Navbar';
 import './hotelPage.scss';
 import { useToggleFavorites } from '../../hooks/useToggleFavorites';
 import { Modal } from '../../components/modal/Modal';
+import { formatPrice } from '../../utils/formatPrice';
+import { RoomsCardsList } from '../../components/roomCardsList/RoomsCardsList';
 
 export function HotelPage() {
   const { id } = useParams();
@@ -44,7 +46,7 @@ export function HotelPage() {
               </div>
             </div>
             <div className="hotelpage__addit">
-              <p className="hotelpage__price">от {hotel.price} Р</p>
+              <p className="hotelpage__price">от {formatPrice(hotel.price)}</p>
               <div className="hotelpage__actions">
                 <button
                   className="hotelpage__button-icon"
@@ -64,7 +66,9 @@ export function HotelPage() {
                     />
                   </svg>
                 </button>
-                <button className="hotelpage__button"> Посмотреть цены</button>
+                <button className="hotelpage__button">
+                  <a href="#rooms">Посмотреть цены</a>
+                </button>
               </div>
             </div>
           </div>
@@ -90,22 +94,8 @@ export function HotelPage() {
             </div>
           </div>
 
-          {/* Карточки комнат */}
-          <div className="hotelpage__rooms">
-            {hotel.rooms.map((room) => (
-              <div key={room.id} className="hotelpage__room-card">
-                <img
-                  src={room.imageUrl}
-                  alt={room.name}
-                  className="hotelpage__room-image"
-                />
-                <div className="hotelpage__room-info">
-                  <h3 className="hotelpage__room-name">{room.name}</h3>
-                  <p className="hotelpage__room-description">{room.description}</p>
-                  <p className="hotelpage__room-price">{room.price} ₽ за ночь</p>
-                </div>
-              </div>
-            ))}
+          <div id="rooms">
+            <RoomsCardsList rooms={hotel.rooms} />
           </div>
         </div>
       ) : (

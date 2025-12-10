@@ -120,8 +120,7 @@
     transition: 0.25s ease;
 
     &:hover {
-      background-color: darken($color-primary, 5%);
-      transform: translateY(-1px);
+      background-color: lighten($color-primary, 12%);
     }
 
     &:focus-visible {

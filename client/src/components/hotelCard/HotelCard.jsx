@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './hotelCard.scss';
 import { useNavigate } from 'react-router-dom';
+import { formatPrice } from '../../utils/formatPrice';
 
 export const HotelCard = ({ hotel }) => {
   const [imgError, setImgError] = useState(false);
@@ -27,7 +28,7 @@ export const HotelCard = ({ hotel }) => {
         <p>{hotel.description}</p>
 
         <div className="hotel-card__desrciption-bottom">
-          <span className="hotel-card__price">От {hotel.price} Р</span>
+          <span className="hotel-card__price">От {formatPrice(hotel.price)}</span>
           <button onClick={() => openHotel(hotel.id)}>Подробнее</button>
         </div>
       </div>
