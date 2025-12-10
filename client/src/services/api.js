@@ -5,6 +5,11 @@ export function searchHotels(params) {
   return request(`/hotels?${query}`);
 }
 
+export function getHotelDetails(id) {
+  console.log(id);
+  return request(`/hotels/details?id=${id}`);
+}
+
 export const authApi = {
   sendCode(email, name) {
     return request('/auth/send-code', {

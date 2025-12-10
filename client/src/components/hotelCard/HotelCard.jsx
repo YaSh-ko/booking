@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import './hotelCard.scss';
+import { useNavigate } from 'react-router-dom';
 
 export const HotelCard = ({ hotel }) => {
   const [imgError, setImgError] = useState(false);
-  console.log(hotel);
+  const navigate = useNavigate();
+
   return (
     <div className="hotel-card hotel-card--mobile">
       <img
@@ -23,7 +25,9 @@ export const HotelCard = ({ hotel }) => {
 
         <div className="hotel-card__desrciption-bottom">
           <span className="hotel-card__price">От {hotel.price} Р</span>
-          <button>Подробнее</button>
+          <button onClick={() => navigate(`/hotel/details/${hotel.id}`)}>
+            Подробнее
+          </button>
         </div>
       </div>
     </div>
