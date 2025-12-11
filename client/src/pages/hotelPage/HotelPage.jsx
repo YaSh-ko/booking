@@ -9,18 +9,17 @@ import { Modal } from '../../components/modal/Modal';
 import { formatPrice } from '../../utils/formatPrice';
 import { RoomsCardsList } from '../../components/roomCardsList/RoomsCardsList';
 import { getImageUrl } from '../../utils/getImageUrl';
+import { useUserContext } from '../../context/userContext';
 
 export function HotelPage() {
   const { id } = useParams();
   const { hotel, handleHotelDetails, isLoading } = useHotelDetails();
-  const { handleToggleFavorites, auth, error, clearError } = useToggleFavorites();
-
+  const { handleToggleFavorites, error, clearError } = useToggleFavorites();
+  const { user } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log(hotel);
 
   const handleClickFavorite = (id) => {
-    console.log(auth);
-    if (!auth) handleToggleFavorites(id);
+    if (user) handleToggleFavorites(id);
     else setIsModalOpen(true);
   };
   useEffect(() => {
@@ -78,7 +77,7 @@ export function HotelPage() {
           <div className="hotelpage__image-container">
             {getImageUrl(hotel.img, true).map((image) => (
               <div className="hotelpage__image-item">
-                <img src={image} />
+                <img loading="lazy" src={image} />
               </div>
             ))}
           </div>
@@ -107,7 +106,13 @@ export function HotelPage() {
         <p className="hotelpage__not-found">Отель не найден</p>
       )}
 
-      {isModalOpen && <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <Modal
+          modalType="auth"
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

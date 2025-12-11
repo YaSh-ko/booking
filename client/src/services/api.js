@@ -31,8 +31,9 @@ export const authApi = {
 };
 
 export const toggleFavorites = (id) => {
+  console.log(id);
   return request('/favorites/toggle', {
     method: 'POST',
-    body: { id },
+    body: { hotel_id: id },
   });
 };
