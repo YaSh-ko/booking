@@ -3,9 +3,11 @@ import './navbar.scss';
 import { useEffect, useState } from 'react';
 import { Modal } from '../modal/Modal';
 import { useUserContext } from '../../context/userContext';
+import { FavoriteButton } from '../favoriteButton/FavoriteButton';
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUserMenuOPen, setIsUserMenuOpen] = useState(false);
   const { user, logout } = useUserContext();
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
@@ -57,7 +59,26 @@ export const Header = () => {
                 gap: '20px',
               }}
             >
-              <span>{user.name}</span>
+              <button
+                onClick={() => setIsUserMenuOpen((prev) => !prev)}
+                className={`header__user-btn ${isUserMenuOPen ? 'header__user-btn--active' : ''}`}
+              >
+                {user.name}
+              </button>
+
+              {isUserMenuOPen && (
+                <nav className="navbar--vertical">
+                  <ul className="user-menu">
+                    <li className="user-menu__item">
+                      <Link to="/hotels/favorites">Избранное</Link>
+                    </li>
+                    <li className="user-menu__item">
+                      <Link>Бронирования</Link>
+                    </li>
+                  </ul>
+                </nav>
+              )}
+
               <button
                 className="header__signin-btn"
                 onClick={() => setIsExitModalOpen(true)}

@@ -43,6 +43,16 @@
     }
   }
 
+  &__user-btn {
+    border-radius: 6px;
+    transition: all 0.6s ease;
+
+    &--active {
+      background-color: $color-primary;
+      color: $color-text-secondary;
+    }
+  }
+
   &__signin-btn {
     background-color: $color-primary;
     border-radius: $border-radius-secondary;
@@ -128,6 +138,26 @@
       top: 80px;
       left: 10px;
       right: 10px;
+    }
+  }
+}
+
+.user-menu {
+  display: block;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background-color: $color-white-background;
+  z-index: 2;
+  padding: 14px 20px;
+  border-radius: $border-radius;
+  box-shadow: $shadow-default;
+
+  .user-menu__item {
+    padding: 5px 10px;
+    border-radius: 10px;
+    &:hover {
+      background-color: $color-secondary;
     }
   }
 }
