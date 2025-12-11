@@ -83,4 +83,34 @@ export const toggleFavorite = async (req, res) => {
     console.error('Server error: ', error);
     return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
+};
+
+export const myFavorite = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const { data: fav, error } = await supabase
+      .from('favorites')
+      .select('hotel_id')
+      .eq('user_id', userId)
+    
+
+    if(error) {
+      console.error('error: ', Error);
+      return res.status(400).json({ error: 'Ошибка получения избранных' });
+    };
+
+    if(!fav) {
+       console.error('error: ', Error);
+       return res.status(400).json({ error: 'Данные отсутствуют'})
+    };
+
+    //успех 200;
+    console.log(fav);
+    res.json(fav);
+
+  } catch (error) {
+    console.error('Server error: ', error);
+    return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+  }
 }

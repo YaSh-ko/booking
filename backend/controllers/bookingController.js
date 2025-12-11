@@ -148,3 +148,33 @@ export const deleteBooking = async (req, res) => {
     return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 };
+
+export const myBookings = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const { data: booking, error } = await supabase
+      .from('bookings')
+      .select('hotel_id, room_id')
+      .eq('user_id', userId)
+      
+
+    if(error) {
+      console.error('error: ', Error);
+      return res.status(400).json({ error: 'Ошибка получения бронирований' });
+    };
+
+    if(!booking) {
+       console.error('error: ', Error);
+       return res.status(400).json({ error: 'Данные отсутствуют'})
+    };
+
+    //успех 200;
+    console.log(booking);
+    res.json(booking);
+
+  } catch (error) {
+    console.error('Server error: ', error);
+    return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+  }
+};
