@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import './navbar.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal } from '../modal/Modal';
 import { useUserContext } from '../../context/userContext';
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, logout } = useUserContext();
+  const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
+  useEffect(() => console.log(user?.name), [user?.name]);
   return (
     <header className="header">
       <div className="header__container">
@@ -56,7 +58,10 @@ export const Header = () => {
               }}
             >
               <span>{user.name}</span>
-              <button className="header__signin-btn" onClick={() => logout()}>
+              <button
+                className="header__signin-btn"
+                onClick={() => setIsExitModalOpen(true)}
+              >
                 Выйти
               </button>
             </div>
@@ -81,7 +86,21 @@ export const Header = () => {
         </div>
       </div>
 
-      {isModalOpen && <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <Modal
+          modalType={'auth'}
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+
+      {isExitModalOpen && (
+        <Modal
+          modalType={'exit'}
+          open={isExitModalOpen}
+          onClose={() => setIsExitModalOpen(false)}
+        />
+      )}
     </header>
   );
 };

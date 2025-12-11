@@ -1,4 +1,10 @@
-import { BadRequestError, NotFoundError, NetworkError, ServerError } from './error';
+import {
+  BadRequestError,
+  NotFoundError,
+  NetworkError,
+  ServerError,
+  UnauthorizedError,
+} from './error';
 
 const API_BASE_URL = 'http://localhost:3234/api';
 
@@ -29,9 +35,12 @@ export async function request(path, options = {}) {
   }
 
   if (!response.ok) {
+    console.log(response);
     switch (response.status) {
       case 400:
         throw new BadRequestError(data?.error || 'Некорректные данные');
+      case 401:
+        throw new UnauthorizedError(data?.error || 'Требуется авторизация');
       case 404:
         throw new NotFoundError('Не найдено');
       case 500:

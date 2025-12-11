@@ -10,6 +10,8 @@ export const SearchForm = ({ onSearch, selectedType, searchData }) => {
     type: selectedType,
   });
 
+  console.log('formData', formData);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 

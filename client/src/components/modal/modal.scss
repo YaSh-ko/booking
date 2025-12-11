@@ -14,7 +14,7 @@
 }
 
 .modal {
-  background: $color-background;
+  background: $color-white-background;
   border-radius: $border-radius-secondary;
   padding: 32px;
   position: relative;
@@ -50,6 +50,10 @@
     }
   }
 
+  &__exit-buttons-group {
+    display: flex;
+    gap: 20px;
+  }
   &__button {
     background-color: $color-button;
     color: white;
@@ -59,6 +63,18 @@
     font-size: 16px;
     cursor: pointer;
 
+    &:hover {
+      background-color: lighten($color-primary, 12%);
+    }
+
+    &--gray {
+      background-color: #ccc;
+      color: #000;
+
+      &:hover {
+        background-color: lighten(#ccc, 12%);
+      }
+    }
     &:disabled {
       background: #ccc;
       cursor: not-allowed;
