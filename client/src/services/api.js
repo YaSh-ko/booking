@@ -29,3 +29,11 @@ export const authApi = {
     return request('/auth/me');
   },
 };
+
+export const toggleFavorites = (id) => {
+  console.log(id);
+  return request('/favorites/toggle', {
+    method: 'POST',
+    body: { hotel_id: id },
+  });
+};

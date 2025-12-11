@@ -4,7 +4,7 @@ import './modal.scss';
 import { Loader } from '../loader/Loader';
 import { useUserContext } from '../../context/userContext';
 
-export function Modal({ open, onClose }) {
+export function Modal({ open, onClose, modalType }) {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
@@ -12,7 +12,7 @@ export function Modal({ open, onClose }) {
   const [localError, setLocalError] = useState('');
   const modalRef = useRef();
   const { sendCode, verifyCode, isLoading, error: apiError, clearError } = useAuth();
-  const { login } = useUserContext();
+  const { login, logout } = useUserContext();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -47,8 +47,8 @@ export function Modal({ open, onClose }) {
         await sendCode(email, name);
         setIsSentCode(true);
       } else {
-        const user = await verifyCode(email, code);
-        login(user);
+        const data = await verifyCode(email, code);
+        login(data.user);
         onClose();
       }
     } catch (err) {
@@ -58,73 +58,97 @@ export function Modal({ open, onClose }) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal" ref={modalRef}>
-        <h2 className="modal__title">Вход</h2>
+      {modalType === 'auth' ? (
+        <div className="modal" ref={modalRef}>
+          <h2 className="modal__title">Вход</h2>
 
-        {(apiError || localError) && (
-          <div className="modal__error">
-            {apiError || localError}
+          {(apiError || localError) && (
+            <div className="modal__error">
+              {apiError || localError}
+              <button
+                className="modal__error-close"
+                onClick={() => {
+                  if (apiError) clearError();
+                  if (localError) setLocalError('');
+                }}
+              >
+                ×
+              </button>
+            </div>
+          )}
+
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <form onSubmit={handleSubmit} className="modal__form">
+              <input
+                type="text"
+                name="name"
+                value={name}
+                className="modal__input"
+                placeholder="Введите имя"
+                onChange={handleInputChange(setName)}
+                disabled={isSentCode}
+              />
+
+              <input
+                type="email"
+                value={email}
+                className="modal__input"
+                placeholder="Введите email"
+                onChange={handleInputChange(setEmail)}
+                disabled={isSentCode}
+              />
+
+              {isSentCode && (
+                <input
+                  placeholder="Введите код"
+                  value={code}
+                  onChange={handleInputChange(setCode)}
+                  className="modal__input"
+                />
+              )}
+
+              {isSentCode && (
+                <div className="modal__actions">
+                  <button type="button" onClick={() => setIsSentCode(false)}>
+                    Вернуться назад
+                  </button>
+                  <button type="button" onClick={(e) => handleSubmit(e, true)}>
+                    Отправить код еще раз
+                  </button>
+                </div>
+              )}
+
+              <button type="submit" className="modal__button">
+                {isSentCode ? 'Войти' : 'Отправить код'}
+              </button>
+            </form>
+          )}
+        </div>
+      ) : (
+        <div className="modal" ref={modalRef}>
+          <h2 className="modal__title">Вы уверены что хотите выйти? </h2>
+
+          <div className="modal__exit-buttons-group">
             <button
-              className="modal__error-close"
+              className="modal__button modal__button--gray"
+              onClick={() => onClose()}
+            >
+              Вернуться
+            </button>
+            <button
+              className="modal__button"
               onClick={() => {
-                if (apiError) clearError();
-                if (localError) setLocalError('');
+                logout();
+                onClose();
               }}
             >
-              ×
+              Выйти
             </button>
           </div>
-        )}
-
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <form onSubmit={handleSubmit} className="modal__form">
-            <input
-              type="text"
-              name="name"
-              value={name}
-              className="modal__input"
-              placeholder="Введите имя"
-              onChange={handleInputChange(setName)}
-              disabled={isSentCode}
-            />
-
-            <input
-              type="email"
-              value={email}
-              className="modal__input"
-              placeholder="Введите email"
-              onChange={handleInputChange(setEmail)}
-              disabled={isSentCode}
-            />
-
-            {isSentCode && (
-              <input
-                placeholder="Введите код"
-                value={code}
-                onChange={handleInputChange(setCode)}
-                className="modal__input"
-              />
-            )}
-
-            {isSentCode && (
-              <div className="modal__actions">
-                <button type="button" onClick={() => setIsSentCode(false)}>
-                  Вернуться назад
-                </button>
-                <button type="button" onClick={(e) => handleSubmit(e, true)}>
-                  Отправить код еще раз
-                </button>
-              </div>
-            )}
-
-            <button type="submit" className="modal__button">
-              {isSentCode ? 'Войти' : 'Отправить код'}
-            </button>
-          </form>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

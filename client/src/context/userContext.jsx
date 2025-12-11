@@ -10,8 +10,7 @@ export function UserProvider({ children }) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await authApi.me();
-        const data = await response.json();
+        const data = await authApi.me();
         setUser(data.user);
       } catch (err) {
         console.error(err);

@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { TopHotels } from '../../components/topHotels/TopHotels';
 
 export const HomePage = () => {
-  const [placeType, setPlaceType] = useState('hotel');
+  const [placeType, setPlaceType] = useState('Hotel');
 
   const navigate = useNavigate();
 
@@ -21,14 +21,14 @@ export const HomePage = () => {
     <div className="home-page">
       <Header />
 
-      <main className="home-page__content">
+      <main className="home-page__content main-content">
         <section className="home-page__search-section">
           <h1 className="visually-hidden">Найти отель</h1>
           <div className="home-page__search-container">
             <div className="home-page__search-text">
               <h2 className="home-page__search-title">ИСКАТЬ</h2>
               <div className="home-page__search-tabs">
-                {['hotel', 'hostel', 'apartment'].map((type) => (
+                {['Hotel', 'Hostel', 'Apartment'].map((type) => (
                   <button
                     key={type}
                     className={
@@ -38,9 +38,9 @@ export const HomePage = () => {
                     }
                     onClick={() => setPlaceType(type)}
                   >
-                    {type === 'hotel'
+                    {type === 'Hotel'
                       ? 'Отели'
-                      : type === 'apartment'
+                      : type === 'Apartment'
                         ? 'Квартиры'
                         : 'Хостелы'}
                   </button>

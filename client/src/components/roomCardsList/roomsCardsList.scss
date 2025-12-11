@@ -1,0 +1,18 @@
+.room-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.room-list__empty {
+  text-align: center;
+  padding: 48px;
+  color: #666;
+  font-size: 16px;
+
+  p {
+    margin: 0;
+  }
+}

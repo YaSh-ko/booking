@@ -13,7 +13,7 @@
   padding: 20px 60px;
   background-color: $color-white-background;
   border-radius: $border-radius-secondary;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: $shadow-default;
 
   font-size: 18px;
   font-weight: 500;
@@ -120,8 +120,7 @@
     transition: 0.25s ease;
 
     &:hover {
-      background-color: darken($color-primary, 5%);
-      transform: translateY(-1px);
+      background-color: lighten($color-primary, 12%);
     }
 
     &:focus-visible {

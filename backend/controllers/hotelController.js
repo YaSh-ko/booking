@@ -1,9 +1,8 @@
-import supabase from "../connect.js";
+import supabase from '../connect.js';
 
 export const getHotels = async (req, res) => {
   try {
-    const { city, checkIn, checkOut, type } = req.query
-    
+    const { city, checkIn, checkOut, type } = req.query;
     const { data, error } = await supabase
       .from('hotels')
       .select('*')
@@ -12,32 +11,31 @@ export const getHotels = async (req, res) => {
 
     if (error) {
       // 500 - только для внутренних ошибок БД
-      console.error('Supabase error:', error)
-      return res.status(500).json({ error: 'Ошибка базы данных' })
+      console.error('Supabase error:', error);
+      return res.status(500).json({ error: 'Ошибка базы данных' });
     }
 
     if (!data || data.length === 0) {
       // 404 - нет отелей по запросу
-      console.log("Ничего не найдено");
-      return res.status(404).json({ error: 'Отели не найдены' })
+      console.log('Ничего не найдено');
+      return res.status(404).json({ error: 'Отели не найдены' });
     }
 
     // 200 - успех
     console.log(data);
-    res.json(data)
-    
+    res.json(data);
   } catch (error) {
     // 500 - непредвиденные ошибки сервера
-    console.error('Server error:', error)
-    res.status(500).json({ error: 'Внутренняя ошибка сервера' })
+    console.error('Server error:', error);
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
-}
+};
 
-export const getInfobyID = async(req, res) => {
+export const getInfobyID = async (req, res) => {
   try {
-    const { id, checkIn, checkOut } = req.query
+    const { id, checkIn, checkOut } = req.query;
 
-    const {data: hotel, error} = await supabase
+    const { data: hotel, error } = await supabase
       .from('hotels')
       .select('*, rooms(*)')
       .eq('id', parseInt(id))
@@ -45,20 +43,20 @@ export const getInfobyID = async(req, res) => {
 
     if (error) {
       // 500 - только для внутренних ошибок БД
-      console.error('Supabase error:', error)
-      return res.status(500).json({ error: 'Ошибка базы данных' })
+      console.error('Supabase error:', error);
+      return res.status(500).json({ error: 'Ошибка базы данных' });
     }
 
     if (!hotel) {
       // 404 - нет отелей по запросу
-      return res.status(404).json({ error: 'Данные не найдены' })
+      return res.status(404).json({ error: 'Данные не найдены' });
     }
 
     if (!checkIn || !checkOut) {
       return res.json(hotel);
     }
 
-    const roomIds = hotel.rooms.map(room => room.id);
+    const roomIds = hotel.rooms.map((room) => room.id);
 
     const { data: bookings, error: bookingError } = await supabase
       .from('bookings')
@@ -71,30 +69,23 @@ export const getInfobyID = async(req, res) => {
       console.error(bookingError);
     }
 
-    const bookedRoomIds = new Set(bookings?.map(b => b.room_id) || []);
+    const bookedRoomIds = new Set(bookings?.map((b) => b.room_id) || []);
 
-    hotel.rooms = hotel.rooms.filter(room => !bookedRoomIds.has(room.id));
-    
+    hotel.rooms = hotel.rooms.filter((room) => !bookedRoomIds.has(room.id));
+
     // 200 - успех
     console.log(hotel);
-    res.json(hotel)
-    
+    res.json(hotel);
   } catch (error) {
     // 500 - непредвиденные ошибки сервера
-    console.error('Server error:', error)
-    res.status(500).json({ error: 'Внутренняя ошибка сервера' })
+    console.error('Server error:', error);
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
-}
+};
 
 export const searchHotels = async (req, res) => {
   try {
-    const {
-      city,
-      min_price,
-      max_price,
-      sort = 'rating',
-      order = 'desc'
-    } = req.query;
+    const { city, min_price, max_price, sort = 'rating', order = 'desc' } = req.query;
 
     if (!city) {
       return res.status(400).json({ error: 'Параметр city обязателен' });
@@ -129,9 +120,8 @@ export const searchHotels = async (req, res) => {
 
     // Просто возвращаем массив отелей
     res.json({
-      hotels: data
+      hotels: data,
     });
-
   } catch (err) {
     console.error('SearchHotels server error:', err);
     res.status(500).json({ error: 'Внутренняя ошибка сервера' });
