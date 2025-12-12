@@ -1,33 +1,60 @@
 import { useContext, useEffect, useState } from 'react';
 import { createContext } from 'react';
-import { authApi } from '../services/api';
+import { authApi, getFavorites } from '../services/api';
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchData = async () => {
       try {
-        const data = await authApi.me();
-        setUser(data.user);
+        // 1. Загружаем пользователя
+        const userData = await authApi.me();
+        setUser(userData.user);
+
+        // 2. Если пользователь есть, загружаем избранное
+        if (userData.user) {
+          const favoritesData = await getFavorites();
+          setFavorites(favoritesData);
+        }
       } catch (err) {
         console.error(err);
+        setUser(null);
+        setFavorites([]);
+      } finally {
+        setIsLoading(false);
       }
     };
-    fetchUser();
+
+    fetchData();
   }, []);
+
   const login = (userData) => {
     setUser(userData);
+    getFavorites()
+      .then((data) => setFavorites(data))
+      .catch(console.error);
   };
 
   const logout = () => {
     setUser(null);
+    setFavorites([]);
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+        favorites,
+        isLoading,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

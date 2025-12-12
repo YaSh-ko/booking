@@ -36,6 +36,7 @@ export const toggleFavorites = (id) => {
   });
 };
 
-export const getFavorites = () => {
+export const getFavorites = (id) => {
+  if (id) return request(`/favorites/myFavorite?id=${id}`);
   return request('/favorites/myFavorite');
 };

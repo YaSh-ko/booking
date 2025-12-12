@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
 import './navbar.scss';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Modal } from '../modal/Modal';
 import { useUserContext } from '../../context/userContext';
 import { FavoriteButton } from '../favoriteButton/FavoriteButton';
+import { useClickOutside } from '../../hooks/useClickOutside';
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUserMenuOPen, setIsUserMenuOpen] = useState(false);
-  const { user, logout } = useUserContext();
+  const { user } = useUserContext();
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
   useEffect(() => console.log(user?.name), [user?.name]);
