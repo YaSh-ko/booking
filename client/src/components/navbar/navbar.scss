@@ -185,7 +185,7 @@
     content: '';
     position: absolute;
     background-color: black;
-    border-radius: $border-radius;
+    border-radius: $border-radius-secondary;
     width: 100%;
     top: 80%;
     left: 0;
@@ -195,14 +195,15 @@
 
 .user-actions {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 2px;
 
   &__button {
     background-color: transparent;
-    padding: 1px 6px;
+    padding: 1px 4px;
 
-    img {
-      width: 28px;
+    &--profile {
+      margin-left: 12px;
     }
   }
 }

@@ -7,13 +7,11 @@ export const FavoriteButton = ({ hotelId, user, initialIsFavorite = false }) => 
   const { handleToggleFavorites, error } = useToggleFavorites();
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
   const [showAuthModal, setShowAuthModal] = useState(false);
-  console.log('here');
   useEffect(() => {
     setIsFavorite(initialIsFavorite);
   }, [initialIsFavorite]);
 
   const handleClick = async () => {
-    console.log(user);
     if (!user) {
       setShowAuthModal(true);
       return;

@@ -6,7 +6,6 @@ export function searchHotels(params) {
 }
 
 export function getHotelDetails(id) {
-  console.log(id);
   return request(`/hotels/details?id=${id}`);
 }
 

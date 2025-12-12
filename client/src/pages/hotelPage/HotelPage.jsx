@@ -17,7 +17,6 @@ export function HotelPage() {
   const { hotel, handleHotelDetails, isLoading } = useHotelDetails();
   const { user } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   useEffect(() => {
     if (id) handleHotelDetails(Number(id));
   }, [id]);
