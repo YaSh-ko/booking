@@ -26,6 +26,7 @@ export const toggleFavorite = async (req, res) => {
       .select('id')
       .eq('hotel_id', hotelId)
       .eq('user_id', userId)
+      .limit(1)
       .maybeSingle();
 
     if (checkError) {
