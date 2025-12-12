@@ -67,7 +67,7 @@ export const Header = () => {
               </button>
 
               {isUserMenuOPen && (
-                <nav className="navbar--vertical">
+                <nav>
                   <ul className="user-menu">
                     <li className="user-menu__item">
                       <Link to="/hotels/favorites">Избранное</Link>
