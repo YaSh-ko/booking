@@ -96,6 +96,7 @@ export function Modal({ open, onClose, modalType }) {
                 value={email}
                 className="modal__input"
                 placeholder="Введите email"
+                autoComplete="email"
                 onChange={handleInputChange(setEmail)}
                 disabled={isSentCode}
               />

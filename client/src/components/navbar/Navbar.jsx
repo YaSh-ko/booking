@@ -59,32 +59,46 @@ export const Header = () => {
                 gap: '20px',
               }}
             >
-              <button
-                onClick={() => setIsUserMenuOpen((prev) => !prev)}
-                className={`header__user-btn ${isUserMenuOPen ? 'header__user-btn--active' : ''}`}
-              >
-                {user.name}
-              </button>
-
               {isUserMenuOPen && (
-                <nav>
-                  <ul className="user-menu">
-                    <li className="user-menu__item">
+                <nav className="user-menu">
+                  <ul className="user-menu__list">
+                    <li className="user-menu__item user-name">
+                      <span>{user.name}</span>
+                    </li>
+
+                    <li className="user-menu__item user-menu__link">
                       <Link to="/hotels/favorites">Избранное</Link>
                     </li>
-                    <li className="user-menu__item">
+                    <li className="user-menu__item user-menu__link">
                       <Link>Бронирования</Link>
+                    </li>
+                    <li className="user-menu__item user-menu__button">
+                      <button
+                        className="header__signin-btn user-menu__exit-btn"
+                        onClick={() => setIsExitModalOpen(true)}
+                      >
+                        Выйти
+                      </button>
                     </li>
                   </ul>
                 </nav>
               )}
 
-              <button
-                className="header__signin-btn"
-                onClick={() => setIsExitModalOpen(true)}
-              >
-                Выйти
-              </button>
+              <div className="user-actions">
+                <Link to="/hotels/favorites" className="user-actions__button ">
+                  <img src="/navbar/favorites.png" alt="" />
+                </Link>
+                <Link className="user-actions__button">
+                  <img src="/navbar/bookings.png" alt="" />
+                </Link>
+                <button
+                  className="user-actions__button"
+                  disabled={isMenuOpen}
+                  onClick={() => setIsUserMenuOpen((prev) => !prev)}
+                >
+                  <img src="/navbar/prfoile.png" alt="" />
+                </button>
+              </div>
             </div>
           ) : (
             <button className="header__signin-btn" onClick={() => setIsModalOpen(true)}>
@@ -94,6 +108,7 @@ export const Header = () => {
 
           <button
             className="header__open-menu-btn"
+            disabled={isUserMenuOPen}
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
           >

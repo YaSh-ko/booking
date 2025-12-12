@@ -26,6 +26,7 @@ export const toggleFavorite = async (req, res) => {
       .select('id')
       .eq('hotel_id', hotelId)
       .eq('user_id', userId)
+      .limit(1)
       .maybeSingle();
 
     if (checkError) {
@@ -85,32 +86,36 @@ export const toggleFavorite = async (req, res) => {
   }
 }
 
+// controllers/favoriteController.js
+
 export const myFavorite = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const { data: fav, error } = await supabase
+    const hotel_id = req.query.hotel_id;
+
+    let query = supabase
       .from('favorites')
       .select('hotel_id')
-      .eq('user_id', userId)
-    
+      .eq('user_id', userId);
 
-    if(error) {
-      console.error('error: ', Error);
-      return res.status(400).json({ error: 'Ошибка получения избранных' });
-    };
+    // Если передан hotelId — фильтруем только по нему
+    if (hotel_id) {
+      query = query.eq('hotel_id', hotel_id);
+    }
 
-    if(!fav) {
-       console.error('error: ', Error);
-       return res.status(400).json({ error: 'Данные отсутствуют'})
-    };
+    // Выполняем запрос
+    const { data: fav, error } = await query;
 
-    //успех 200;
-    console.log(fav);
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.status(400).json({ error: error.message });
+    }
+
     res.json(fav);
 
   } catch (error) {
     console.error('Server error: ', error);
     return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
-}
+};
