@@ -15,10 +15,8 @@ import { FavoriteButton } from '../../components/favoriteButton/FavoriteButton';
 export function HotelPage() {
   const { id } = useParams();
   const { hotel, handleHotelDetails, isLoading } = useHotelDetails();
-  const { handleToggleFavorites, error, clearError } = useToggleFavorites();
   const { user } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   useEffect(() => {
     if (id) handleHotelDetails(Number(id));
   }, [id]);

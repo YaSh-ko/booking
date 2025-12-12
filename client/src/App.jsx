@@ -6,6 +6,7 @@ import { HotelsListPage } from './pages/hotelsListPage/HotelsListPage';
 import { Routes, Route } from 'react-router-dom';
 import { UserProvider } from './context/userContext';
 import { HotelPage } from './pages/hotelPage/HotelPage';
+import { HotelsFavorites } from './pages/hotelsFavorites/HotelsFavorites';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/search" element={<HotelsListPage />} />
         <Route path="/hotel/details/:id" element={<HotelPage />} />
+        <Route path="/hotels/favorites" element={<HotelsFavorites />} />
         <Route path="/about" element={<AboutUs />}></Route>
         <Route path="/contacts" element={<Contacts />}></Route>
         <Route path="/help" element={<Help />}></Route>

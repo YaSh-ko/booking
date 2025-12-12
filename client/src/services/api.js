@@ -6,7 +6,6 @@ export function searchHotels(params) {
 }
 
 export function getHotelDetails(id) {
-  console.log(id);
   return request(`/hotels/details?id=${id}`);
 }
 
@@ -31,9 +30,13 @@ export const authApi = {
 };
 
 export const toggleFavorites = (id) => {
-  console.log(id);
   return request('/favorites/toggle', {
     method: 'POST',
     body: { hotel_id: id },
   });
+};
+
+export const getFavorites = (id) => {
+  if (id) return request(`/favorites/myFavorite?id=${id}`);
+  return request('/favorites/myFavorite');
 };
