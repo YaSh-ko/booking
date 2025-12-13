@@ -132,7 +132,23 @@ export const GetFavorite = async (req, res) => {
 
     const { data: fav, error } = await supabase
       .from('favorites')
-      .select('*')
+      .select(`
+        id,
+        created_at,
+        hotel_id,
+        hotels (
+          id,
+          name,
+          description,
+          city,
+          rating,
+          type,
+          img,
+          price,
+          amenities,
+          adress
+        )
+      `)
       .eq('user_id', userId);
 
     if (error) {
