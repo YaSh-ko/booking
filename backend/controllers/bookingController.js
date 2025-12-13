@@ -153,28 +153,70 @@ export const myBookings = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const { data: booking, error } = await supabase
+    const { data: bookings, error: bookingsError } = await supabase
       .from('bookings')
-      .select('hotel_id, room_id')
+      .select('hotel_id, room_id') 
       .eq('user_id', userId)
-      
+      .order('id', { ascending: false }); 
 
-    if(error) {
-      console.error('error: ', Error);
-      return res.status(400).json({ error: 'Ошибка получения бронирований' });
-    };
+    if (bookingsError) {
+      console.error('Supabase error (bookings):', bookingsError);
+      return res.status(500).json({ error: 'Ошибка получения бронирований' });
+    }
 
-    if(!booking) {
-       console.error('error: ', Error);
-       return res.status(400).json({ error: 'Данные отсутствуют'})
-    };
+    if (!bookings || bookings.length === 0) {
+      return res.json([]);
+    }
 
-    //успех 200;
-    console.log(booking);
-    res.json(booking);
+    
+    const hotelIds = [...new Set(bookings.map(b => b.hotel_id).filter(Boolean))];
+    const roomIds = [...new Set(bookings.map(b => b.room_id).filter(Boolean))];
+
+    let hotels = [];
+    let rooms = [];
+
+    if (hotelIds.length > 0) {
+      const { data: hotelsData, error: hotelsError } = await supabase
+        .from('hotels')
+        .select('id, name, description, city, rating, type, img, price, amenities, adress')
+        .in('id', hotelIds);
+
+      if (hotelsError) {
+        console.error('Supabase error (hotels):', hotelsError);
+        return res.status(500).json({ error: 'Ошибка получения отелей' });
+      }
+      hotels = hotelsData || [];
+    }
+
+    if (roomIds.length > 0) {
+      const { data: roomsData, error: roomsError } = await supabase
+        .from('rooms')
+        .select('id, hotel_id, room_number, room_type, price_per_night, capacity, image_url')
+        .in('id', roomIds);
+
+      if (roomsError) {
+        console.error('Supabase error (rooms):', roomsError);
+        return res.status(500).json({ error: 'Ошибка получения номеров' });
+      }
+      rooms = roomsData || [];
+    }
+
+    
+    const enrichedBookings = bookings.map(booking => {
+      const hotel = hotels.find(h => h.id === booking.hotel_id) || null;
+      const room = rooms.find(r => r.id === booking.room_id) || null;
+
+      return {
+        ...booking, 
+        hotel,
+        room
+      };
+    });
+
+    res.json(enrichedBookings);
 
   } catch (error) {
-    console.error('Server error: ', error);
-    return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+    console.error('Server error:', error);
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 };
