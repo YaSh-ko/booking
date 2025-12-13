@@ -1,5 +1,5 @@
 @import '../../assets/styles/variables';
-
+@import '../../assets/styles/breakpoints';
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -107,6 +107,15 @@
     display: flex;
     justify-content: space-between;
     font-size: 14px;
+    gap: 10px;
+
+    @include respond(sm) {
+      font-size: 13px;
+    }
+
+    button {
+      border-radius: 4px;
+    }
   }
 
   &__hint {

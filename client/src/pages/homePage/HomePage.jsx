@@ -3,18 +3,24 @@ import Footer from '../../components/footer/footer';
 import { SearchForm } from '../../components/serachForm/SearchForm';
 import { useNavigate } from 'react-router-dom';
 import './homePage.scss';
-import { useState } from 'react';
 import { TopHotels } from '../../components/topHotels/TopHotels';
+import { useSearch } from '../../context/searchContext';
 
 export const HomePage = () => {
-  const [placeType, setPlaceType] = useState('Hotel');
+  const { searchData, updateSearchData } = useSearch();
 
   const navigate = useNavigate();
 
-  const handleSearch = (searchParams) => {
-    const queryParams = new URLSearchParams(searchParams).toString();
-    console.log(queryParams);
-    navigate(`/search?${queryParams}`);
+  const handleSearch = (formData) => {
+    const params = new URLSearchParams({
+      city: formData.city,
+      checkIn: formData.checkIn,
+      checkOut: formData.checkOut,
+      guests: formData.guests.toString(),
+      type: formData.type,
+    }).toString();
+
+    navigate(`/search?${params}`);
   };
 
   return (
@@ -32,11 +38,11 @@ export const HomePage = () => {
                   <button
                     key={type}
                     className={
-                      placeType === type
+                      searchData.type === type
                         ? 'home-page__search-tab home-page__search-tab--active'
                         : 'home-page__search-tab'
                     }
-                    onClick={() => setPlaceType(type)}
+                    onClick={() => updateSearchData({ type })}
                   >
                     {type === 'Hotel'
                       ? 'Отели'
@@ -48,11 +54,7 @@ export const HomePage = () => {
               </div>
             </div>
 
-            <SearchForm
-              onSearch={handleSearch}
-              selectedType={placeType}
-              className="searchForm"
-            />
+            <SearchForm onSearch={handleSearch} className="searchForm" />
           </div>
         </section>
 

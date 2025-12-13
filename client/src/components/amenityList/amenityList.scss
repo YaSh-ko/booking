@@ -1,0 +1,12 @@
+@import '../../assets/styles/variables';
+
+.amenity-list {
+  display: flex;
+  gap: 5px;
+}
+
+.amenity-item {
+  background-color: $color-background;
+  padding: 4px;
+  border-radius: 6px;
+}

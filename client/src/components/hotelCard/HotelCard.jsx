@@ -1,15 +1,9 @@
-import { useState } from 'react';
 import './hotelCard.scss';
-import { useNavigate } from 'react-router-dom';
 import { formatPrice } from '../../utils/formatPrice';
 import { getImageUrl } from '../../utils/getImageUrl';
+import { AmenityList } from '../amenityList/AmenityList';
 
-export const HotelCard = ({ hotel }) => {
-  const openHotel = (id) => {
-    window.open(`/hotel/details/${id}`, '_blank', 'noopener,noreferrer');
-  };
-
-  console.log(getImageUrl(hotel.img));
+export const HotelCard = ({ hotel, onClickDetails }) => {
   return (
     <div className="hotel-card hotel-card--mobile">
       <img src={getImageUrl(hotel.img)} alt="Фото отеля" loading="lazy" />
@@ -22,9 +16,12 @@ export const HotelCard = ({ hotel }) => {
 
         <p>{hotel.description}</p>
 
+        <div className="hotel-card__amenity-list">
+          <AmenityList amenities={hotel.amenities} />
+        </div>
         <div className="hotel-card__desrciption-bottom">
           <span className="hotel-card__price">От {formatPrice(hotel.price)}</span>
-          <button onClick={() => openHotel(hotel.id)}>Подробнее</button>
+          <button onClick={() => onClickDetails(hotel.id)}>Подробнее</button>
         </div>
       </div>
     </div>
