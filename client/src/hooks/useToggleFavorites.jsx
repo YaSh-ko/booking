@@ -17,7 +17,6 @@ export function useToggleFavorites() {
     setError(null);
 
     try {
-      console.log('Вызов запроса');
       const result = await toggleFavorites(id);
       return result;
     } catch (err) {

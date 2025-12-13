@@ -11,10 +11,10 @@ export function useHotelDetails() {
   const [hotel, setHotel] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleHotelDetails = async (id) => {
+  const handleHotelDetails = async (id, checkIn, checkOut) => {
     setIsLoading(true);
     try {
-      const result = await getHotelDetails(id);
+      const result = await getHotelDetails(id, checkIn, checkOut);
       setHotel(result);
     } catch (err) {
       if (err instanceof BadRequestError) {
