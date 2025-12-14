@@ -16,7 +16,9 @@ export const RoomCard = ({ room }) => {
 
         <div className="room-card__info">
           <span className="room-card__capacity">{capacity} гостя</span>
-          <span className="room-card__price">{formatPrice(price_per_night)}</span>
+          <span className="room-card__price">
+            {formatPrice(price_per_night)} / за ночь
+          </span>
         </div>
 
         <button className="room-card__button">Забронировать</button>

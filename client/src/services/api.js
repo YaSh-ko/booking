@@ -5,9 +5,8 @@ export function searchHotels(params) {
   return request(`/hotels?${query}`);
 }
 
-export function getHotelDetails(id) {
-  console.log(id);
-  return request(`/hotels/details?id=${id}`);
+export function getHotelDetails(id, checkIn, checkOut) {
+  return request(`/hotels/details?id=${id}&checkIn=${checkIn}&checkOut=${checkOut}`);
 }
 
 export const authApi = {
@@ -31,9 +30,20 @@ export const authApi = {
 };
 
 export const toggleFavorites = (id) => {
-  console.log(id);
   return request('/favorites/toggle', {
     method: 'POST',
     body: { hotel_id: id },
   });
+};
+
+export const getFavorites = (id) => {
+  if (id) return request(`/favorites/myFavorite?id=${id}`);
+  return request('/favorites/myFavorite');
+};
+
+export const getHotelsByFavorites = (ids) => {
+  console.log(ids);
+  const promises = ids.map((id) => getHotelDetails(id.hotel_id));
+  console.log(promises);
+  return Promise.all(promises);
 };

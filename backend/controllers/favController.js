@@ -91,21 +91,65 @@ export const toggleFavorite = async (req, res) => {
 export const myFavorite = async (req, res) => {
   try {
     const userId = req.user.id;
+    const hotel_id = req.query.hotel_id; 
 
-    const hotel_id = req.query.hotel_id;
-
-    let query = supabase
-      .from('favorites')
-      .select('hotel_id')
-      .eq('user_id', userId);
-
-    // Если передан hotelId — фильтруем только по нему
-    if (hotel_id) {
-      query = query.eq('hotel_id', hotel_id);
+    if (!hotel_id) {
+      return res.status(400).json({ error: 'hotel_id обязателен' });
     }
 
-    // Выполняем запрос
-    const { data: fav, error } = await query;
+    const hotelId = parseInt(hotel_id, 10);
+    if (isNaN(hotelId)) {
+      return res.status(400).json({ error: 'hotel_id должен быть числом' });
+    }
+
+    // Ищем, есть ли запись с этим user_id + hotel_id
+    const { data, error } = await supabase
+      .from('favorites')
+      .select('id') 
+      .eq('user_id', userId)
+      .eq('hotel_id', hotelId)
+      .maybeSingle(); // важно: может вернуть null, если ничего нет
+
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.status(500).json({ error: 'Ошибка сервера' });
+    }
+
+    const isFavorite = !!data;
+
+    return res.json({ isFavorite });
+
+  } catch (error) {
+    console.error('Server error:', error);
+    return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+  }
+};
+
+
+export const GetFavorite = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const { data: fav, error } = await supabase
+      .from('favorites')
+      .select(`
+        id,
+        created_at,
+        hotel_id,
+        hotels (
+          id,
+          name,
+          description,
+          city,
+          rating,
+          type,
+          img,
+          price,
+          amenities,
+          adress
+        )
+      `)
+      .eq('user_id', userId);
 
     if (error) {
       console.error('Supabase error:', error);

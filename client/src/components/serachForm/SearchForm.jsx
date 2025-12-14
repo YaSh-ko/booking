@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import './searchForm.scss';
+import { useSearch } from '../../context/searchContext';
 
-export const SearchForm = ({ onSearch, selectedType, searchData }) => {
+export const SearchForm = ({ onSearch }) => {
+  const { searchData: contextData, updateSearchData } = useSearch();
+  console.log(contextData);
   const [formData, setFormData] = useState({
-    city: searchData?.city || '',
-    checkIn: searchData?.checkIn || '',
-    checkOut: searchData?.checkOut || '',
-    guests: searchData?.guests || 1,
-    type: selectedType,
+    city: contextData?.city || '',
+    checkIn: contextData?.checkIn || '',
+    checkOut: contextData?.checkOut || '',
+    guests: contextData?.guests || 1,
+    type: contextData?.placeType || 'Hotel',
   });
-
-  console.log('formData', formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +21,11 @@ export const SearchForm = ({ onSearch, selectedType, searchData }) => {
       return;
     }
 
-    await onSearch(formData);
+    updateSearchData(formData);
+
+    if (onSearch) {
+      await onSearch(formData);
+    }
   };
 
   const handleChange = (e) => {

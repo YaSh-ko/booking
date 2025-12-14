@@ -13,26 +13,48 @@
   }
 
   &__loader {
-    height: 100%;
+    height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   &__header {
     margin-block: 20px;
-    display: flex;
+
     box-shadow: $shadow-default;
-    justify-content: space-between;
+
     padding-inline: 30px;
     padding-block: 20px;
     border-radius: $border-radius;
     background-color: $color-white-background;
+
+    &--desktop {
+      display: flex;
+      justify-content: space-between;
+
+      @include respond(md) {
+        display: none;
+      }
+    }
+
+    &--mobile {
+      display: none;
+      @include respond(md) {
+        display: block;
+      }
+    }
   }
 
   &__addit {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    &--mobile {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
   &__price {
@@ -57,10 +79,19 @@
     }
   }
 
+  &__info p {
+    @include respond(md) {
+      font-size: 1rem;
+    }
+  }
   &__title {
     font-size: 2.5rem;
     font-weight: bold;
     margin: 0;
+
+    @include respond(md) {
+      font-size: 2rem;
+    }
   }
 
   &__image-container {
@@ -68,8 +99,9 @@
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     grid-template-rows: repeat(2, 200px);
-    border-radius: $border-radius;
     overflow: hidden;
+    border-radius: $border-radius;
+    gap: 8px;
 
     @include respond(sm) {
       grid-template-columns: 1fr 1fr;
@@ -101,33 +133,107 @@
   }
 
   /* Плашка с данными о заезде */
+  /* Чистый и простой вариант */
+  /* Плашка с данными о заезде - с иконками */
   &__booking-info {
-    display: flex;
-    gap: 20px;
-    background-color: $color-white-background;
-    padding: 15px 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    box-shadow: $shadow-default;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: center;
+    background-color: #f8fafc;
+    padding: 28px 32px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
 
-    &-item {
-      display: flex;
-      flex-direction: column;
-
-      &-label {
-        font-weight: bold;
-        font-size: 14px;
-        color: #333;
-      }
-
-      &-value {
-        font-size: 16px;
-        color: #000;
-        margin-top: 5px;
-      }
+    @include respond(md) {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 24px 20px;
     }
   }
 
+  &__booking-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    &--city {
+      .hotelpage__booking-icon {
+        color: #3b82f6; // Синий
+      }
+    }
+
+    &--date {
+      justify-content: center;
+
+      .hotelpage__booking-icon {
+        color: #10b981; // Зеленый
+      }
+
+      @include respond(md) {
+        justify-content: flex-start;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+        margin-top: 4px;
+      }
+    }
+
+    &--guests {
+      justify-content: flex-end;
+
+      .hotelpage__booking-icon {
+        color: #f59e0b; // Оранжевый
+      }
+
+      @include respond(md) {
+        justify-content: flex-start;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+      }
+    }
+  }
+  &__booking {
+    &-icon {
+      width: 30px; // ← 30px
+      height: 30px; // ← 30px
+      flex-shrink: 0;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    &-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #64748b;
+      letter-spacing: 0.3px;
+    }
+
+    &-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+      line-height: 1.4;
+
+      b {
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .days-info {
+        color: #666;
+        font-size: 14px;
+        font-weight: 400;
+        margin-left: 8px;
+      }
+    }
+  }
   /* Сетка для комнат */
   &__rooms {
     display: grid;

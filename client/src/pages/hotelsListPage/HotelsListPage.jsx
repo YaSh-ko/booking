@@ -6,14 +6,14 @@ import { Header } from '../../components/navbar/Navbar';
 import './hotelsListPage.scss';
 import { HotelCard } from '../../components/hotelCard/HotelCard';
 import { Loader } from '../../components/loader/Loader';
+import { useSearch } from '../../context/searchContext';
 
 export const HotelsListPage = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = Object.fromEntries(new URLSearchParams(location.search));
-  console.log('Параметры', searchParams.type);
   const { hotels, isLoading, handleSearch } = useHotelsSearch();
-  const [selectType, setSelestType] = useState(searchParams.type);
+  const { searchData } = useSearch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (Object.keys(searchParams).length > 0) {
@@ -22,9 +22,18 @@ export const HotelsListPage = () => {
   }, [location.search]);
 
   const handleSearchChange = (newParams) => {
-    const queryString = new URLSearchParams(newParams).toString();
-    navigate(`?${queryString}`, { replace: true });
     handleSearch(newParams);
+  };
+
+  const handleClickHotelDetails = (id) => {
+    const params = new URLSearchParams({
+      city: searchData.city,
+      checkIn: searchData.checkIn,
+      checkOut: searchData.checkOut,
+      guests: searchData.guests.toString(),
+    }).toString();
+
+    window.open(`/hotel/details/${id}?${params}`, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -33,12 +42,7 @@ export const HotelsListPage = () => {
       <main>
         <div className="filters-bar"></div>
         <div className="content">
-          <SearchForm
-            onSearch={handleSearchChange}
-            selectedType={selectType}
-            searchData={searchParams}
-            className="search-form"
-          />
+          <SearchForm onSearch={handleSearchChange} className="search-form" />
 
           {isLoading ? (
             <div className="hotels-search_loader">
@@ -47,7 +51,11 @@ export const HotelsListPage = () => {
           ) : (
             <div className="hotels-list">
               {hotels.map((hotel) => (
-                <HotelCard key={hotel.id} hotel={hotel} />
+                <HotelCard
+                  key={hotel.id}
+                  hotel={hotel}
+                  onClickDetails={handleClickHotelDetails}
+                />
               ))}
             </div>
           )}

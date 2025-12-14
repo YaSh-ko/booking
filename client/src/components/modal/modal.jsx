@@ -1,8 +1,9 @@
 import { useAuth } from '../../hooks/useAuth';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import './modal.scss';
 import { Loader } from '../loader/Loader';
 import { useUserContext } from '../../context/userContext';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 export function Modal({ open, onClose, modalType }) {
   const [email, setEmail] = useState('');
@@ -10,23 +11,14 @@ export function Modal({ open, onClose, modalType }) {
   const [code, setCode] = useState('');
   const [isSentCode, setIsSentCode] = useState(false);
   const [localError, setLocalError] = useState('');
-  const modalRef = useRef();
   const { sendCode, verifyCode, isLoading, error: apiError, clearError } = useAuth();
   const { login, logout } = useUserContext();
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) {
-        onClose();
-      }
-    };
+  const handleClose = useCallback(() => {
+    onClose();
+  }, [onClose]);
 
-    if (open) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [open, onClose]);
+  const modalRef = useClickOutside(handleClose, open);
 
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
@@ -96,6 +88,7 @@ export function Modal({ open, onClose, modalType }) {
                 value={email}
                 className="modal__input"
                 placeholder="Введите email"
+                autoComplete="email"
                 onChange={handleInputChange(setEmail)}
                 disabled={isSentCode}
               />
