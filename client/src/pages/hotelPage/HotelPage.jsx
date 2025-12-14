@@ -12,6 +12,7 @@ import { getImageUrl } from '../../utils/getImageUrl';
 import { useUserContext } from '../../context/userContext';
 import { FavoriteButton } from '../../components/favoriteButton/FavoriteButton';
 import { AmenityList } from '../../components/amenityList/AmenityList';
+import { useFavoriteHotels } from '../../hooks/useFavoriteHotels';
 
 export function HotelPage() {
   const { id } = useParams();
@@ -19,11 +20,9 @@ export function HotelPage() {
   const searchParams = Object.fromEntries(new URLSearchParams(location.search));
   const { user } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const liveTime = new Date(searchParams.checkOut) - new Date(searchParams.checkIn);
   const daysCount = Math.ceil(liveTime / (1000 * 60 * 60 * 24));
 
-  console.log(liveTime);
   useEffect(() => {
     if (id) handleHotelDetails(Number(id));
   }, [id]);
@@ -113,7 +112,7 @@ export function HotelPage() {
               <div className="hotelpage__booking-content">
                 <span className="hotelpage__booking-label">Город</span>
                 <span className="hotelpage__booking-value">
-                  <b>{searchParams.city}</b>
+                  <b>{hotel.city}</b>
                 </span>
               </div>
             </div>

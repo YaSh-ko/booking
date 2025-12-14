@@ -13,8 +13,6 @@ export const HotelsListPage = () => {
   const searchParams = Object.fromEntries(new URLSearchParams(location.search));
   const { hotels, isLoading, handleSearch } = useHotelsSearch();
   const { searchData } = useSearch();
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (Object.keys(searchParams).length > 0) {
       handleSearch(searchParams);
@@ -27,7 +25,6 @@ export const HotelsListPage = () => {
 
   const handleClickHotelDetails = (id) => {
     const params = new URLSearchParams({
-      city: searchData.city,
       checkIn: searchData.checkIn,
       checkOut: searchData.checkOut,
       guests: searchData.guests.toString(),
@@ -47,6 +44,10 @@ export const HotelsListPage = () => {
           {isLoading ? (
             <div className="hotels-search_loader">
               <Loader />
+            </div>
+          ) : hotels.length === 0 ? ( // ← убрали лишние {}
+            <div>
+              <span>Введите параметры</span>
             </div>
           ) : (
             <div className="hotels-list">

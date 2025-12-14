@@ -1,0 +1,23 @@
+@import '../../assets/styles/variables';
+
+.favorites {
+  height: 100%;
+  &__loader {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+  }
+  &__content {
+    padding-inline: 160px;
+  }
+
+  &__message {
+    display: flex;
+  }
+
+  &__link {
+    font-weight: bold;
+    color: darken($color-text-primary, 4%);
+  }
+}

@@ -36,14 +36,10 @@ export const toggleFavorites = (id) => {
   });
 };
 
-export const getFavorites = (id) => {
-  if (id) return request(`/favorites/myFavorite?id=${id}`);
-  return request('/favorites/myFavorite');
+export const checkFavorites = (id) => {
+  return request(`/favorites/myFavorite?id=${id}`);
 };
 
-export const getHotelsByFavorites = (ids) => {
-  console.log(ids);
-  const promises = ids.map((id) => getHotelDetails(id.hotel_id));
-  console.log(promises);
-  return Promise.all(promises);
+export const getFavorites = () => {
+  return request('/favorites/GetFavorite');
 };

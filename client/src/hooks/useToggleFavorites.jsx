@@ -18,6 +18,7 @@ export function useToggleFavorites() {
 
     try {
       const result = await toggleFavorites(id);
+      console.log('Избранное успешно изменено');
       return result;
     } catch (err) {
       if (err instanceof BadRequestError) {
