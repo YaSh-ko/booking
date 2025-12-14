@@ -1,32 +1,55 @@
 import { Header } from '../../components/navbar/Navbar';
 import { useUserContext } from '../../context/userContext';
-import { useHotelDetails } from '../../hooks/useHotelDetails';
 import { HotelCard } from '../../components/hotelCard/HotelCard';
 import { useFavoriteHotels } from '../../hooks/useFavoriteHotels';
 import { Loader } from '../../components/loader/Loader';
-import { getFavorites } from '../../services/api';
 import { useEffect } from 'react';
-
+import './hotelsFavorites.scss';
+import { Link } from 'react-router-dom';
 export function HotelsFavorites() {
-  const { favorites } = useUserContext();
-  const { favoriteHotels, handleFavoriteHotels, isLoading } = useFavoriteHotels();
+  const { favoriteHotels, fetchFavorites, isLoading } = useFavoriteHotels();
 
   useEffect(() => {
-    handleFavoriteHotels(favorites);
-  }, [favorites]);
+    console.log(favoriteHotels);
+    fetchFavorites();
+  }, []);
+
+  const handleClickHotelDetails = (id) => {
+    window.open(`/hotel/details/${id}`, '_blank', 'noopener,noreferrer');
+  };
   return (
-    <div className="favorites-container">
+    <div className="favorites">
       <Header />
       {isLoading ? (
-        <Loader />
+        <div className="favorites__loader">
+          <Loader />
+        </div>
       ) : (
-        <div>
-          {/* {favoriteHotels.map((favoriteHotel) => (
-            <HotelCard key={favoriteHotel.id} hotel={favoriteHotel} />
-          ))} */}
+        <div className="favorites__content">
+          <h1 className="section-title">Любимые отели</h1>
+          {favoriteHotels.length !== 0 ? (
+            <div>
+              {favoriteHotels.map((favoriteHotel) => (
+                <HotelCard
+                  key={favoriteHotel.id}
+                  hotel={favoriteHotel.hotels}
+                  onClickDetails={handleClickHotelDetails}
+                />
+              ))}
+            </div>
+          ) : (
+            <div>
+              <span className="favorites__message">У вас нет избранных</span>
+              <span>
+                Перейдите на страницу{' '}
+                <Link to="/search" className="favorites__link">
+                  поиска отелей{' '}
+                </Link>
+              </span>
+            </div>
+          )}
         </div>
       )}
-      <span>Избранное</span>
     </div>
   );
 }

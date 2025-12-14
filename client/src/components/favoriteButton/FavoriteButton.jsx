@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useToggleFavorites } from '../../hooks/useToggleFavorites';
 import { Modal } from '../modal/Modal';
 import './favoriteButton.scss';
+import { useFavoriteHotels } from '../../hooks/useFavoriteHotels';
 
-export const FavoriteButton = ({ hotelId, user, initialIsFavorite = false }) => {
-  const { handleToggleFavorites, error } = useToggleFavorites();
-  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+export const FavoriteButton = ({ hotelId, user }) => {
+  const { toggleFavorite, isFavorite: checkFavorite } = useFavoriteHotels();
   const [showAuthModal, setShowAuthModal] = useState(false);
-  useEffect(() => {
-    setIsFavorite(initialIsFavorite);
-  }, [initialIsFavorite]);
 
+  const isFavorite = checkFavorite(hotelId);
+
+  useEffect(() => {
+    console.log(isFavorite);
+  }, [isFavorite]);
   const handleClick = async () => {
     if (!user) {
       setShowAuthModal(true);
@@ -18,13 +19,8 @@ export const FavoriteButton = ({ hotelId, user, initialIsFavorite = false }) => 
     }
 
     try {
-      const oldState = isFavorite;
-
-      setIsFavorite(!oldState);
-
-      await handleToggleFavorites(hotelId);
+      await toggleFavorite(hotelId);
     } catch (err) {
-      setIsFavorite(isFavorite);
       console.error('Ошибка при изменении избранного:', err);
     }
   };

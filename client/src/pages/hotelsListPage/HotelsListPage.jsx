@@ -7,18 +7,18 @@ import './hotelsListPage.scss';
 import { HotelCard } from '../../components/hotelCard/HotelCard';
 import { Loader } from '../../components/loader/Loader';
 import { useSearch } from '../../context/searchContext';
+import { HotelFilters } from '../../components/hotelFilters/HotelFilters';
 
 export const HotelsListPage = () => {
   const location = useLocation();
   const searchParams = Object.fromEntries(new URLSearchParams(location.search));
   const { hotels, isLoading, handleSearch } = useHotelsSearch();
   const { searchData } = useSearch();
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (Object.keys(searchParams).length > 0) {
       handleSearch(searchParams);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 
   const handleSearchChange = (newParams) => {
@@ -27,7 +27,6 @@ export const HotelsListPage = () => {
 
   const handleClickHotelDetails = (id) => {
     const params = new URLSearchParams({
-      city: searchData.city,
       checkIn: searchData.checkIn,
       checkOut: searchData.checkOut,
       guests: searchData.guests.toString(),
@@ -40,13 +39,19 @@ export const HotelsListPage = () => {
     <div className="hotels-list-page_container">
       <Header />
       <main>
-        <div className="filters-bar"></div>
+        <div className="filters-bar">
+          <HotelFilters />
+        </div>
         <div className="content">
           <SearchForm onSearch={handleSearchChange} className="search-form" />
 
           {isLoading ? (
             <div className="hotels-search_loader">
               <Loader />
+            </div>
+          ) : hotels.length === 0 ? ( // ← убрали лишние {}
+            <div>
+              <span>Введите параметры</span>
             </div>
           ) : (
             <div className="hotels-list">
