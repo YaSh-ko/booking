@@ -1,0 +1,96 @@
+@import '../../assets/styles/variables';
+@import '../../assets//styles//breakpoints';
+
+.popular-destinations {
+  padding-top: 20px !important;
+  //background: transparent;
+}
+
+.popular-destinations__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 32px;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0;
+
+  @media (max-width: 1279px) { gap: 24px; }
+  @media (max-width: 1023px) { gap: 20px; }
+  @media (max-width: 767px)  { gap: 16px; padding: 0 16px; }
+}
+
+.popular-destinations__card {
+  position: relative;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  transition: all 0.5s ease;
+
+  /* ВСЕ карточки — одинаковые прямоугольные 16:9 */
+  aspect-ratio: 16 / 9;
+  grid-column: span 4; /* по умолчанию 3 в ряд (4×3 = 12 колонок) */
+
+  &:hover {
+    transform: translateY(-20px);
+    box-shadow: 0 35px 80px rgba(0,0,0,0.4);
+
+    .popular-destinations__image { transform: scale(1.15); }
+    .popular-destinations__name   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Верхние две — шире (по 6 колонок) */
+  &--1,
+  &--2 {
+    grid-column: span 6;
+  }
+
+  /* Адаптив */
+  @media (max-width: 1023px) {
+    grid-column: span 6;               /* по 2 в ряд */
+  }
+
+  @media (max-width: 767px) {
+    grid-column: 1 / -1;               /* по одной на всю ширину */
+  }
+}
+
+  .popular-destinations__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s ease;
+  }
+
+  .popular-destinations__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.75) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 32px 40px;
+
+    @media (max-width: 767px) {
+      padding: 24px;
+    }
+  }
+
+  .popular-destinations__name {
+    color: white;
+    font-size: 2.2rem;           /* нормальный размер */
+    font-weight: 800;
+    margin: 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.9);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.5s ease;
+
+    @media (max-width: 1023px) {
+      opacity: 1;
+      transform: translateY(0);
+      font-size: 2rem;
+    }
+
+    @media (max-width: 767px) {
+      font-size: 2.1rem;
+    }
+  }
