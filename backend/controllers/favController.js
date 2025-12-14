@@ -84,14 +84,14 @@ export const toggleFavorite = async (req, res) => {
     console.error('Server error: ', error);
     return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
-}
+};
 
 // controllers/favoriteController.js
 
 export const myFavorite = async (req, res) => {
   try {
     const userId = req.user.id;
-    const hotel_id = req.query.hotel_id; 
+    const hotel_id = req.query.hotel_id;
 
     if (!hotel_id) {
       return res.status(400).json({ error: 'hotel_id обязателен' });
@@ -105,7 +105,7 @@ export const myFavorite = async (req, res) => {
     // Ищем, есть ли запись с этим user_id + hotel_id
     const { data, error } = await supabase
       .from('favorites')
-      .select('id') 
+      .select('id')
       .eq('user_id', userId)
       .eq('hotel_id', hotelId)
       .maybeSingle(); // важно: может вернуть null, если ничего нет
@@ -118,13 +118,11 @@ export const myFavorite = async (req, res) => {
     const isFavorite = !!data;
 
     return res.json({ isFavorite });
-
   } catch (error) {
     console.error('Server error:', error);
     return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 };
-
 
 export const GetFavorite = async (req, res) => {
   try {
@@ -132,7 +130,8 @@ export const GetFavorite = async (req, res) => {
 
     const { data: fav, error } = await supabase
       .from('favorites')
-      .select(`
+      .select(
+        `
         id,
         created_at,
         hotel_id,
@@ -148,16 +147,17 @@ export const GetFavorite = async (req, res) => {
           amenities,
           adress
         )
-      `)
+      `,
+      )
       .eq('user_id', userId);
 
+    console.log('Избранное', fav);
     if (error) {
       console.error('Supabase error:', error);
       return res.status(400).json({ error: error.message });
     }
 
     res.json(fav);
-
   } catch (error) {
     console.error('Server error: ', error);
     return res.status(500).json({ error: 'Внутренняя ошибка сервера' });

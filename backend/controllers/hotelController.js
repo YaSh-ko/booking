@@ -22,7 +22,6 @@ export const getHotels = async (req, res) => {
     }
 
     // 200 - успех
-    console.log(data);
     res.json(data);
   } catch (error) {
     // 500 - непредвиденные ошибки сервера

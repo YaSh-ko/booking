@@ -68,6 +68,9 @@ export const Header = () => {
                     </li>
 
                     <li className="user-menu__item user-menu__link">
+                      <Link to="/search">Поиск</Link>
+                    </li>
+                    <li className="user-menu__item user-menu__link">
                       <Link to="/hotels/favorites">Избранное</Link>
                     </li>
                     <li className="user-menu__item user-menu__link">

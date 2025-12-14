@@ -1,0 +1,29 @@
+.hotels-list-page_container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #e5e5e5;
+}
+.hotels-list-page_container header {
+  margin-bottom: 30px;
+}
+.hotels-list-page_container main {
+  padding-inline: 20px;
+  display: flex;
+}
+.hotels-list-page_container main .filters-bar {
+  flex: 2;
+}
+@media (max-width: 768px) {
+  .hotels-list-page_container main .filters-bar {
+    display: none;
+  }
+}
+.hotels-list-page_container main .content {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hotels-list-page_container main .content .search-form {
+  margin-bottom: 20px;
+}/*# sourceMappingURL=hotelsListPage.css.map */
