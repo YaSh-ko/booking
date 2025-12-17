@@ -6,7 +6,7 @@ import { PopularDestinations } from '../../components/popularDestinations/Popula
 import { Reviews } from '../../components/reviews/reviews';
 import { useNavigate } from 'react-router-dom';
 import './homePage.scss';
-import { TopHotels } from '../../components/topHotels/TopHotels';
+// import { TopHotels } from '../../components/topHotels/TopHotels';
 import { useSearch } from '../../context/searchContext';
 
 export const HomePage = () => {

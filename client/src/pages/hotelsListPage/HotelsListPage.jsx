@@ -7,6 +7,7 @@ import './hotelsListPage.scss';
 import { HotelCard } from '../../components/hotelCard/HotelCard';
 import { Loader } from '../../components/loader/Loader';
 import { useSearch } from '../../context/searchContext';
+import { HotelFilters } from '../../components/hotelFilters/HotelFilters';
 
 export const HotelsListPage = () => {
   const location = useLocation();
@@ -17,6 +18,7 @@ export const HotelsListPage = () => {
     if (Object.keys(searchParams).length > 0) {
       handleSearch(searchParams);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 
   const handleSearchChange = (newParams) => {
@@ -37,7 +39,9 @@ export const HotelsListPage = () => {
     <div className="hotels-list-page_container">
       <Header />
       <main>
-        <div className="filters-bar"></div>
+        <div className="filters-bar">
+          <HotelFilters />
+        </div>
         <div className="content">
           <SearchForm onSearch={handleSearchChange} className="search-form" />
 
