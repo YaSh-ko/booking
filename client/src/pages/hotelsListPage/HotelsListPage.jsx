@@ -18,6 +18,7 @@ export const HotelsListPage = () => {
   const { hotels, isLoading, handleSearch } = useHotelsSearch();
   const { addToRecentlyViewed } = useUserContext();
   const { filters, updatePriceRangs, updateSort } = useFilters();
+  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
   const { searchData } = useSearch();
   useEffect(() => {
     if (Object.keys(searchParams).length > 0) {
@@ -46,29 +47,35 @@ export const HotelsListPage = () => {
   return (
     <div className="hotels-list-page_container">
       <Header />
+
       <main>
-        <div className="filters-bar">
+        <div className="search-bar">
+          <SearchForm onSearch={handleSearchChange} />
+          <button
+            className="filters-toggle"
+            onClick={() => setIsFilterMenuOpen((prev) => !prev)}
+          >
+            Фильтры
+          </button>
+        </div>
+
+        <div className={`filters-bar ${isFilterMenuOpen ? 'filters-bar--open' : ''}`}>
           <HotelFilters
             filters={filters}
             onPriceChange={updatePriceRangs}
             onSortChange={updateSort}
           />
         </div>
-        <div className="content">
-          <SearchForm onSearch={handleSearchChange} className="search-form" />
 
+        <div className="hotels-content">
           {isLoading ? (
             <div className="hotels-search_loader">
               <Loader />
             </div>
-          ) : hotels.length === 0 ? ( // ← убрали лишние {}
-            <div>
-              <span>Введите параметры</span>
-            </div>
+          ) : hotels.length === 0 ? (
+            <span>Введите параметры</span>
           ) : filteredHotels.length === 0 ? (
-            <div>
-              <span>Выберите другие фильтры</span>
-            </div>
+            <span>Выберите другие фильтры</span>
           ) : (
             <div className="hotels-list">
               {filteredHotels.map((hotel) => (
