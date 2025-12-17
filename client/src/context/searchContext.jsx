@@ -1,13 +1,19 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { formatDate } from '../utils/formatDate';
 
 const SearchContext = createContext();
+const defaultCheckIn = new Date();
+const defaultCheckOut = new Date(
+  new Date(defaultCheckIn).setDate(defaultCheckIn.getDate() + 7),
+);
 const defaultSearchData = {
   city: '',
-  checkIn: '',
-  checkOut: '',
+  checkIn: formatDate(defaultCheckIn),
+  checkOut: formatDate(defaultCheckOut),
   guests: 1,
   type: 'Hotel',
 };
+
 export const SearchProvider = ({ children }) => {
   const [searchData, setSearchData] = useState(defaultSearchData);
 

@@ -6,16 +6,22 @@ import { Loader } from '../../components/loader/Loader';
 import { useEffect } from 'react';
 import './hotelsFavorites.scss';
 import { Link } from 'react-router-dom';
+import { useSearch } from '../../context/searchContext';
 export function HotelsFavorites() {
   const { favoriteHotels, fetchFavorites, isLoading } = useFavoriteHotels();
-
+  const { searchData } = useSearch();
   useEffect(() => {
-    console.log(favoriteHotels);
     fetchFavorites();
   }, []);
 
   const handleClickHotelDetails = (id) => {
-    window.open(`/hotel/details/${id}`, '_blank', 'noopener,noreferrer');
+    const params = new URLSearchParams({
+      checkIn: searchData.checkIn,
+      checkOut: searchData.checkOut,
+      guests: searchData.guests.toString(),
+    }).toString();
+
+    window.open(`/hotel/details/${id}?${params}`, '_blank', 'noopener,noreferrer');
   };
   return (
     <div className="favorites">

@@ -6,18 +6,7 @@ import { formatDate } from '../../utils/formatDate';
 export const SearchForm = ({ onSearch }) => {
   const { searchData: contextData, updateSearchData } = useSearch();
 
-  const defultChekIn = new Date();
-  const defaultCheckIn = new Date();
-  const defaultCheckOut = new Date(
-    new Date(defaultCheckIn).setDate(defaultCheckIn.getDate() + 7),
-  );
-  const [formData, setFormData] = useState({
-    city: contextData?.city || '',
-    checkIn: contextData?.checkIn || formatDate(defultChekIn),
-    checkOut: contextData?.checkOut || formatDate(defaultCheckOut),
-    guests: contextData?.guests || 1,
-    type: contextData?.type || 'Hotel',
-  });
+  const [formData, setFormData] = useState(contextData);
 
   useEffect(() => {
     setFormData(contextData);
