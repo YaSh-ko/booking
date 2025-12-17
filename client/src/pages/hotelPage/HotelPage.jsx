@@ -12,6 +12,7 @@ import { getImageUrl } from '../../utils/getImageUrl';
 import { useUserContext } from '../../context/userContext';
 import { FavoriteButton } from '../../components/favoriteButton/FavoriteButton';
 import { AmenityList } from '../../components/amenityList/AmenityList';
+import { HotelReviews } from '../../components/hotelReviews/hotelReviews';
 import { useFavoriteHotels } from '../../hooks/useFavoriteHotels';
 
 export function HotelPage() {
@@ -172,6 +173,10 @@ export function HotelPage() {
 
           <div id="rooms">
             <RoomsCardsList rooms={hotel.rooms} />
+          </div>
+
+          <div id="reviews">
+            <HotelReviews />
           </div>
         </div>
       ) : (

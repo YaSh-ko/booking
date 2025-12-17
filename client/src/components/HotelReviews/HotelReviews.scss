@@ -1,0 +1,371 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/breakpoints';
+
+.hotel-reviews {
+  margin: 40px 0;
+  padding: 32px;
+  background: $color-white-background;
+  border-radius: $border-radius;
+  box-shadow: $shadow-default;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    @include respond(sm) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  &__title {
+    font-size: 28px;
+    font-weight: 700;
+    color: $color-primary;
+    margin: 0;
+  }
+
+  &__summary {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+
+    @include respond(sm) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  }
+
+  &__rating {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+  }
+
+  &__rating-score {
+    font-size: 32px;
+    font-weight: 700;
+    color: $color-primary;
+  }
+
+  &__rating-text {
+    color: #333;
+    font-weight: 600;
+  }
+
+  &__reviews-count {
+    color: #666;
+    font-size: 16px;
+  }
+
+  &__button {
+    padding: 12px 24px;
+    background-color: $color-primary;
+    color: $color-text-secondary;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: $border-radius;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #5a86d6;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  &__empty {
+    text-align: center;
+    color: #666;
+    font-size: 18px;
+    padding: 60px 0;
+  }
+
+  .hotel-review {
+    padding: 24px;
+    background: #f9f9f9;
+    border-radius: $border-radius;
+    border-left: 4px solid $color-primary;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    &__author {
+      font-weight: 600;
+      color: $color-text-primary;
+      font-size: 17px;
+    }
+
+    &__date {
+      color: #666;
+      font-size: 14px;
+    }
+
+    &__rating {
+      margin-bottom: 16px;
+    }
+
+    &__rating-score {
+      font-size: 24px;
+      font-weight: 700;
+      color: $color-primary;
+    }
+
+    &__text {
+      margin: 0 0 16px 0;
+      line-height: 1.6;
+      color: #333;
+      font-size: 16px;
+    }
+  }
+}
+
+/* === Модальное окно добавления отзыва === */
+.reviews-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.reviews-modal {
+  background: $color-white-background;
+  width: 100%;
+  max-width: 600px;
+  border-radius: $border-radius;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.reviews-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid $color-secondary;
+  background: #f9f9f9;
+
+  h3 {
+    margin: 0;
+    font-size: 22px;
+    color: $color-primary;
+    font-weight: 700;
+  }
+}
+
+.reviews-modal__close {
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: #666;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: $color-secondary;
+  }
+}
+
+.reviews-modal__form {
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: $color-text-primary;
+    font-size: 16px;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid $color-secondary;
+    border-radius: $border-radius;
+    font-size: 16px;
+    background: $color-white-background;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+/* === Звёздочки для оценки (5-балльная) === */
+.rating-stars {
+  .stars {
+    display: flex;
+    flex-direction: row-reverse; /* ключевой момент: закрашиваются звёзды слева */
+    justify-content: flex-end;
+    gap: 24px;
+    margin-top: 12px;
+  }
+
+  .star-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 36px;
+  }
+
+  .star-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .star {
+    color: $color-secondary;
+    transition: color 0.2s ease;
+    user-select: none;
+  }
+
+  .star-count {
+    margin-left: 8px;
+    font-size: 18px;
+    color: #666;
+    font-weight: 600;
+    min-width: 20px;
+  }
+
+  /* Закрашиваем золотым выбранную звезду и все слева от неё */
+  .star-input:checked ~ .star-label .star,
+  .star-input:checked ~ .star-label ~ .star-label .star {
+    color: #ffb400; /* красивый золотой */
+  }
+
+  /* При наведении — превью выбора */
+  .star-label:hover .star,
+  .star-label:hover ~ .star-label .star {
+    color: #ffb400;
+  }
+}
+
+.reviews-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.btn-cancel {
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px solid $color-secondary;
+  color: $color-text-primary;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $color-secondary;
+  }
+}
+
+.btn-submit {
+  padding: 12px 32px;
+  background: $color-primary;
+  color: $color-text-secondary;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+
+  &:hover {
+      background-color: #5a86d6;
+  }
+}
+
+/* === Адаптивность === */
+@include respond(md) {
+  .hotel-reviews {
+    padding: 24px;
+    margin: 24px 0;
+
+    &__title {
+      font-size: 24px;
+    }
+
+    &__rating-score {
+      font-size: 28px;
+    }
+
+    .hotel-review {
+      padding: 20px;
+    }
+  }
+
+  .reviews-modal {
+    margin: 0 16px;
+  }
+
+  .reviews-modal__form {
+    padding: 20px;
+  }
+
+  .rating-stars {
+    .stars {
+      gap: 20px;
+    }
+
+    .star-label {
+      font-size: 32px;
+    }
+  }
+}
+
+@include respond(sm) {
+  .hotel-reviews {
+    padding: 20px;
+  }
+
+  .reviews-modal__header {
+    padding: 16px 20px;
+  }
+
+  .reviews-modal__form {
+    padding: 20px;
+  }
+
+  .rating-stars .stars {
+    gap: 16px;
+  }
+}
