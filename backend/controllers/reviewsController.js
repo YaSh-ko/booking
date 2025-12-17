@@ -95,3 +95,30 @@ export const deleteReview = async (req, res) => {
     return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 }
+
+export const getReview = async ( req, res ) => {
+  try {
+    const { hotel_id } = req.query;
+
+    if (!hotel_id ) {
+       return res.status(400).json({ error: 'Параметр hotel_id обязателен' });
+    }
+
+    const { data, error } = await supabase
+      .from('reviews')
+      .select('*')
+      .eq('hotel_id', hotel_id);
+
+    if (error) {
+      // 500 - только для внутренних ошибок БД
+      console.error('Supabase error:', error);
+      return res.status(500).json({ error: 'Ошибка базы данных' });
+    }
+
+    res.status(200).json(data || []);
+    
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+  }
+}
