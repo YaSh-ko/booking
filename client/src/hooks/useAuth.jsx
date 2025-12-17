@@ -34,6 +34,7 @@ export const useAuth = () => {
     sendCode: (email, name) => handle(() => authApi.sendCode(email, name)),
     verifyCode: (email, code) => handle(() => authApi.verifyCode(email, code)),
     me: () => handle(() => authApi.me()),
+    logout: () => handle(() => authApi.logout()),
     isLoading,
     error,
     clearError: () => setError(null),

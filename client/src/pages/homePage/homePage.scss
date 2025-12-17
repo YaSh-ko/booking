@@ -88,6 +88,7 @@
 
   &__search-tab {
     background-color: transparent;
+    color: $color-text-secondary;
     position: relative;
 
     &--active {
@@ -124,6 +125,10 @@
     top: 100%;
     height: 5px;
     background-color: $color-primary;
+  }
+
+  @include respond(md) {
+    font-size: 2rem;
   }
 }
 

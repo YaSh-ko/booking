@@ -1,8 +1,6 @@
 @import '../../assets/styles/variables';
 
 .favorite-button-wrapper {
-  position: relative;
-  display: inline-block;
 }
 
 .favorite-button {
@@ -14,7 +12,7 @@
 
   &:hover {
     svg path {
-      fill: $color-primary;
+      fill: currentColor;
     }
   }
 }

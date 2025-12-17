@@ -8,7 +8,7 @@ export const TopHotels = () => {
       name: 'Hotel Moscow Palace',
       city: 'Москва',
       rating: 4.5,
-      price: 4.2,
+      price: 4200,
       image:
         'https://rajatourrs.com/wp-content/uploads/2022/11/pool-for-google-blog-1536x864.jpg',
     },
@@ -17,7 +17,7 @@ export const TopHotels = () => {
       name: 'Skyline Hotel',
       city: 'Санкт-Петербург',
       rating: 4.8,
-      price: 4.8,
+      price: 4800,
       image:
         'https://rajatourrs.com/wp-content/uploads/2022/11/pool-for-google-blog-1536x864.jpg',
     },
@@ -26,7 +26,7 @@ export const TopHotels = () => {
       name: 'Mountain View Resort',
       city: 'Сочи',
       rating: 4.7,
-      price: 5.1,
+      price: 5100,
       image:
         'https://rajatourrs.com/wp-content/uploads/2022/11/pool-for-google-blog-1536x864.jpg',
     },
@@ -35,16 +35,7 @@ export const TopHotels = () => {
       name: 'Golden Bay Hotel',
       city: 'Казань',
       rating: 4.6,
-      price: 4.5,
-      image:
-        'https://rajatourrs.com/wp-content/uploads/2022/11/pool-for-google-blog-1536x864.jpg',
-    },
-    {
-      id: 5,
-      name: 'Golden Bay Hotel',
-      city: 'Казань',
-      rating: 4.6,
-      price: 4.5,
+      price: 4500,
       image:
         'https://rajatourrs.com/wp-content/uploads/2022/11/pool-for-google-blog-1536x864.jpg',
     },

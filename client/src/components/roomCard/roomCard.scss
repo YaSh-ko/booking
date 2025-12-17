@@ -15,6 +15,8 @@
     box-shadow 0.2s ease;
 
   &:hover {
+    transform: translateY(-4px);
+
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.12);
   }
 
@@ -23,7 +25,6 @@
     width: 100%;
     height: 200px;
     object-fit: cover;
-    display: block;
     flex-shrink: 0;
     margin-bottom: 10px;
   }
@@ -49,7 +50,7 @@
     display: inline-block;
     padding: 4px 10px;
     background: #f0f7ff;
-    color: #0066cc;
+    color: #5a86d6;
     border-radius: 6px;
     font-size: 14px;
     font-weight: 500;
@@ -91,7 +92,7 @@
     flex-shrink: 0;
 
     &:hover {
-      background: lighten($color-button, 12%);
+      background: #5a86d6;
     }
 
     &:active {

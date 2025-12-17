@@ -24,6 +24,11 @@ export const authApi = {
     });
   },
 
+  logout() {
+    return request('/auth/logout', {
+      method: 'POST',
+    });
+  },
   me() {
     return request('/auth/me');
   },

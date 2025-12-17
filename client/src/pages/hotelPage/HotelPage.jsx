@@ -53,7 +53,12 @@ export function HotelPage() {
             </div>
 
             <div className="hotelpage__addit">
-              <p className="hotelpage__price">от {formatPrice(hotel.price)}</p>
+              <div className="hotelpage__price-container">
+                <span className="hotelpage__price-label">от</span>
+                <span className="hotelpage__price">{formatPrice(hotel.price)}</span>
+                <span className="hotelpage__price-period">/ ночь</span>
+              </div>
+
               <div className="hotelpage__actions">
                 <FavoriteButton hotelId={hotel.id} user={user} />
                 <button className="hotelpage__button">
@@ -78,7 +83,10 @@ export function HotelPage() {
             </div>
 
             <div className="hotelpage__addit--mobile">
-              <p className="hotelpage__price">от {formatPrice(hotel.price)}</p>
+              <div className="hotelpage__price-container">
+                <span className="hotelpage__price-label">от</span>
+                <span className="hotelpage__price">{formatPrice(hotel.price)}</span>
+              </div>
               <div className="hotelpage__actions">
                 <FavoriteButton hotelId={hotel.id} user={user} />
                 <button className="hotelpage__button">

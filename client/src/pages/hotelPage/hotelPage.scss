@@ -57,9 +57,16 @@
     }
   }
 
-  &__price {
+  &__price-container {
     font-size: 1.5rem;
+    display: flex;
+    gap: 10px;
     align-self: end;
+  }
+
+  &__price {
+    font-weight: bold;
+    color: #5a86d6;
   }
 
   &__actions {
@@ -75,7 +82,7 @@
     padding-block: 8px;
 
     &:hover {
-      background-color: lighten($color-primary, 12%);
+      background-color: #5a86d6;
     }
   }
 
