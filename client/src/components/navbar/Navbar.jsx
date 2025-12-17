@@ -12,7 +12,6 @@ export const Header = () => {
   const { user } = useUserContext();
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
-  useEffect(() => console.log(user?.name), [user?.name]);
   return (
     <header className="header">
       <div className="header__container">

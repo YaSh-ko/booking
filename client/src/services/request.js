@@ -35,7 +35,6 @@ export async function request(path, options = {}) {
   }
 
   if (!response.ok) {
-    console.log(response);
     switch (response.status) {
       case 400:
         throw new BadRequestError(data?.error || 'Некорректные данные');

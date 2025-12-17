@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { createContext } from 'react';
 import { authApi } from '../services/api';
 
@@ -7,6 +7,25 @@ const UserContext = createContext();
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [recentlyViewed, setRecentlyViewed] = useState(() => {
+    const saved = localStorage.getItem('recentlyViewed');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
+  }, [recentlyViewed]);
+
+  const addToRecentlyViewed = useCallback((hotel) => {
+    console.log(hotel);
+    setRecentlyViewed((prev) => {
+      const filtered = prev.filter((h) => h.id !== hotel.id);
+      console.log(filtered);
+      const updated = [hotel, ...filtered].slice(0, 4);
+      console.log(updated);
+      return updated;
+    });
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +59,8 @@ export function UserProvider({ children }) {
         login,
         logout,
         isLoading,
+        recentlyViewed,
+        addToRecentlyViewed,
       }}
     >
       {children}

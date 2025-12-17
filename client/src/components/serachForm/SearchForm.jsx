@@ -4,7 +4,6 @@ import { useSearch } from '../../context/searchContext';
 
 export const SearchForm = ({ onSearch }) => {
   const { searchData: contextData, updateSearchData } = useSearch();
-  console.log(contextData);
   const [formData, setFormData] = useState({
     city: contextData?.city || '',
     checkIn: contextData?.checkIn || '',

@@ -1,18 +1,33 @@
 import { Header } from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/footer';
 import { SearchForm } from '../../components/serachForm/SearchForm';
-import { TopHotels } from '../../components/topHotels/topHotels';
+import { TopHotels } from '../../components/topHotels/TopHotels';
 import { PopularDestinations } from '../../components/popularDestinations/PopularDestinations';
 import { Reviews } from '../../components/reviews/reviews';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './homePage.scss';
 import { useSearch } from '../../context/searchContext';
+import { useUserContext } from '../../context/userContext';
+import { useState } from 'react';
+import { Modal } from '../../components/modal/Modal';
 
 export const HomePage = () => {
   const { searchData, updateSearchData } = useSearch();
-
+  const { recentlyViewed, user } = useUserContext();
   const navigate = useNavigate();
+  const [authModal, setAuthModal] = useState(false);
 
+  const handleClickHotelDetails = (id) => {
+    const params = new URLSearchParams({
+      checkIn: searchData.checkIn,
+      checkOut: searchData.checkOut,
+      guests: searchData.guests.toString(),
+    }).toString();
+
+    window.open(`/hotel/details/${id}?${params}`, '_blank', 'noopener,noreferrer');
+  };
+
+  console.log(recentlyViewed);
   const handleSearch = (formData) => {
     const params = new URLSearchParams({
       city: formData.city,
@@ -64,7 +79,36 @@ export const HomePage = () => {
 
         <section className="home-page__top-hotels-section">
           <h2 className="section-title">Лучшие отели</h2>
-          <TopHotels />
+          {user ? (
+            recentlyViewed.length === 0 ? (
+              <div>
+                <span>
+                  Перейдите на{' '}
+                  <Link to="/search" className="home-page__no-user-action">
+                    страницу посика
+                  </Link>
+                  , чтобы появились недавно просмотренные
+                </span>
+              </div>
+            ) : (
+              <TopHotels
+                hotels={recentlyViewed}
+                onClickDetails={handleClickHotelDetails}
+              />
+            )
+          ) : (
+            <div>
+              <span>
+                <button
+                  className="home-page__no-user-action home-page__no-user-action--button"
+                  onClick={() => setAuthModal(true)}
+                >
+                  Войдите
+                </button>{' '}
+                чтобы просматривать недавние отели
+              </span>
+            </div>
+          )}
         </section>
 
         <section className="home-page__popular-destinations">
@@ -79,6 +123,9 @@ export const HomePage = () => {
       </main>
 
       <Footer />
+      {authModal && (
+        <Modal open={authModal} onClose={() => setAuthModal(false)} modalType={'auth'} />
+      )}
     </div>
   );
 };

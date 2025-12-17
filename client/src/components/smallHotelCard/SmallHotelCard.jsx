@@ -3,15 +3,16 @@ import { formatPrice } from '../../utils/formatPrice';
 import { FavoriteButton } from '../favoriteButton/FavoriteButton';
 import { useUserContext } from '../../context/userContext';
 import './smallHotelCard.scss';
+import { getImageUrl } from '../../utils/getImageUrl';
 
-export const SmallHotelCard = ({ hotel }) => {
+export const SmallHotelCard = ({ hotel, onClick }) => {
   const { user } = useUserContext();
 
   return (
     <div className="small-hotel-card">
       <img
         className="small-hotel-card__image"
-        src={hotel.img || hotel.image}
+        src={getImageUrl(hotel.img)}
         alt={hotel.name}
       />
 
@@ -50,7 +51,9 @@ export const SmallHotelCard = ({ hotel }) => {
           <span className="small-hotel-card__price">от {formatPrice(hotel.price)}</span>
         </div>
 
-        <button className="small-hotel-card__button">Подробнее</button>
+        <button onClick={() => onClick(hotel.id)} className="small-hotel-card__button">
+          Подробнее
+        </button>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 @import '../../assets//styles//breakpoints';
 
 .hotel-filters {
+  position: fixed;
   padding: 24px;
   background: $color-white-background;
   border-radius: $border-radius;

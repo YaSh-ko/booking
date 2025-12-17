@@ -86,6 +86,15 @@
     }
   }
 
+  &__no-user-action {
+    text-decoration: underline;
+    color: $color-text-primary;
+
+    &--button {
+      background: none;
+      padding: 0;
+    }
+  }
   &__search-tab {
     background-color: transparent;
     color: $color-text-secondary;
