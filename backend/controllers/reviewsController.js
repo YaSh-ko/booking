@@ -50,9 +50,38 @@ export const addReview = async (req, res) => {
       return res.status(400).json({ error: 'Ошибка при добавлении отзыва' });
       }
 
+      const { data: avgData, error: avgError } = await supabase
+        .from('reviews')
+        .select('rating')
+        .eq('hotel_id', hotelId);
+
+      if ( avgError ){
+        console.error('Ошибка получения оценок:', avgError);
+      }
+
+      let newRating = 0;
+
+      if (avgData && avgData.length > 0) {
+        const sum = avgData.reduce((acc, curr) => acc + curr.rating, 0);
+        newRating = sum / avgData.length;
+        newRating = Math.round(newRating * 10) / 10;
+      }
+
+      const { error: updateError } = await supabase
+        .from('hotels')
+        .update({ rating: newRating })
+        .eq('id', hotelId);
+
+      if (updateError) {
+        console.error('Ошибка обновления рейтинга:', updateError);
+      return res.status(500).json({ error: 'Ошибка обновления рейтинга отеля' });
+      }
+
+
       return res.status(201).json({
-        message: 'Отзыв успешно добавлен!',
-      })
+        message: 'Отзыв успешно добавлен!', 
+        newHotelRating: newRating
+      });
 
   } catch (error) {
     console.error('Server error: ', error);
@@ -93,5 +122,32 @@ export const deleteReview = async (req, res) => {
   } catch (error) {
     console.error('Server error: ', error);
     return res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+  }
+}
+
+export const getReview = async ( req, res ) => {
+  try {
+    const { hotel_id } = req.query;
+
+    if (!hotel_id ) {
+       return res.status(400).json({ error: 'Параметр hotel_id обязателен' });
+    }
+
+    const { data, error } = await supabase
+      .from('reviews')
+      .select('*')
+      .eq('hotel_id', hotel_id);
+
+    if (error) {
+      // 500 - только для внутренних ошибок БД
+      console.error('Supabase error:', error);
+      return res.status(500).json({ error: 'Ошибка базы данных' });
+    }
+
+    res.status(200).json(data || []);
+    
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 }
