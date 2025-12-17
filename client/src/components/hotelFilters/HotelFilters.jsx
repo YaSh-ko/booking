@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import './HotelFilters.scss';
+import { useSearch } from '../../context/searchContext';
+import { CustomSelect } from '../customSelect/CustomSelect';
 
-export const HotelFilters = ({ filters, onPriceChange, onSortChange }) => {
+export const HotelFilters = ({ filters, onPriceChange, onSortChange, placeType }) => {
+  const { updateSearchData } = useSearch();
+
   const handleMinChange = (e) => {
     const value = Math.min(Number(e.target.value), filters.priceMax - 500);
     onPriceChange(value, filters.priceMax);
@@ -10,6 +14,10 @@ export const HotelFilters = ({ filters, onPriceChange, onSortChange }) => {
   const handleMaxChange = (e) => {
     const value = Math.max(Number(e.target.value), filters.priceMin + 500);
     onPriceChange(filters.priceMin, value);
+  };
+
+  const updateType = (value) => {
+    updateSearchData({ type: value });
   };
 
   return (
@@ -62,6 +70,30 @@ export const HotelFilters = ({ filters, onPriceChange, onSortChange }) => {
         </div>
       </div>
 
+      <div className="hotel-filters__section">
+        <h2 className="hotel-filters__subtitle">Тип отеля</h2>
+        <CustomSelect
+          value={placeType}
+          onChange={updateType}
+          options={[
+            { label: 'Отель', value: 'Hotel' },
+            { label: 'Хостел', value: 'Hostel' },
+            { label: 'Квартира', value: 'Apartments' },
+          ]}
+        />
+
+        {/* <select
+          className="hotel-filters__select"
+          name="type"
+          id=""
+          value={placeType}
+          onChange={(e) => updateSearchData({ type: e.target.value })}
+        >
+          <option value="Hotel">Отель</option>
+          <option value="Hostel">Хостел</option>
+          <option value="Apartments">Квартира</option>
+        </select> */}
+      </div>
       {/* Сортировки */}
       <div className="hotel-filters__section">
         <h2 className="hotel-filters__subtitle">Сортировки</h2>

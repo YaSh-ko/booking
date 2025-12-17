@@ -69,7 +69,7 @@
 
       &--open {
         @include respond(md) {
-          max-height: 460px; // запас
+          max-height: 580px; // запас
           opacity: 1;
         }
       }

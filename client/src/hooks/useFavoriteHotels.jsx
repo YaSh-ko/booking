@@ -17,7 +17,6 @@ export function useFavoriteHotels() {
 
     try {
       const favorites = await getFavorites();
-      console.log('Fetched favorites:', favorites); // ← для отладки
       setFavoriteHotels(favorites);
     } catch (err) {
       setError(err.message);
@@ -46,7 +45,6 @@ export function useFavoriteHotels() {
 
   const isFavorite = useCallback(
     (hotelId) => {
-      console.log(hotelId);
       return favoriteHotels.some((fav) => fav.hotel_id === hotelId);
     },
     [favoriteHotels],

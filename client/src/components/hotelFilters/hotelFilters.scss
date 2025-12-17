@@ -30,7 +30,28 @@
       font-size: 1rem;
     }
   }
+  &__select {
+    border-radius: $border-radius;
+    background-color: $color-white-background;
+    padding: 10px 12px;
+    border: 1px solid $color-primary;
 
+    option {
+      border-radius: 5px;
+      &:checked {
+        color: $color-text-secondary;
+        background-color: $color-primary;
+      }
+      &:hover {
+        color: $color-text-secondary;
+        background-color: $color-primary;
+      }
+      &:active {
+        color: $color-text-secondary;
+        background-color: $color-primary;
+      }
+    }
+  }
   &__section {
     margin-bottom: 32px;
 

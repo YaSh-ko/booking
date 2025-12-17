@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 const SearchContext = createContext();
 const defaultSearchData = {
@@ -12,6 +12,7 @@ export const SearchProvider = ({ children }) => {
   const [searchData, setSearchData] = useState(defaultSearchData);
 
   const updateSearchData = useCallback((newData) => {
+    console.log(newData);
     setSearchData((prev) => ({ ...prev, ...newData }));
   }, []);
   return (

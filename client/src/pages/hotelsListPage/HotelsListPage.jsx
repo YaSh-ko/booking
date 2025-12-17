@@ -31,6 +31,10 @@ export const HotelsListPage = () => {
     handleSearch(newParams);
   };
 
+  useEffect(() => {
+    console.log(searchData);
+  }, [searchData]);
+
   const handleClickHotelDetails = (id) => {
     const hotel = hotels.find((h) => h.id === id);
     const params = new URLSearchParams({
@@ -64,6 +68,7 @@ export const HotelsListPage = () => {
             filters={filters}
             onPriceChange={updatePriceRangs}
             onSortChange={updateSort}
+            placeType={searchData.type}
           />
         </div>
 

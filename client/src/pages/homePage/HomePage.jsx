@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './homePage.scss';
 import { useSearch } from '../../context/searchContext';
 import { useUserContext } from '../../context/userContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal } from '../../components/modal/Modal';
 
 export const HomePage = () => {
@@ -27,8 +27,9 @@ export const HomePage = () => {
     window.open(`/hotel/details/${id}?${params}`, '_blank', 'noopener,noreferrer');
   };
 
-  console.log(recentlyViewed);
+  useEffect(() => console.log(searchData), [searchData]);
   const handleSearch = (formData) => {
+    console.log(formData);
     const params = new URLSearchParams({
       city: formData.city,
       checkIn: formData.checkIn,
@@ -61,7 +62,7 @@ export const HomePage = () => {
                         ? 'home-page__search-tab home-page__search-tab--active'
                         : 'home-page__search-tab'
                     }
-                    onClick={() => updateSearchData({ type })}
+                    onClick={() => updateSearchData({ type: type })}
                   >
                     {type === 'Hotel'
                       ? 'Отели'
@@ -78,7 +79,7 @@ export const HomePage = () => {
         </section>
 
         <section className="home-page__top-hotels-section">
-          <h2 className="section-title">Лучшие отели</h2>
+          <h2 className="section-title">Недавно просмотренные</h2>
           {user ? (
             recentlyViewed.length === 0 ? (
               <div>

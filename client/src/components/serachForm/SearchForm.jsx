@@ -1,17 +1,27 @@
 import { useEffect, useState } from 'react';
 import './searchForm.scss';
 import { useSearch } from '../../context/searchContext';
+import { formatDate } from '../../utils/formatDate';
 
 export const SearchForm = ({ onSearch }) => {
   const { searchData: contextData, updateSearchData } = useSearch();
+
+  const defultChekIn = new Date();
+  const defaultCheckIn = new Date();
+  const defaultCheckOut = new Date(
+    new Date(defaultCheckIn).setDate(defaultCheckIn.getDate() + 7),
+  );
   const [formData, setFormData] = useState({
     city: contextData?.city || '',
-    checkIn: contextData?.checkIn || '',
-    checkOut: contextData?.checkOut || '',
+    checkIn: contextData?.checkIn || formatDate(defultChekIn),
+    checkOut: contextData?.checkOut || formatDate(defaultCheckOut),
     guests: contextData?.guests || 1,
-    type: contextData?.placeType || 'Hotel',
+    type: contextData?.type || 'Hotel',
   });
 
+  useEffect(() => {
+    setFormData(contextData);
+  }, [contextData]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
