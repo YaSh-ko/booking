@@ -65,7 +65,7 @@
     font-size: 16px;
   }
 
-  &__button {
+  &__add-btn {
     padding: 12px 24px;
     background-color: $color-primary;
     color: $color-text-secondary;
@@ -92,6 +92,13 @@
     color: #666;
     font-size: 18px;
     padding: 60px 0;
+  }
+
+  &__error {
+    text-align: center;
+    color: red;
+    font-size: 16px;
+    margin-top: 16px;
   }
 
   .hotel-review {
@@ -225,11 +232,19 @@
   }
 }
 
-/* === Звёздочки для оценки (5-балльная) === */
+.error-message {
+  color: red;
+  text-align: center;
+  margin: 16px 0;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* === Звёздочки для оценки === */
 .rating-stars {
   .stars {
     display: flex;
-    flex-direction: row-reverse; /* ключевой момент: закрашиваются звёзды слева */
+    flex-direction: row-reverse;
     justify-content: flex-end;
     gap: 24px;
     margin-top: 12px;
@@ -250,7 +265,7 @@
   }
 
   .star {
-    color: $color-secondary;
+    color: $color-secondary; /* серые по умолчанию */
     transition: color 0.2s ease;
     user-select: none;
   }
@@ -266,10 +281,10 @@
   /* Закрашиваем золотым выбранную звезду и все слева от неё */
   .star-input:checked ~ .star-label .star,
   .star-input:checked ~ .star-label ~ .star-label .star {
-    color: #ffb400; /* красивый золотой */
+    color: #ffb400; /* золотой */
   }
 
-  /* При наведении — превью выбора */
+  /* При наведении — превью */
   .star-label:hover .star,
   .star-label:hover ~ .star-label .star {
     color: #ffb400;
@@ -286,8 +301,8 @@
 .btn-cancel {
   padding: 12px 24px;
   background: transparent;
-  border: 1px solid $color-secondary;
-  color: $color-text-primary;
+  border: 1px solid #999;
+  color: #666;
   font-size: 16px;
   font-weight: 600;
   border-radius: $border-radius;
@@ -311,6 +326,11 @@
 
   &:hover {
       background-color: #5a86d6;
+    }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 

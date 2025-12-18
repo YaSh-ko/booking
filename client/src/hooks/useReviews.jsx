@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import {BadRequestError,
+import {
+  BadRequestError,
   NetworkError,
   NotFoundError,
   ServerError,
@@ -15,7 +16,7 @@ export function useReviewApi() {
     setError(null);
 
     try {
-      return await fn(); 
+      return await fn();
     } catch (err) {
       if (err instanceof BadRequestError) setError('Неверные данные');
       else if (err instanceof NetworkError) setError('Проблемы с сетью');
@@ -25,16 +26,17 @@ export function useReviewApi() {
 
       throw err;
     } finally {
-      setIsLoading(flase);
+      setIsLoading(false);
     }
   };
 
   return {
-    addReview: (hotel_id, rating, comment) => handleReviewApi(() => reviewApi.addReview(hotel_id, rating, comment)),
+    addReview: (hotel_id, rating, comment) =>
+      handleReviewApi(() => reviewApi.addReview(hotel_id, rating, comment)),
     deleteReview: (hotel_id) => handleReviewApi(() => reviewApi.deleteReview(hotel_id)),
     getReview: (hotel_id) => handleReviewApi(() => reviewApi.getReview(hotel_id)),
     isLoading,
     error,
     clearError: () => setError(null),
   };
-};
+}

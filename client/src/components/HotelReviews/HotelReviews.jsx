@@ -1,20 +1,75 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './HotelReviews.scss';
+import { useReviewApi } from '../../hooks/useReviews';
+import { useUserContext } from '../../context/userContext';
 
-export const HotelReviews = ({ reviews = [], averageRating = 0, reviewsCount = 0 }) => {
+export const HotelReviews = ({ hotelId }) => {
+  const [reviews, setReviews] = useState([]);
+  const [averageRating, setAverageRating] = useState(0);
+  const [reviewsCount, setReviewsCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [author, setAuthor] = useState('');
   const [rating, setRating] = useState(5);
   const [text, setText] = useState('');
 
-  const handleSubmit = (e) => {
+  const { addReview, getReview, isLoading, error, clearError } = useReviewApi();
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      if (!hotelId) return;
+
+      try {
+        const data = await getReview(hotelId);
+        setReviews(data || []);
+
+        if (data && data.length > 0) {
+          const avg = data.reduce((sum, r) => sum + r.rating, 0) / data.length;
+          setAverageRating(Math.round(avg * 10) / 10);
+          setReviewsCount(data.length);
+        } else {
+          setAverageRating(0);
+          setReviewsCount(0);
+        }
+      } catch (err) {
+        setReviews([]);
+        setAverageRating(0);
+        setReviewsCount(0);
+      }
+    };
+
+    fetchReviews();
+  }, [hotelId]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Новый отзыв:', { author, rating, text });
-    setIsModalOpen(false);
-    setAuthor('');
-    setRating(5);
-    setText('');
-    alert('Спасибо за ваш отзыв!');
+    clearError();
+
+    if (!hotelId) {
+      alert('Ошибка: неизвестный отель');
+      return;
+    }
+
+    try {
+      await addReview(hotelId, rating, text.trim());
+
+      alert('Спасибо за отзыв!');
+
+      setIsModalOpen(false);
+      setRating(5);
+      setText('');
+
+      const data = await getReview(hotelId);
+      setReviews(data || []);
+      if (data && data.length > 0) {
+        const avg = data.reduce((sum, r) => sum + r.rating, 0) / data.length;
+        setAverageRating(Math.round(avg * 10) / 10);
+        setReviewsCount(data.length);
+      } else {
+        setAverageRating(0);
+        setReviewsCount(0);
+      }
+    } catch (err) {
+      // Ошибка уже в error от хука
+    }
   };
 
   return (
@@ -41,30 +96,38 @@ export const HotelReviews = ({ reviews = [], averageRating = 0, reviewsCount = 0
               <span className="hotel-reviews__reviews-count">{reviewsCount} отзывов</span>
             </div>
           )}
-          <button className="hotel-reviews__button" onClick={() => setIsModalOpen(true)}>
+          <button className="hotel-reviews__add-btn" onClick={() => setIsModalOpen(true)}>
             Оставить отзыв
           </button>
         </div>
       </div>
 
       <div className="hotel-reviews__list">
-        {reviews.length > 0 ? (
+        {isLoading ? (
+          <p>Загрузка отзывов...</p>
+        ) : reviews.length > 0 ? (
           reviews.map((review) => (
             <div key={review.id} className="hotel-review">
               <div className="hotel-review__header">
-                <div className="hotel-review__author">{review.author}</div>
-                <div className="hotel-review__date">{review.date}</div>
+                <div className="hotel-review__author">
+                  Пользователь {review.users.name}
+                </div>
+                <div className="hotel-review__date">
+                  {new Date(review.created_at).toLocaleDateString('ru-RU')}
+                </div>
               </div>
               <div className="hotel-review__rating">
                 <span className="hotel-review__rating-score">{review.rating}</span>
               </div>
-              <p className="hotel-review__text">{review.text}</p>
+              <p className="hotel-review__text">{review.comment}</p>
             </div>
           ))
         ) : (
           <p className="hotel-reviews__empty">Пока нет отзывов. Будьте первым!</p>
         )}
       </div>
+
+      {error && <p className="hotel-reviews__error">{error}</p>}
 
       {isModalOpen && (
         <div className="reviews-modal-overlay" onClick={() => setIsModalOpen(false)}>
@@ -80,17 +143,6 @@ export const HotelReviews = ({ reviews = [], averageRating = 0, reviewsCount = 0
             </div>
 
             <form onSubmit={handleSubmit} className="reviews-modal__form">
-              <div className="form-group">
-                <label>Ваше имя</label>
-                <input
-                  type="text"
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                  required
-                  placeholder="Иван Иванов"
-                />
-              </div>
-
               <div className="form-group rating-stars">
                 <label>Оценка</label>
                 <div className="stars">
@@ -130,10 +182,12 @@ export const HotelReviews = ({ reviews = [], averageRating = 0, reviewsCount = 0
                 >
                   Отмена
                 </button>
-                <button type="submit" className="btn-submit">
-                  Отправить отзыв
+                <button type="submit" className="btn-submit" disabled={isLoading}>
+                  {isLoading ? 'Отправка...' : 'Отправить отзыв'}
                 </button>
               </div>
+
+              {error && <p className="error-message">{error}</p>}
             </form>
           </div>
         </div>

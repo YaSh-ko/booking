@@ -176,7 +176,7 @@ export function HotelPage() {
           </div>
 
           <div id="reviews">
-            <HotelReviews />
+            <HotelReviews hotelId={hotel.id} />
           </div>
         </div>
       ) : (

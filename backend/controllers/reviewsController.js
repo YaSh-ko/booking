@@ -133,10 +133,12 @@ export const getReview = async ( req, res ) => {
        return res.status(400).json({ error: 'Параметр hotel_id обязателен' });
     }
 
+    const hotelId = parseInt(hotel_id, 10);
+
     const { data, error } = await supabase
       .from('reviews')
-      .select('*')
-      .eq('hotel_id', hotel_id);
+      .select('id, hotel_id, rating, comment, created_at, user_id, users(name)' )
+      .eq('hotel_id', hotelId);
 
     if (error) {
       // 500 - только для внутренних ошибок БД
