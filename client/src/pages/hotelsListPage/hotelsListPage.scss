@@ -13,16 +13,21 @@
     padding-inline: 20px;
     display: grid;
     grid-template-columns: 2fr 5fr;
+    grid-template-rows: 113px auto;
     grid-template-areas:
       'filters search'
       'filters hotels';
     gap: 20px;
 
+    @include respond(xl) {
+      grid-template-rows: 211px auto;
+    }
     @include respond(lg) {
       grid-template-columns: 3fr 7fr;
     }
     @include respond(md) {
       grid-template-columns: 1fr;
+      grid-template-rows: auto;
       grid-template-areas:
         'search'
         'filters'
@@ -31,6 +36,15 @@
 
     .search-bar {
       grid-area: search;
+    }
+    .hotels-search_loader {
+      height: 60vh;
+
+      @include respond(md) {
+        height: 100%;
+      }
+      display: flex;
+      align-items: center;
     }
 
     .filters-toggle {
@@ -76,6 +90,8 @@
     }
 
     .hotels-content {
+      width: 100%;
+      height: 100%;
       grid-area: hotels;
       display: flex;
       flex-direction: column;
