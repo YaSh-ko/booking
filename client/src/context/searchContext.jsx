@@ -2,14 +2,9 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 import { formatDate } from '../utils/formatDate';
 
 const SearchContext = createContext();
-const defaultCheckIn = new Date();
-const defaultCheckOut = new Date(
-  new Date(defaultCheckIn).setDate(defaultCheckIn.getDate() + 7),
-);
+
 const defaultSearchData = {
   city: '',
-  checkIn: formatDate(defaultCheckIn),
-  checkOut: formatDate(defaultCheckOut),
   guests: 1,
   type: 'Hotel',
 };

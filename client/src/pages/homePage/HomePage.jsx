@@ -85,7 +85,7 @@ export const HomePage = () => {
               <div>
                 <span>
                   Перейдите на{' '}
-                  <Link to="/search" className="home-page__no-user-action">
+                  <Link to="/search" className="no-user-action">
                     страницу посика
                   </Link>
                   , чтобы появились недавно просмотренные
@@ -101,7 +101,7 @@ export const HomePage = () => {
             <div>
               <span>
                 <button
-                  className="home-page__no-user-action home-page__no-user-action--button"
+                  className="no-user-action no-user-action--button"
                   onClick={() => setAuthModal(true)}
                 >
                   Войдите

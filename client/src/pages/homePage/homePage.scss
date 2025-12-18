@@ -86,15 +86,6 @@
     }
   }
 
-  &__no-user-action {
-    text-decoration: underline;
-    color: $color-text-primary;
-
-    &--button {
-      background: none;
-      padding: 0;
-    }
-  }
   &__search-tab {
     background-color: transparent;
     color: $color-text-secondary;
@@ -146,5 +137,15 @@
   padding-inline: 60px;
   @include respond(md) {
     padding-inline: 20px;
+  }
+}
+
+.no-user-action {
+  text-decoration: underline;
+  color: $color-text-primary;
+
+  &--button {
+    background: none;
+    padding: 0;
   }
 }
