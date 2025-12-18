@@ -176,7 +176,10 @@ export function HotelPage() {
           </div>
 
           <div id="reviews">
-            <HotelReviews hotelId={hotel.id} />
+            <HotelReviews
+              hotelId={hotel.id}
+              handleClickNoUser={() => setIsModalOpen(true)}
+            />
           </div>
         </div>
       ) : (

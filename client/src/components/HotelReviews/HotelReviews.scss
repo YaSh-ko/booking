@@ -244,10 +244,9 @@
 .rating-stars {
   .stars {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
     gap: 24px;
     margin-top: 12px;
+    justify-content: flex-start; /* слева направо: 1 2 3 4 5 */
   }
 
   .star-label {
@@ -265,9 +264,13 @@
   }
 
   .star {
-    color: $color-secondary; /* серые по умолчанию */
+    color: $color-secondary; /* серый по умолчанию */
     transition: color 0.2s ease;
     user-select: none;
+
+    &--filled {
+      color: #ffb400; /* золотой для выбранных */
+    }
   }
 
   .star-count {
@@ -278,15 +281,8 @@
     min-width: 20px;
   }
 
-  /* Закрашиваем золотым выбранную звезду и все слева от неё */
-  .star-input:checked ~ .star-label .star,
-  .star-input:checked ~ .star-label ~ .star-label .star {
-    color: #ffb400; /* золотой */
-  }
-
-  /* При наведении — превью */
-  .star-label:hover .star,
-  .star-label:hover ~ .star-label .star {
+  /* Превью при наведении (опционально) */
+  .star-label:hover .star {
     color: #ffb400;
   }
 }
@@ -325,8 +321,8 @@
   cursor: pointer;
 
   &:hover {
-      background-color: #5a86d6;
-    }
+    background-color: #5a86d6;
+  }
 
   &:disabled {
     opacity: 0.5;

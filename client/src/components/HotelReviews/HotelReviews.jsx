@@ -3,14 +3,16 @@ import './HotelReviews.scss';
 import { useReviewApi } from '../../hooks/useReviews';
 import { useUserContext } from '../../context/userContext';
 
-export const HotelReviews = ({ hotelId }) => {
+export const HotelReviews = ({ hotelId, handleClickNoUser }) => {
   const [reviews, setReviews] = useState([]);
+
   const [averageRating, setAverageRating] = useState(0);
   const [reviewsCount, setReviewsCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rating, setRating] = useState(5);
   const [text, setText] = useState('');
 
+  const { user } = useUserContext();
   const { addReview, getReview, isLoading, error, clearError } = useReviewApi();
 
   useEffect(() => {
@@ -38,6 +40,15 @@ export const HotelReviews = ({ hotelId }) => {
 
     fetchReviews();
   }, [hotelId]);
+
+  const handleClick = async () => {
+    if (!user) {
+      handleClickNoUser();
+      return;
+    } else {
+      setIsModalOpen(true);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -96,7 +107,7 @@ export const HotelReviews = ({ hotelId }) => {
               <span className="hotel-reviews__reviews-count">{reviewsCount} отзывов</span>
             </div>
           )}
-          <button className="hotel-reviews__add-btn" onClick={() => setIsModalOpen(true)}>
+          <button className="hotel-reviews__add-btn" onClick={handleClick}>
             Оставить отзыв
           </button>
         </div>
@@ -146,7 +157,7 @@ export const HotelReviews = ({ hotelId }) => {
               <div className="form-group rating-stars">
                 <label>Оценка</label>
                 <div className="stars">
-                  {[5, 4, 3, 2, 1].map((value) => (
+                  {[1, 2, 3, 4, 5].map((value) => (
                     <label key={value} className="star-label">
                       <input
                         type="radio"
@@ -156,7 +167,9 @@ export const HotelReviews = ({ hotelId }) => {
                         onChange={(e) => setRating(Number(e.target.value))}
                         className="star-input"
                       />
-                      <span className="star">★</span>
+                      <span className={`star ${rating >= value ? 'star--filled' : ''}`}>
+                        ★
+                      </span>
                       <span className="star-count">{value}</span>
                     </label>
                   ))}
