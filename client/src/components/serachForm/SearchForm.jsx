@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './searchForm.scss';
 import { useSearch } from '../../context/searchContext';
+import toast from 'react-hot-toast';
 
 export const SearchForm = ({ onSearch }) => {
   const { searchData: contextData, updateSearchData } = useSearch();
@@ -16,7 +17,7 @@ export const SearchForm = ({ onSearch }) => {
     e.preventDefault();
 
     if (!formData.city.trim()) {
-      alert('Введите город для поиска');
+      toast.error('Введите город для поиска');
       return;
     }
 
