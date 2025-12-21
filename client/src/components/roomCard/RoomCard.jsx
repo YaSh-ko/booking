@@ -21,7 +21,7 @@ export const RoomCard = ({ room, onClick }) => {
           </span>
         </div>
 
-        <button className="room-card__button" onClick={onClick}>
+        <button className="room-card__button" onClick={() => onClick(room.id)}>
           Забронировать
         </button>
       </div>

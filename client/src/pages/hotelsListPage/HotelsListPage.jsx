@@ -29,6 +29,7 @@ export const HotelsListPage = () => {
 
   const handleSearchChange = (newParams) => {
     handleSearch(newParams);
+    console.log(hotels);
   };
 
   useEffect(() => {

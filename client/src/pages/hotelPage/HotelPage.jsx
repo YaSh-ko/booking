@@ -50,8 +50,8 @@ export function HotelPage() {
     navigate(`${location.pathname}?${newSearchParams}`, { replace: true });
   };
 
-  const hangleClickRoom = () => {
-    navigate(`/hotel/booking`);
+  const hangleClickRoom = (roomId) => {
+    navigate(`/hotel/booking/:${roomId}`);
   };
 
   useEffect(() => {
