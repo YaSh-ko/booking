@@ -12,6 +12,7 @@ import { getImageUrl } from '../../utils/getImageUrl';
 import { useUserContext } from '../../context/userContext';
 import { FavoriteButton } from '../../components/favoriteButton/FavoriteButton';
 import { AmenityList } from '../../components/amenityList/AmenityList';
+import { HotelReviews } from '../../components/hotelReviews/hotelReviews';
 import { useFavoriteHotels } from '../../hooks/useFavoriteHotels';
 import { SearchForm } from '../../components/serachForm/SearchForm';
 import { useClickOutside } from '../../hooks/useClickOutside';
@@ -226,6 +227,10 @@ export function HotelPage() {
       ) : (
         <p className="hotelpage__not-found">Отель не найден</p>
       )}
+
+      <div id="reviews">
+        <HotelReviews hotelId={hotel.id} handleClickNoUser={() => setIsModalOpen(true)} />
+      </div>
 
       {isModalOpen && (
         <Modal

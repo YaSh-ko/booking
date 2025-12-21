@@ -8,6 +8,7 @@ import { UserProvider } from './context/userContext';
 import { HotelPage } from './pages/hotelPage/HotelPage';
 import { HotelsFavorites } from './pages/hotelsFavorites/HotelsFavorites';
 import { SearchProvider } from './context/searchContext';
+import { Toaster } from 'react-hot-toast';
 import { BookingPage } from './pages/bookingPage/BookingPage';
 
 function App() {
@@ -24,6 +25,39 @@ function App() {
           <Route path="/contacts" element={<Contacts />}></Route>
           <Route path="/help" element={<Help />}></Route>
         </Routes>
+        <Toaster
+          position="top-center" // можно изменить на "bottom-center", "top-right" и т.д.
+          reverseOrder={false}
+          gutter={12}
+          containerStyle={{
+            top: 20,
+            left: 20,
+            right: 20,
+            zIndex: 9999,
+          }}
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#F4F4F4',
+              color: '#5A86D6',
+              fontSize: '16px',
+              borderRadius: '12px',
+              padding: '16px 20px',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            },
+            success: {
+              duration: 3000,
+              icon: '✅',
+            },
+            error: {
+              duration: 5000,
+              icon: '❌',
+            },
+            loading: {
+              duration: Infinity,
+            },
+          }}
+        />
       </UserProvider>
     </SearchProvider>
   );
