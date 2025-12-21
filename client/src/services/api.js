@@ -68,3 +68,7 @@ export const reviewApi = {
     return request(`/reviews/getReview?hotel_id=${hotel_id}`);
   },
 };
+
+export function getRoomDetails(roomId) {
+  return request(`/hotels/RoomDetails?room_id=${roomId}`);
+}

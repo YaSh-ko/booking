@@ -1,32 +1,32 @@
-import supabase from '../connect.js';
+import supabase from "../connect.js";
 
 export const getHotels = async (req, res) => {
   try {
     const { city, checkIn, checkOut, type } = req.query;
     const { data, error } = await supabase
-      .from('hotels')
-      .select('*')
-      .eq('city', city)
-      .eq('type', type);
+      .from("hotels")
+      .select("*")
+      .eq("city", city)
+      .eq("type", type);
 
     if (error) {
       // 500 - только для внутренних ошибок БД
-      console.error('Supabase error:', error);
-      return res.status(500).json({ error: 'Ошибка базы данных' });
+      console.error("Supabase error:", error);
+      return res.status(500).json({ error: "Ошибка базы данных" });
     }
 
     if (!data || data.length === 0) {
       // 404 - нет отелей по запросу
-      console.log('Ничего не найдено');
-      return res.status(404).json({ error: 'Отели не найдены' });
+      console.log("Ничего не найдено");
+      return res.status(404).json({ error: "Отели не найдены" });
     }
 
     // 200 - успех
     res.json(data);
   } catch (error) {
     // 500 - непредвиденные ошибки сервера
-    console.error('Server error:', error);
-    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+    console.error("Server error:", error);
+    res.status(500).json({ error: "Внутренняя ошибка сервера" });
   }
 };
 
@@ -35,20 +35,20 @@ export const getInfobyID = async (req, res) => {
     const { id, checkIn, checkOut } = req.query;
 
     const { data: hotel, error } = await supabase
-      .from('hotels')
-      .select('*, rooms(*)')
-      .eq('id', parseInt(id))
+      .from("hotels")
+      .select("*, rooms(*)")
+      .eq("id", parseInt(id))
       .single();
 
     if (error) {
       // 500 - только для внутренних ошибок БД
-      console.error('Supabase error:', error);
-      return res.status(500).json({ error: 'Ошибка базы данных' });
+      console.error("Supabase error:", error);
+      return res.status(500).json({ error: "Ошибка базы данных" });
     }
 
     if (!hotel) {
       // 404 - нет отелей по запросу
-      return res.status(404).json({ error: 'Данные не найдены' });
+      return res.status(404).json({ error: "Данные не найдены" });
     }
 
     if (!checkIn || !checkOut) {
@@ -58,11 +58,11 @@ export const getInfobyID = async (req, res) => {
     const roomIds = hotel.rooms.map((room) => room.id);
 
     const { data: bookings, error: bookingError } = await supabase
-      .from('bookings')
-      .select('room_id')
-      .in('room_id', roomIds)
-      .lt('check_in', checkOut)
-      .gt('check_out', checkIn);
+      .from("bookings")
+      .select("room_id")
+      .in("room_id", roomIds)
+      .lt("check_in", checkOut)
+      .gt("check_out", checkIn);
 
     if (bookingError) {
       console.error(bookingError);
@@ -77,31 +77,39 @@ export const getInfobyID = async (req, res) => {
     res.json(hotel);
   } catch (error) {
     // 500 - непредвиденные ошибки сервера
-    console.error('Server error:', error);
-    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+    console.error("Server error:", error);
+    res.status(500).json({ error: "Внутренняя ошибка сервера" });
   }
 };
 
 export const searchHotels = async (req, res) => {
   try {
-    const { city, min_price, max_price, sort = 'rating', order = 'desc' } = req.query;
+    const {
+      city,
+      min_price,
+      max_price,
+      sort = "rating",
+      order = "desc",
+    } = req.query;
 
     if (!city) {
-      return res.status(400).json({ error: 'Параметр city обязателен' });
+      return res.status(400).json({ error: "Параметр city обязателен" });
     }
 
     let query = supabase
-      .from('hotels')
-      .select('id, name, city, type, img, price, rating, adress')
-      .eq('city', city);
+      .from("hotels")
+      .select("id, name, city, type, img, price, rating, adress")
+      .eq("city", city);
 
     // Фильтры по цене
-    if (min_price) query = query.gte('price', parseInt(min_price, 10));
-    if (max_price) query = query.lte('price', parseInt(max_price, 10));
+    if (min_price) query = query.gte("price", parseInt(min_price, 10));
+    if (max_price) query = query.lte("price", parseInt(max_price, 10));
 
     // Сортировка
-    const validSort = ['price', 'rating', 'popularity'].includes(sort) ? sort : 'rating';
-    const validOrder = order === 'asc'; // true → asc, false → desc
+    const validSort = ["price", "rating", "popularity"].includes(sort)
+      ? sort
+      : "rating";
+    const validOrder = order === "asc"; // true → asc, false → desc
 
     query = query.order(validSort, { ascending: validOrder });
 
@@ -109,12 +117,12 @@ export const searchHotels = async (req, res) => {
     const { data, error } = await query;
 
     if (error) {
-      console.error('Supabase error:', error);
-      return res.status(500).json({ error: 'Ошибка базы данных' });
+      console.error("Supabase error:", error);
+      return res.status(500).json({ error: "Ошибка базы данных" });
     }
 
     if (!data || data.length === 0) {
-      return res.status(404).json({ message: 'Отели не найдены' });
+      return res.status(404).json({ message: "Отели не найдены" });
     }
 
     // Просто возвращаем массив отелей
@@ -122,7 +130,33 @@ export const searchHotels = async (req, res) => {
       hotels: data,
     });
   } catch (err) {
-    console.error('SearchHotels server error:', err);
-    res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+    console.error("SearchHotels server error:", err);
+    res.status(500).json({ error: "Внутренняя ошибка сервера" });
+  }
+};
+
+export const roomDetails = async (req, res) => {
+  try {
+    const { room_id } = req.query;
+
+    if (!room_id) {
+      return res.status(400).json({ error: "Параметр room_id обязателен" });
+    }
+
+    const { data, error } = await supabase
+      .from("rooms")
+      .select("*")
+      .eq("id", room_id);
+
+    if (error) {
+      // 500 - только для внутренних ошибок БД
+      console.error("Supabase error:", error);
+      return res.status(500).json({ error: "Ошибка базы данных" });
+    }
+
+    res.json(data);
+  } catch (err) {
+    console.error("server error:", err);
+    res.status(500).json({ error: "Внутренняя ошибка сервера" });
   }
 };
