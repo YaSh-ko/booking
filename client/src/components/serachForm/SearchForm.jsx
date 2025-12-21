@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './searchForm.scss';
 import { useSearch } from '../../context/searchContext';
+import toast from 'react-hot-toast';
 import { formatDate } from '../../utils/formatDate';
 
 export const SearchForm = ({ onSearch, hotelName = null }) => {
@@ -30,8 +31,8 @@ export const SearchForm = ({ onSearch, hotelName = null }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.city.trim() && !hotelName) {
-      alert('Введите город для поиска');
+    if (!formData.city.trim()) {
+      toast.error('Введите город для поиска');
       return;
     }
 

@@ -48,3 +48,23 @@ export const checkFavorites = (id) => {
 export const getFavorites = () => {
   return request('/favorites/GetFavorite');
 };
+
+export const reviewApi = {
+  addReview(hotel_id, rating, comment) {
+    return request('/reviews/addReview', {
+      method: 'POST',
+      body: { hotel_id, rating, comment },
+    });
+  },
+
+  deleteReview(hotel_id) {
+    return request('/reviews/deleteReview', {
+      method: 'POST',
+      body: { hotel_id },
+    });
+  },
+
+  getReview(hotel_id) {
+    return request(`/reviews/getReview?hotel_id=${hotel_id}`);
+  },
+};
