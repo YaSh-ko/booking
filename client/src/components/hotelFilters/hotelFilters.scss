@@ -2,20 +2,22 @@
 @import '../../assets//styles//breakpoints';
 
 .hotel-filters {
-  position: fixed;
   padding: 24px;
   background: $color-white-background;
   border-radius: $border-radius;
   box-shadow: $shadow-default;
-  width: 400px;
   color: $color-text-primary;
-  max-width: 100%; // важно для мобильных
+  width: 100%;
 
   &__title {
     font-size: 22px;
     font-weight: 700;
     margin: 0 0 24px 0;
     color: $color-primary;
+
+    @include respond(lg) {
+      font-size: 1.2rem;
+    }
   }
 
   &__subtitle {
@@ -23,8 +25,33 @@
     font-weight: 600;
     margin: 24px 0 16px 0;
     color: $color-text-primary;
-  }
 
+    @include respond(lg) {
+      font-size: 1rem;
+    }
+  }
+  &__select {
+    border-radius: $border-radius;
+    background-color: $color-white-background;
+    padding: 10px 12px;
+    border: 1px solid $color-primary;
+
+    option {
+      border-radius: 5px;
+      &:checked {
+        color: $color-text-secondary;
+        background-color: $color-primary;
+      }
+      &:hover {
+        color: $color-text-secondary;
+        background-color: $color-primary;
+      }
+      &:active {
+        color: $color-text-secondary;
+        background-color: $color-primary;
+      }
+    }
+  }
   &__section {
     margin-bottom: 32px;
 
@@ -41,6 +68,9 @@
     cursor: pointer;
     user-select: none;
 
+    @include respond(lg) {
+      font-size: 14px;
+    }
     input {
       opacity: 0;
       position: absolute;
@@ -177,107 +207,6 @@
 
     &:focus {
       outline: none;
-    }
-  }
-}
-
-/* === Адаптивность === */
-
-// Планшеты и ниже (≤768px)
-@include respond(md) {
-  .hotel-filters {
-    width: 100%;
-    padding: 20px;
-    border-radius: 0;
-    box-shadow: none;
-
-    &__title {
-      font-size: 20px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    &__subtitle {
-      font-size: 17px;
-      text-align: center;
-      margin: 20px 0 12px 0;
-    }
-
-    &__checkbox {
-      justify-content: center;
-      font-size: 15px;
-
-      .hotel-filters__checkmark {
-        width: 22px;
-        height: 22px;
-      }
-    }
-
-    .price-range {
-      &__values {
-        font-size: 14px;
-        padding: 0 10px;
-      }
-
-      &__slider {
-        height: 60px;
-        margin: 24px 0;
-      }
-
-      &__track,
-      &__fill {
-        height: 8px;
-      }
-
-      &__input {
-        &::-webkit-slider-thumb,
-        &::-moz-range-thumb {
-          width: 30px;
-          height: 30px;
-        }
-      }
-    }
-  }
-}
-
-// Мобильные (≤480px)
-@include respond(sm) {
-  .hotel-filters {
-    padding: 16px;
-
-    &__title {
-      font-size: 19px;
-    }
-
-    &__subtitle {
-      font-size: 16px;
-    }
-
-    &__checkbox {
-      font-size: 14px;
-      margin-bottom: 12px;
-    }
-
-    .price-range {
-      &__values {
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 16px;
-      }
-
-      &__slider {
-        height: 70px;
-        margin: 20px 0;
-      }
-
-      &__input {
-        &::-webkit-slider-thumb,
-        &::-moz-range-thumb {
-          width: 34px;
-          height: 34px;
-        }
-      }
     }
   }
 }

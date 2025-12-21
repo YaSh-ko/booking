@@ -11,27 +11,91 @@
   }
   main {
     padding-inline: 20px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    grid-template-rows: 113px auto;
+    grid-template-areas:
+      'filters search'
+      'filters hotels';
+    gap: 20px;
 
-    .filters-bar {
-      flex: 2;
+    @include respond(xl) {
+      grid-template-rows: 211px auto;
+    }
+    @include respond(lg) {
+      grid-template-columns: 3fr 7fr;
+    }
+    @include respond(md) {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        'search'
+        'filters'
+        'hotels';
+    }
+
+    .search-bar {
+      grid-area: search;
+    }
+    .hotels-search_loader {
+      height: 60vh;
 
       @include respond(md) {
-        display: none;
+        height: 100%;
+      }
+      display: flex;
+      align-items: center;
+    }
+
+    .filters-toggle {
+      display: none;
+      @include respond(md) {
+        display: block;
+      }
+      margin-top: 20px;
+      height: 60px;
+      width: 100%;
+      background-color: $color-white-background;
+      border-radius: $border-radius;
+      color: $color-text-primary;
+      font-weight: bold;
+    }
+    .filters-bar {
+      grid-area: filters;
+      position: sticky;
+      top: 90px;
+      height: calc(100vh - 90px);
+      overflow-y: auto;
+
+      // mobile
+      @include respond(md) {
+        position: static;
+        overflow: hidden;
+
+        max-height: 0;
+        opacity: 0;
+
+        transition:
+          max-height 0.35s ease,
+          opacity 0.25s ease,
+          transform 0.25s ease;
+      }
+
+      &--open {
+        @include respond(md) {
+          max-height: 580px; // запас
+          opacity: 1;
+        }
       }
     }
 
-    .content {
-      flex: 5;
+    .hotels-content {
+      width: 100%;
+      height: 100%;
+      grid-area: hotels;
       display: flex;
       flex-direction: column;
       align-items: center;
-
-      @include respond(md) {
-      }
-      .search-form {
-        margin-bottom: 20px;
-      }
     }
   }
 }

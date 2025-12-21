@@ -12,6 +12,35 @@
     max-width: 1440px;
   }
 
+  &__no-data-field {
+    background-color: $color-white-background;
+    border-radius: $border-radius;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  &__input-data-button {
+    padding: 10px 12px;
+    background-color: $color-button;
+    color: $color-text-secondary;
+    border-radius: $border-radius;
+  }
+  &__search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding-inline: 15%;
+  }
+
   &__loader {
     height: 80vh;
     display: flex;
@@ -290,4 +319,8 @@
 
 #rooms {
   scroll-margin-top: 80px;
+}
+
+.no-display {
+  display: none;
 }

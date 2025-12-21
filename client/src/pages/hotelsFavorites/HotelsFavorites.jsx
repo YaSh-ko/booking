@@ -6,11 +6,11 @@ import { Loader } from '../../components/loader/Loader';
 import { useEffect } from 'react';
 import './hotelsFavorites.scss';
 import { Link } from 'react-router-dom';
+import { useSearch } from '../../context/searchContext';
 export function HotelsFavorites() {
   const { favoriteHotels, fetchFavorites, isLoading } = useFavoriteHotels();
-
+  const { searchData } = useSearch();
   useEffect(() => {
-    console.log(favoriteHotels);
     fetchFavorites();
   }, []);
 

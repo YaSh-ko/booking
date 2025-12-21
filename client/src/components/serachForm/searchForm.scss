@@ -81,6 +81,10 @@
     transform: translateY(-50%);
     left: 0;
     transition: all 0.2s ease;
+
+    @include respond(lg) {
+      font-size: 1.1rem;
+    }
   }
 
   &__input {
@@ -94,6 +98,10 @@
     border-radius: 18px;
     background-color: #fff;
     transition: all 0.2s ease;
+
+    @include respond(lg) {
+      font-size: 1.1rem;
+    }
 
     &:focus {
       padding-inline: 10px;
@@ -119,6 +127,10 @@
     cursor: pointer;
     transition: 0.25s ease;
 
+    @include respond(lg) {
+      padding: 10px 16px;
+      font-size: 1rem;
+    }
     &:hover {
       background-color: #5a86d6;
     }

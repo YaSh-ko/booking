@@ -1,17 +1,19 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { formatDate } from '../utils/formatDate';
 
 const SearchContext = createContext();
+
 const defaultSearchData = {
   city: '',
-  checkIn: '',
-  checkOut: '',
   guests: 1,
   type: 'Hotel',
 };
+
 export const SearchProvider = ({ children }) => {
   const [searchData, setSearchData] = useState(defaultSearchData);
 
   const updateSearchData = useCallback((newData) => {
+    console.log(newData);
     setSearchData((prev) => ({ ...prev, ...newData }));
   }, []);
   return (

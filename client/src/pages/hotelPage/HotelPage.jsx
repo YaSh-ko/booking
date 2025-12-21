@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useHotelDetails } from '../../hooks/useHotelDetails';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Loader } from '../../components/loader/Loader';
 import { Header } from '../../components/navbar/Navbar';
 import './hotelPage.scss';
@@ -14,20 +14,52 @@ import { FavoriteButton } from '../../components/favoriteButton/FavoriteButton';
 import { AmenityList } from '../../components/amenityList/AmenityList';
 import { HotelReviews } from '../../components/hotelReviews/hotelReviews';
 import { useFavoriteHotels } from '../../hooks/useFavoriteHotels';
+import { SearchForm } from '../../components/serachForm/SearchForm';
+import { useClickOutside } from '../../hooks/useClickOutside';
+import { useSearch } from '../../context/searchContext';
 
 export function HotelPage() {
   const { id } = useParams();
   const { hotel, handleHotelDetails, isLoading } = useHotelDetails();
   const searchParams = Object.fromEntries(new URLSearchParams(location.search));
+  const [isBookingData, setIsBookimgData] = useState(Boolean(searchParams.checkIn));
   const { user } = useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const liveTime = new Date(searchParams.checkOut) - new Date(searchParams.checkIn);
-  const daysCount = Math.ceil(liveTime / (1000 * 60 * 60 * 24));
-
+  const navigate = useNavigate();
+  const { searchData, updateSearchData } = useSearch();
+  const [searchModal, setIsSearchModal] = useState(Boolean(!searchParams.checkIn));
   useEffect(() => {
     if (id) handleHotelDetails(Number(id));
+    updateSearchData(searchParams);
   }, [id]);
 
+  const handleSearch = (formData) => {
+    // Создаем новые параметры URL
+    const newSearchParams = new URLSearchParams({
+      ...searchParams,
+      checkIn: formData.checkIn,
+      checkOut: formData.checkOut,
+      guests: formData.guests.toString(),
+    }).toString();
+
+    updateSearchData(formData);
+
+    setIsSearchModal(false);
+    setIsBookimgData(true);
+
+    navigate(`${location.pathname}?${newSearchParams}`, { replace: true });
+  };
+
+  useEffect(() => {
+    const hasBookingData = Boolean(searchParams.checkIn);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsBookimgData(hasBookingData);
+  }, [location.search]);
+
+  const liveTime = new Date(searchData.checkOut) - new Date(searchData.checkIn);
+  const daysCount = Math.ceil(liveTime / (1000 * 60 * 60 * 24));
+
+  const modalRef = useClickOutside(() => setIsSearchModal(false), searchModal);
   return (
     <div className="hotelpage">
       <Header />
@@ -106,8 +138,7 @@ export function HotelPage() {
             ))}
           </div>
 
-          {/* Данные о заезде */}
-          <div className="hotelpage__booking-info">
+          <div className={`hotelpage__booking-info ${isBookingData ? '' : 'no-display'}`}>
             <div className="hotelpage__booking-item hotelpage__booking-item--city">
               <svg
                 className="hotelpage__booking-icon"
@@ -139,7 +170,7 @@ export function HotelPage() {
               <div className="hotelpage__booking-content">
                 <span className="hotelpage__booking-label">Даты проживания</span>
                 <span className="hotelpage__booking-value">
-                  <b>{searchParams.checkIn}</b> – <b>{searchParams.checkOut}</b>
+                  <b>{searchData.checkIn}</b> – <b>{searchData.checkOut}</b>
                   <span style={{ color: '#666', fontSize: '14px', marginLeft: '8px' }}>
                     ({daysCount} суток)
                   </span>
@@ -160,10 +191,10 @@ export function HotelPage() {
               <div className="hotelpage__booking-content">
                 <span className="hotelpage__booking-label">Гости</span>
                 <span className="hotelpage__booking-value">
-                  <b>{searchParams.guests}</b>{' '}
-                  {searchParams.guests === 1
+                  <b>{searchData.guests}</b>{' '}
+                  {searchData.guests === 1
                     ? 'гость'
-                    : searchParams.guests >= 2 && searchParams.guests <= 4
+                    : searchData.guests >= 2 && searchData.guests <= 4
                       ? 'гостя'
                       : 'гостей'}
                 </span>
@@ -171,20 +202,36 @@ export function HotelPage() {
             </div>
           </div>
 
-          <div id="rooms">
-            <RoomsCardsList rooms={hotel.rooms} />
-          </div>
 
-          <div id="reviews">
+          
+          {isBookingData ? (
+            <div id="rooms">
+              <RoomsCardsList rooms={hotel.rooms} />
+            </div>
+          ) : (
+            <div>
+              <span>
+                <button
+                  onClick={() => setIsSearchModal(true)}
+                  className="no-user-action no-user-action--button"
+                >
+                  Введите данные заезда
+                </button>{' '}
+                чтобы посмотреть комнаты
+              </span>
+            </div>
+          )}
+        </div>
+      ) : (
+        <p className="hotelpage__not-found">Отель не найден</p>
+      )}
+      
+      <div id="reviews">
             <HotelReviews
               hotelId={hotel.id}
               handleClickNoUser={() => setIsModalOpen(true)}
             />
           </div>
-        </div>
-      ) : (
-        <p className="hotelpage__not-found">Отель не найден</p>
-      )}
 
       {isModalOpen && (
         <Modal
@@ -192,6 +239,18 @@ export function HotelPage() {
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
         />
+      )}
+
+      {searchModal && (
+        <div className="hotelpage__search-overlay">
+          <div ref={modalRef}>
+            <SearchForm
+              className="hotelpage__search-form"
+              onSearch={handleSearch}
+              hotelName={hotel?.name}
+            />
+          </div>
+        </div>
       )}
     </div>
   );

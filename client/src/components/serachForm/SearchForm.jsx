@@ -2,17 +2,32 @@ import { useEffect, useState } from 'react';
 import './searchForm.scss';
 import { useSearch } from '../../context/searchContext';
 import toast from 'react-hot-toast';
+import { formatDate } from '../../utils/formatDate';
 
-export const SearchForm = ({ onSearch }) => {
+export const SearchForm = ({ onSearch, hotelName = null }) => {
   const { searchData: contextData, updateSearchData } = useSearch();
+
+  const defaultCheckIn = new Date();
+  const defaultCheckOut = new Date(
+    new Date(defaultCheckIn).setDate(defaultCheckIn.getDate() + 7),
+  );
   const [formData, setFormData] = useState({
     city: contextData?.city || '',
-    checkIn: contextData?.checkIn || '',
-    checkOut: contextData?.checkOut || '',
+    checkIn: contextData?.checkIn || formatDate(defaultCheckIn),
+    checkOut: contextData?.checkOut || formatDate(defaultCheckOut),
     guests: contextData?.guests || 1,
-    type: contextData?.placeType || 'Hotel',
+    type: contextData.type,
   });
 
+  useEffect(() => {
+    if (contextData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setFormData((prev) => ({
+        ...prev,
+        ...contextData,
+      }));
+    }
+  }, [contextData]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,21 +54,37 @@ export const SearchForm = ({ onSearch }) => {
 
   return (
     <form onSubmit={handleSubmit} className="search-form">
-      <div className="search-form__group search-form__group-city">
-        <label className="search-form__label" htmlFor="cityValue">
-          Город
-        </label>
-        <input
-          type="text"
-          name="city"
-          className="search-form__input"
-          id="cityValue"
-          placeholder="Введите город"
-          value={formData.city}
-          onChange={handleChange}
-          required
-        />
-      </div>
+      {hotelName ? (
+        <div className="search-form__group search-form__group-city">
+          <label className="search-form__label" htmlFor="cityValue">
+            Отель
+          </label>
+          <input
+            type="text"
+            name="city"
+            className="search-form__input"
+            value={hotelName}
+            disabled
+            required
+          />
+        </div>
+      ) : (
+        <div className="search-form__group search-form__group-city">
+          <label className="search-form__label" htmlFor="cityValue">
+            Город
+          </label>
+          <input
+            type="text"
+            name="city"
+            className="search-form__input"
+            id="cityValue"
+            placeholder="Введите город"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
+        </div>
+      )}
 
       <div className="search-form__group search-form__group-checkin">
         <label className="search-form__label" htmlFor="checkInValue">
