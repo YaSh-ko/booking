@@ -223,14 +223,14 @@ export function HotelPage() {
               </span>
             </div>
           )}
+
+          <div id="reviews" className="hotelpage__reviews">
+            <HotelReviews hotelId={id} handleClickNoUser={() => setIsModalOpen(true)} />
+          </div>
         </div>
       ) : (
         <p className="hotelpage__not-found">Отель не найден</p>
       )}
-
-      <div id="reviews">
-        <HotelReviews hotelId={hotel.id} handleClickNoUser={() => setIsModalOpen(true)} />
-      </div>
 
       {isModalOpen && (
         <Modal
