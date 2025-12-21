@@ -2,7 +2,7 @@
 import { RoomCard } from '../roomCard/roomCard';
 import './roomsCardsList.scss';
 
-export const RoomsCardsList = ({ rooms }) => {
+export const RoomsCardsList = ({ rooms, onClickRoom }) => {
   if (!rooms.length) {
     return (
       <div className="room-list__empty">
@@ -14,7 +14,7 @@ export const RoomsCardsList = ({ rooms }) => {
   return (
     <div className="room-list">
       {rooms.map((room) => (
-        <RoomCard key={room.id} room={room} />
+        <RoomCard key={room.id} room={room} onClick={onClickRoom} />
       ))}
     </div>
   );

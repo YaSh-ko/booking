@@ -49,6 +49,10 @@ export function HotelPage() {
     navigate(`${location.pathname}?${newSearchParams}`, { replace: true });
   };
 
+  const hangleClickRoom = () => {
+    navigate(`/hotel/booking`);
+  };
+
   useEffect(() => {
     const hasBookingData = Boolean(searchParams.checkIn);
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -203,7 +207,7 @@ export function HotelPage() {
 
           {isBookingData ? (
             <div id="rooms">
-              <RoomsCardsList rooms={hotel.rooms} />
+              <RoomsCardsList rooms={hotel.rooms} onClickRoom={hangleClickRoom} />
             </div>
           ) : (
             <div>

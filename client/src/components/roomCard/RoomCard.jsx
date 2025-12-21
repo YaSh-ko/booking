@@ -1,7 +1,7 @@
 import { formatPrice } from '../../utils/formatPrice';
 import './roomCard.scss';
 
-export const RoomCard = ({ room }) => {
+export const RoomCard = ({ room, onClick }) => {
   const { capacity, image_url, price_per_night, room_number, room_type } = room;
 
   return (
@@ -21,7 +21,9 @@ export const RoomCard = ({ room }) => {
           </span>
         </div>
 
-        <button className="room-card__button">Забронировать</button>
+        <button className="room-card__button" onClick={onClick}>
+          Забронировать
+        </button>
       </div>
     </div>
   );

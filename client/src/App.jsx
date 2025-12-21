@@ -8,6 +8,7 @@ import { UserProvider } from './context/userContext';
 import { HotelPage } from './pages/hotelPage/HotelPage';
 import { HotelsFavorites } from './pages/hotelsFavorites/HotelsFavorites';
 import { SearchProvider } from './context/searchContext';
+import { BookingPage } from './pages/bookingPage/BookingPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<HotelsListPage />} />
           <Route path="/hotel/details/:id" element={<HotelPage />} />
+          <Route path="/hotel/booking" element={<BookingPage />} />
           <Route path="/hotels/favorites" element={<HotelsFavorites />} />
           <Route path="/about" element={<AboutUs />}></Route>
           <Route path="/contacts" element={<Contacts />}></Route>
