@@ -178,7 +178,7 @@ export const HotelReviews = ({ hotelId, handleClickNoUser }) => {
                 </div>
               </div>
               <div className="hotel-review__rating">
-                <span className="hotel-review__rating-score">{review.rating}</span>
+                <span className="hotel-review__rating-score">{review.rating} ★</span>
               </div>
               <p className="hotel-review__text">{review.comment}</p>
 
