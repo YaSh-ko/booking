@@ -8,13 +8,23 @@ export const sendCode = async (req, res) => {
       return res.status(400).json({ error: 'Email обязателен'});
     }
 
-    if (!name) {
+    // Валидация email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Неверный формат email'});
+    }
+
+    if (!name || name.trim().length === 0) {
       return res.status(400).json({ error: 'Имя обязательно'});
+    }
+
+    if (name.trim().length < 2) {
+      return res.status(400).json({ error: 'Имя должно содержать минимум 2 символа'});
     }
 
     const {data, error} = await supabase.auth.signInWithOtp({
       email,
-      options: { 
+      options: {
         data: { name }
       }
     });
@@ -38,9 +48,18 @@ export const verifyCode = async (req, res) => {
   try {
     const { email, code } = req.body;
 
+    if (!email || !code) {
+      return res.status(400).json({ error: 'Email и код обязательны' });
+    }
 
-    if (!email || !code || code.length !== 6) {
-      return res.status(400).json({ error: 'Неверный код или email' });
+    // Валидация email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Неверный формат email' });
+    }
+
+    if (code.length !== 6 || !/^\d+$/.test(code)) {
+      return res.status(400).json({ error: 'Код должен состоять из 6 цифр' });
     }
 
     const {data, error} = await supabase.auth.verifyOtp({
@@ -76,7 +95,7 @@ export const verifyCode = async (req, res) => {
         user_uuid: user.id,
         email: user.email,
         name: finalName
-      }, {onConflict: 'email' 
+      }, {onConflict: 'email'
       });
 
     if (dbError) {

@@ -1,0 +1,59 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/breakpoints';
+.bookings {
+  height: 100%;
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+  }
+
+  &__content {
+    padding-inline: 160px;
+    padding-bottom: 40px;
+
+    @include respond(lg) {
+      padding-inline: 80px;
+    }
+
+    @include respond(md) {
+      padding-inline: 40px;
+    }
+
+    @include respond(sm) {
+      padding-inline: 20px;
+    }
+  }
+
+  &__list {
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__message {
+    font-size: 1.2rem;
+    color: #666;
+    font-weight: 500;
+  }
+
+  &__link {
+    font-weight: bold;
+    color: $color-primary;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: darken($color-primary, 10%);
+      text-decoration: underline;
+    }
+  }
+}

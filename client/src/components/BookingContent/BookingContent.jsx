@@ -1,3 +1,6 @@
+import toast from 'react-hot-toast';
+import { useBooking } from '../../hooks/useBooking';
+import { bookingApi } from '../../services/api';
 import { formatPrice } from '../../utils/formatPrice';
 import { AmenityList } from '../amenityList/AmenityList';
 import { BookingInfo } from '../bookingInfo/BookingInfo';
@@ -11,7 +14,26 @@ export function BookingContent({
   onClickModal,
   daysCount,
 }) {
-  const { capacity, image_url, price_per_night, room_number, room_type, hotels } = room;
+  console.log(room);
+  const { capacity, image_url, price_per_night, id, room_number, room_type, hotels } =
+    room;
+  const { booking, handleBooking } = useBooking();
+
+  const handleCreateBooking = async () => {
+    try {
+      if (!searchData.checkIn || !searchData.checkOut) {
+        toast.error('Отсутствуют даты бронирования');
+        return;
+      }
+
+      await handleBooking(id, searchData.checkIn, searchData.checkOut);
+    } catch (error) {
+      console.error('Ошибка создания бронирования:', error);
+      toast.error('Не удалось создать бронирование');
+      throw error; // Пробрасываем ошибку дальше для обработки в PaymentForm
+    }
+  };
+
   return (
     <div className="booking">
       <div className="booking-content">
@@ -114,7 +136,11 @@ export function BookingContent({
       </div>
       {user ? (
         <div className="booking-content__payment-form">
-          <PaymentForm amount={daysCount * price_per_night} user={user} />
+          <PaymentForm
+            amount={daysCount * price_per_night}
+            user={user}
+            handleCreateBooking={handleCreateBooking}
+          />
         </div>
       ) : (
         <div className="booking-content__no-user">

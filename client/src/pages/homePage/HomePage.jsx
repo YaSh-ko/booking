@@ -18,13 +18,7 @@ export const HomePage = () => {
   const [authModal, setAuthModal] = useState(false);
 
   const handleClickHotelDetails = (id) => {
-    const params = new URLSearchParams({
-      checkIn: searchData.checkIn,
-      checkOut: searchData.checkOut,
-      guests: searchData.guests.toString(),
-    }).toString();
-
-    window.open(`/hotel/details/${id}?${params}`, '_blank', 'noopener,noreferrer');
+    window.open(`/hotel/details/${id}`, '_blank', 'noopener,noreferrer');
   };
 
   useEffect(() => console.log(searchData), [searchData]);

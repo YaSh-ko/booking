@@ -10,7 +10,10 @@ import {
 import './paymantForm.scss';
 import { formatPrice } from '../../utils/formatPrice';
 import { request } from '../../services/request';
-export function PaymentForm({ user, amount }) {
+import { bookingApi } from '../../services/api';
+import toast from 'react-hot-toast';
+import { useUserContext } from '../../context/userContext';
+export function PaymentForm({ user, amount, handleCreateBooking }) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -18,6 +21,7 @@ export function PaymentForm({ user, amount }) {
   const [email, setEmail] = useState(user.email || '');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const { updateBookings } = useUserContext();
   const handlePay = async () => {
     setIsSuccess(false);
     if (!stripe || !elements) return;
@@ -39,7 +43,10 @@ export function PaymentForm({ user, amount }) {
         },
       });
 
-      console.log(clientSecret);
+      if (!clientSecret) {
+        toast.error('Не удалось создать платеж. Попробуйте еще раз');
+        return;
+      }
 
       // 2. Подтверждаем платёж
       const result = await stripe.confirmCardPayment(clientSecret, {
@@ -54,11 +61,24 @@ export function PaymentForm({ user, amount }) {
 
       if (result.error) {
         setIsSuccess(false);
-        alert(result.error.message);
+        toast.error(result.error.message || 'Ошибка при оплате');
       } else {
         setIsSuccess(true);
-        alert('Оплата прошла успешно 🎉');
+        toast.success('Оплата прошла успешно 🎉');
+        try {
+          await handleCreateBooking();
+          // Обновляем список бронирований
+          await updateBookings();
+        } catch (bookingError) {
+          console.error('Ошибка при создании бронирования после оплаты:', bookingError);
+          toast.error(
+            'Оплата прошла, но произошла ошибка при создании бронирования. Обратитесь в поддержку',
+          );
+        }
       }
+    } catch (error) {
+      console.error('Ошибка при обработке платежа:', error);
+      toast.error('Произошла ошибка при обработке платежа. Попробуйте еще раз');
     } finally {
       setIsLoading(false);
     }
