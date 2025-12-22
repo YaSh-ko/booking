@@ -29,15 +29,16 @@ export function PaymentForm({ amount }) {
 
     try {
       // 1. Создаём intent на сервере
-      const { clientSecret } = await request('booking/Payment', {
+      const { clientSecret } = await request('/booking/Payment', {
         method: 'POST',
         body: {
           name,
           email,
           amount: (amount / 2) * 100,
-          curency: 'rub',
         },
       });
+
+      console.log(clientSecret);
 
       // 2. Подтверждаем платёж
       const result = await stripe.confirmCardPayment(clientSecret, {
@@ -63,6 +64,7 @@ export function PaymentForm({ amount }) {
   return (
     <div className="payment-card">
       <div className="card-fields">
+        <span style={{ fontWeight: 'bold' }}>Данные карты</span>
         <CardNumberElement
           options={{
             style: {

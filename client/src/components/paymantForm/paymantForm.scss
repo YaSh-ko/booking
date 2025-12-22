@@ -77,8 +77,9 @@
   flex-direction: column;
   background-color: #e2e8f0;
   justify-content: space-between;
-  padding: 30px 20px;
+  padding: 20px 20px;
   border-radius: $border-radius;
+  box-shadow: $shadow-default;
   &__add-data {
     display: flex;
   }
