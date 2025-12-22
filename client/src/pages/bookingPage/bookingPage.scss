@@ -1,4 +1,15 @@
 .booking-page {
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  &__no-data {
+    display: flex;
+    justify-content: center;
+  }
   &__paymant-form {
     margin-top: 20px;
   }

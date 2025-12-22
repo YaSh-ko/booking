@@ -1,127 +1,119 @@
-@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/variables';
 @import '../../assets/styles/breakpoints';
 
 .contacts-page__content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  margin-top: 20px;
+  gap: 60px;
+  margin-top: 40px;
+  padding: 0 20px;
 }
 
 .contacts-section {
   display: flex;
   justify-content: center;
-  gap: 7rem;
+  gap: 60px;
+  flex-wrap: wrap;
 
   @include respond(md) {
-    flex-wrap: wrap;
-    gap: 3rem;
+    gap: 40px;
   }
 
   @include respond(sm) {
     flex-direction: column;
-    gap: 2rem;
+    align-items: center;
+    gap: 40px;
   }
 }
 
-.contacts-section p {
-  margin: 3px;
-}
-
-.Yakov,
-.Petr,
-.Alex {
+.developer-card {
+  border-radius: $border-radius;
+  padding: 32px;
+  width: 320px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
-  text-align: justify;
+
+  @include respond(lg) {
+    width: 280px;
+    padding: 28px;
+  }
+
+  @include respond(md) {
+    width: 260px;
+  }
+
+  @include respond(sm) {
+    width: 100%;
+    max-width: 340px;
+    padding: 24px;
+  }
 }
 
-.Yakov-img,
-.Petr-img,
-.Alex-img {
-  border-radius: 20px;
-  height: 400px;
-  width: 300px;
+.developer-img {
+  width: 100%;
+  height: 360px;
   object-fit: cover;
-}
+  border-radius: $border-radius;
+  margin-bottom: 24px;
 
-@include respond(xl) {
-  .Yakov,
-  .Petr,
-  .Alex {
-    width: 260px;
+  @include respond(lg) {
+    height: 320px;
   }
-  .Yakov-img,
-  .Petr-img,
-  .Alex-img {
-    width: 260px;
-    height: 350px;
-  }
-}
 
-@include respond(lg) {
-  .Yakov,
-  .Petr,
-  .Alex {
-    width: 230px;
+  @include respond(md) {
+    height: 280px;
   }
-  .Yakov-img,
-  .Petr-img,
-  .Alex-img {
-    width: 230px;
+
+  @include respond(sm) {
     height: 300px;
   }
 }
 
-@include respond(md) {
-  .Yakov,
-  .Petr,
-  .Alex {
-    width: 200px;
-  }
-  .Yakov-img,
-  .Petr-img,
-  .Alex-img {
-    width: 200px;
-    height: 260px;
-  }
+.developer-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: $color-primary;
+  margin: 0 0 12px 0;
 }
 
-@include respond(sm) {
-  .Yakov,
-  .Petr,
-  .Alex {
-    width: 180px;
-  }
-  .Yakov-img,
-  .Petr-img,
-  .Alex-img {
-    width: 180px;
-    height: 220px;
-  }
+.developer-role {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+.developer-desc {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.developer-contact {
+  font-size: 16px;
+  font-weight: 600;
+  color: $color-primary;
+  margin: 0;
 }
 
 .text-section {
-  text-align: justify;
-  width: 1150px;
-
-  @include respond(xl) {
-    width: 900px;
-  }
-
-  @include respond(lg) {
-    width: 700px;
-  }
+  max-width: 900px;
+  text-align: center; /* ← center вместо justify */
+  font-size: 18px;
+  line-height: 1.8;
+  color: #333;
+  padding: 0 20px;
 
   @include respond(md) {
-    width: 90%;
+    font-size: 17px;
   }
 
   @include respond(sm) {
-    width: 92%;
-    font-size: 14px;
+    font-size: 16px;
+    padding: 0 16px;
   }
 }

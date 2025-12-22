@@ -120,8 +120,8 @@ export function Modal({ open, onClose, modalType }) {
           )}
         </div>
       ) : (
-        <div className="modal" ref={modalRef}>
-          <h2 className="modal__title">Вы уверены что хотите выйти? </h2>
+        <div className="modal_logout" ref={modalRef}>
+          <h2 className="modal__title__logout">Вы уверены что хотите выйти? </h2>
 
           <div className="modal__exit-buttons-group">
             <button
@@ -131,7 +131,7 @@ export function Modal({ open, onClose, modalType }) {
               Вернуться
             </button>
             <button
-              className="modal__button"
+              className="modal__button_logout"
               onClick={() => {
                 logout();
                 onClose();

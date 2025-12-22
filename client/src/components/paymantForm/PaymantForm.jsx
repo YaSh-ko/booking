@@ -10,15 +10,16 @@ import {
 import './paymantForm.scss';
 import { formatPrice } from '../../utils/formatPrice';
 import { request } from '../../services/request';
-export function PaymentForm({ amount }) {
+export function PaymentForm({ user, amount }) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState(user.name || '');
+  const [email, setEmail] = useState(user.email || '');
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isSuccess, setIsSuccess] = useState(false);
   const handlePay = async () => {
+    setIsSuccess(false);
     if (!stripe || !elements) return;
     if (!name || !email) {
       alert('Заполните имя и email');
@@ -52,8 +53,10 @@ export function PaymentForm({ amount }) {
       });
 
       if (result.error) {
+        setIsSuccess(false);
         alert(result.error.message);
       } else {
+        setIsSuccess(true);
         alert('Оплата прошла успешно 🎉');
       }
     } finally {
@@ -158,10 +161,10 @@ export function PaymentForm({ amount }) {
 
         <button
           onClick={handlePay}
-          disabled={!stripe || isLoading}
-          className="payment-card__button"
+          disabled={!stripe || isLoading || isSuccess}
+          className={`payment-card__button ${isSuccess ? 'payment-card__button--success' : ''}`}
         >
-          {isLoading ? 'Оплата...' : 'Оплатить'}
+          {!isSuccess ? (isLoading ? 'Оплата...' : 'Оплатить') : 'Оплачено'}
         </button>
       </div>
     </div>

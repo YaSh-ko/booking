@@ -18,10 +18,8 @@ export function UserProvider({ children }) {
   }, [recentlyViewed]);
 
   const addToRecentlyViewed = useCallback((hotel) => {
-    console.log(hotel);
     setRecentlyViewed((prev) => {
       const filtered = prev.filter((h) => h.id !== hotel.id);
-      console.log(filtered);
       const updated = [hotel, ...filtered].slice(0, 4);
       console.log(updated);
       return updated;
