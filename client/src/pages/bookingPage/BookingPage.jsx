@@ -1,6 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Header } from '../../components/navbar/Navbar';
 import { useRoomDetails } from '../../hooks/useRoom';
+
+import Footer from '../../components/footer/footer';
 import { useEffect, useState } from 'react';
 import { useSearch } from '../../context/searchContext';
 import { Loader } from '../../components/loader/Loader';
@@ -56,6 +58,7 @@ export function BookingPage() {
       <Header />
 
       <div className="main-content">{bookingContent()}</div>
+      <Footer />
       {authModal && (
         <Modal open={authModal} onClose={() => setAuthModal(false)} modalType="auth" />
       )}

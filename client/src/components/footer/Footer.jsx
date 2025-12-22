@@ -44,10 +44,26 @@ const Footer = () => {
         <div className="footer__column">
           <h4>Разделы</h4>
           <ul>
-            <li>Поиск</li>
-            <li>Популярные направления</li>
-            <li>Недавнее</li>
-            <li>Отзывы</li>
+            <li className="page__item">
+              <a href="/#search-section" className="navbar__link">
+                Поиск
+              </a>
+            </li>
+            <li className="page__item">
+              <a href="/#popular-destinations" className="navbar__link">
+                Популярные направления
+              </a>
+            </li>
+            <li className="page__item">
+              <a href="/#recently-viewed" className="navbar__link">
+                Недавние
+              </a>
+            </li>
+            <li className="page__item">
+              <a href="/#reviews" className="navbar__link">
+                отзывы
+              </a>
+            </li>
           </ul>
         </div>
 

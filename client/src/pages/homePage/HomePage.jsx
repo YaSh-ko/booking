@@ -46,7 +46,7 @@ export const HomePage = () => {
       <Header />
 
       <main className="home-page__content main-content">
-        <section className="home-page__search-section">
+        <section id="search-section" className="home-page__search-section">
           <h1 className="visually-hidden">Найти отель</h1>
 
           <div className="home-page__search-container">
@@ -78,7 +78,7 @@ export const HomePage = () => {
           </div>
         </section>
 
-        <section className="home-page__top-hotels-section">
+        <section id="recently-viewed" className="home-page__top-hotels-section">
           <h2 className="section-title">Недавно просмотренные</h2>
           {user ? (
             recentlyViewed.length === 0 ? (
@@ -86,7 +86,7 @@ export const HomePage = () => {
                 <span>
                   Перейдите на{' '}
                   <Link to="/search" className="no-user-action">
-                    страницу посика
+                    страницу поиска
                   </Link>
                   , чтобы появились недавно просмотренные
                 </span>
@@ -112,12 +112,12 @@ export const HomePage = () => {
           )}
         </section>
 
-        <section className="home-page__popular-destinations">
+        <section id="popular-destinations" className="home-page__popular-destinations">
           <h2 className="section-title">Популярные напрвления</h2>
           <PopularDestinations />
         </section>
 
-        <section className="home-page__reviews">
+        <section id="reviews" className="home-page__reviews">
           <h2 className="section-title">Отзывы о нас</h2>
           <Reviews />
         </section>
