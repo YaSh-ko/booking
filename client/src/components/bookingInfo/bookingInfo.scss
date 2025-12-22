@@ -1,0 +1,98 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/breakpoints';
+
+.booking-info {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 24px;
+  align-items: center;
+  background-color: #f8fafc;
+  padding: 28px 32px;
+  border-radius: 12px;
+  box-shadow: $shadow-default;
+
+  @include respond(md) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 24px 20px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    &--city {
+      .booking-info__icon {
+        color: #3b82f6; // синий
+      }
+    }
+
+    &--date {
+      justify-content: center;
+      .booking-info__icon {
+        color: #10b981; // зеленый
+      }
+
+      @include respond(md) {
+        justify-content: flex-start;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+        margin-top: 4px;
+      }
+    }
+
+    &--guests {
+      justify-content: flex-end;
+
+      .booking-info__icon {
+        color: #f59e0b; // оранжевый
+      }
+
+      @include respond(md) {
+        justify-content: flex-start;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+      }
+    }
+  }
+
+  &__icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+    letter-spacing: 0.3px;
+  }
+
+  &__value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.4;
+
+    b {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .booking-info__days {
+      color: #666;
+      font-size: 14px;
+      font-weight: 400;
+      margin-left: 8px;
+    }
+  }
+}

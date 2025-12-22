@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getHotelDetails, getRoomDetails } from '../services/api';
+import { getRoomDetails } from '../services/api';
 import {
   BadRequestError,
   NetworkError,
@@ -7,7 +7,7 @@ import {
   ServerError,
 } from '../services/error';
 
-export function useHotelDetails() {
+export function useRoomDetails() {
   const [room, setRoom] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 

@@ -1,0 +1,43 @@
+@import '../../assets/styles/breakpoints';
+@import '../../assets/styles/variables';
+.booking-content {
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+  grid-template-rows: 1fr 100px 100px;
+  gap: 40px;
+  margin-top: 20px;
+
+  &__paymant-info {
+    background-color: $color-primary;
+    border-radius: $border-radius;
+    color: $color-text-secondary;
+  }
+}
+
+.room-card {
+  &--booking {
+    grid-row: span 3;
+    &:hover {
+      transform: none;
+    }
+    @include respond(md) {
+      grid-row: span 1;
+    }
+  }
+  &__image--booking {
+    height: 260px;
+  }
+
+  &__capacity--booking {
+    font-size: 1rem;
+  }
+  &__price--booking {
+    font-size: 1.2rem;
+  }
+}
+
+.hotelpage__header {
+  &--booking {
+    margin: 0;
+  }
+}

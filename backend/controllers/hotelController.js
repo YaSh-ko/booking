@@ -145,8 +145,9 @@ export const roomDetails = async (req, res) => {
 
     const { data, error } = await supabase
       .from("rooms")
-      .select("*")
-      .eq("id", room_id);
+      .select("*, hotels (name, description, price, city, adress, amenities)")
+      .eq("id", room_id)
+      .single();
 
     if (error) {
       // 500 - только для внутренних ошибок БД
@@ -154,7 +155,7 @@ export const roomDetails = async (req, res) => {
       return res.status(500).json({ error: "Ошибка базы данных" });
     }
 
-    res.json(data);
+    res.json({ room: data });
   } catch (err) {
     console.error("server error:", err);
     res.status(500).json({ error: "Внутренняя ошибка сервера" });

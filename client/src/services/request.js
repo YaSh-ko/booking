@@ -50,6 +50,5 @@ export async function request(path, options = {}) {
         throw new Error('Неизвестная ошибка');
     }
   }
-
   return data;
 }
