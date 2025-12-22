@@ -73,7 +73,7 @@ export const Header = () => {
                       <Link to="/hotels/favorites">Избранное</Link>
                     </li>
                     <li className="user-menu__item user-menu__link">
-                      <Link>Бронирования</Link>
+                      <Link to="/bookings">Бронирования</Link>
                     </li>
                     <li className="user-menu__item user-menu__button">
                       <button
@@ -101,7 +101,10 @@ export const Header = () => {
                     <path d="M43.62,52a2,2,0,0,1-1.09-.33L26,40.83,9.47,51.67a2,2,0,0,1-2,.09,2,2,0,0,1-1-1.76V2a2,2,0,0,1,2-2H43.62a2,2,0,0,1,2,2V50a2,2,0,0,1-1,1.76A2,2,0,0,1,43.62,52ZM26,36.44a2.1,2.1,0,0,1,1.1.32L41.62,46.3V4H10.38V46.3L24.9,36.76A2.1,2.1,0,0,1,26,36.44Z" />
                   </svg>
                 </Link>
-                <Link className="user-actions__button user-actions__button--bookings">
+                <Link
+                  to="/bookings"
+                  className="user-actions__button user-actions__button--bookings"
+                >
                   <svg
                     width="24"
                     height="24"

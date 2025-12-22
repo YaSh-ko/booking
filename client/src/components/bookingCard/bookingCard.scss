@@ -1,0 +1,297 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/breakpoints';
+
+.booking-card {
+  min-width: 100%;
+  background-color: $color-white-background;
+  border-radius: $border-radius;
+  box-shadow: $shadow-default;
+  color: #1a1a1a;
+  margin-bottom: 24px;
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border: 1px solid #f0f0f0;
+  position: relative;
+  overflow: hidden;
+
+  @include respond(lg) {
+    gap: 10px;
+  }
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  &--mobile {
+    @include respond(sm) {
+      flex-direction: column;
+      width: 100%;
+      padding: 16px;
+      gap: 16px;
+    }
+  }
+
+  &__image-container {
+    position: relative;
+    width: 40%;
+    min-width: 40%;
+    border-radius: $border-radius;
+    overflow: hidden;
+
+    @include respond(sm) {
+      width: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: $border-radius;
+      min-height: 200px;
+    }
+  }
+
+  &__rating {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+  }
+
+  &__rating-value {
+    font-weight: 600;
+    color: #1a1a1a;
+    font-size: 14px;
+  }
+
+  &__content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__header {
+    margin-bottom: 16px;
+  }
+
+  &__title-container {
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    margin: 0 0 4px 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+
+    @include respond(lg) {
+      font-size: 1.5rem;
+    }
+
+    @include respond(md) {
+      font-size: 1.3rem;
+    }
+
+    @include respond(sm) {
+      font-size: 1.4rem;
+    }
+  }
+
+  &__city {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+    font-weight: 500;
+
+    @include respond(lg) {
+      font-size: 0.95rem;
+    }
+  }
+
+  &__room-info {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  &__room-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &__room-number {
+    font-weight: 600;
+    color: #1a1a1a;
+    font-size: 1rem;
+  }
+
+  &__room-type {
+    color: #666;
+    font-size: 0.95rem;
+    padding: 4px 12px;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+  }
+
+  &__room-capacity {
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  &__dates {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  &__date-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__date-label {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+  }
+
+  &__date-value {
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    font-weight: 600;
+  }
+
+  &__description {
+    color: #555;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+    flex-grow: 1;
+    font-size: 0.95rem;
+
+    @include respond(lg) {
+      font-size: 0.9rem;
+    }
+
+    @include respond(sm) {
+      font-size: 0.95rem;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  &__price-container {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  &__price-label {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  &__price {
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #5a86d6;
+    line-height: 1;
+
+    @include respond(lg) {
+      font-size: 1.15rem;
+    }
+
+    @include respond(md) {
+      font-size: 1.4rem;
+    }
+  }
+
+  &__button {
+    background: $color-button;
+    color: white;
+    border: none;
+    border-radius: $border-radius;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+    text-decoration: none;
+    display: inline-block;
+
+    &:hover {
+      background: #5a86d6;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    @include respond(lg) {
+      padding: 10px 10px;
+      min-width: 96px;
+      font-size: 0.8rem;
+    }
+
+    @include respond(md) {
+      padding: 10px 20px;
+      min-width: 120px;
+      font-size: 0.9rem;
+    }
+
+    @include respond(sm) {
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+
+  // Адаптивные стили для мобильных
+  @include respond(md) {
+    &__footer {
+      flex-direction: column;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    &__price-container {
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    &__button {
+      width: 100%;
+      max-width: none;
+    }
+  }
+}
+

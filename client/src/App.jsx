@@ -10,6 +10,7 @@ import { HotelsFavorites } from './pages/hotelsFavorites/HotelsFavorites';
 import { SearchProvider } from './context/searchContext';
 import { Toaster } from 'react-hot-toast';
 import { BookingPage } from './pages/bookingPage/BookingPage';
+import { AddedBookingsPage } from './pages/addedBookingsPage/addedBookingsPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/hotel/details/:id" element={<HotelPage />} />
           <Route path="/hotel/booking/:roomId" element={<BookingPage />} />
           <Route path="/hotels/favorites" element={<HotelsFavorites />} />
+          <Route path="/bookings" element={<AddedBookingsPage />} />
           <Route path="/about" element={<AboutUs />}></Route>
           <Route path="/contacts" element={<Contacts />}></Route>
           <Route path="/help" element={<Help />}></Route>
