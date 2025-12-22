@@ -62,8 +62,17 @@
 
   &__payment-form {
     margin-top: 30px;
-    padding-inline: 120px;
     margin-bottom: 30px;
+
+    @include respond(lg) {
+      padding-inline: 0;
+    }
+  }
+
+  &__no-user {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
   }
 }
 

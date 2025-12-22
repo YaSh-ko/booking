@@ -4,13 +4,19 @@
   display: flex;
   background-color: $color-white-background;
   border-radius: $border-radius;
-  gap: 20px;
-  padding: 30px 20px;
+  gap: 30px;
+  padding: 30px;
+  @include respond(md) {
+    flex-wrap: wrap;
+  }
   &__user-data {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 50%;
+    @include respond(md) {
+      width: 100%;
+    }
   }
 
   &__label {
@@ -68,6 +74,12 @@
     &:hover {
       background-color: #5a86d6;
     }
+
+    &--success {
+      &:disabled {
+        background-color: green;
+      }
+    }
   }
 }
 
@@ -80,6 +92,11 @@
   padding: 20px 20px;
   border-radius: $border-radius;
   box-shadow: $shadow-default;
+
+  @include respond(md) {
+    height: 200px;
+    width: 100%;
+  }
   &__add-data {
     display: flex;
   }

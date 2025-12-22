@@ -3,7 +3,14 @@ import { AmenityList } from '../amenityList/AmenityList';
 import { BookingInfo } from '../bookingInfo/BookingInfo';
 import { PaymentForm } from '../paymantForm/PaymantForm';
 import './bookingContent.scss';
-export function BookingContent({ room, searchData, onClick, daysCount }) {
+export function BookingContent({
+  user,
+  room,
+  searchData,
+  onClick,
+  onClickModal,
+  daysCount,
+}) {
   const { capacity, image_url, price_per_night, room_number, room_type, hotels } = room;
   return (
     <div className="booking">
@@ -105,9 +112,23 @@ export function BookingContent({ room, searchData, onClick, daysCount }) {
           </button>
         </div>
       </div>
-      <div className="booking-content__payment-form">
-        <PaymentForm amount={daysCount * price_per_night} />
-      </div>
+      {user ? (
+        <div className="booking-content__payment-form">
+          <PaymentForm amount={daysCount * price_per_night} user={user} />
+        </div>
+      ) : (
+        <div className="booking-content__no-user">
+          <span>
+            <button
+              className="no-user-action no-user-action--button"
+              onClick={() => onClickModal(true)}
+            >
+              Войдите
+            </button>{' '}
+            чтобы оплатить проживание
+          </span>
+        </div>
+      )}
     </div>
   );
 }

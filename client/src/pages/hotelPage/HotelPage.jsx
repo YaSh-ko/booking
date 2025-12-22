@@ -52,7 +52,13 @@ export function HotelPage() {
   };
 
   const hangleClickRoom = (roomId) => {
-    navigate(`/hotel/booking/${roomId}`);
+    const bookingParams = new URLSearchParams({
+      checkIn: searchData.checkIn || searchParams.checkIn,
+      checkOut: searchData.checkOut || searchParams.checkOut,
+      guests: searchData.guests || searchParams.guests,
+    }).toString();
+
+    navigate(`/hotel/booking/${roomId}?${bookingParams}`);
   };
 
   useEffect(() => {
