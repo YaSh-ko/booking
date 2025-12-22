@@ -133,7 +133,7 @@ export const getReview = async (req, res) => {
     let query = supabase
       .from("reviews")
       .select(
-        "id, hotel_id, rating, comment, created_at, user_id, users(name)"
+        "id, hotel_id, rating, comment, created_at, user_id, users(name), hotels(name)"
       );
 
     if (hotel_id) {

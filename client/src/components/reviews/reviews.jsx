@@ -1,47 +1,67 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import './reviews.scss';
-
-const avatarAndrey = 'https://example.com/avatars/andrey.jpg';
-const avatarAnna = 'https://example.com/avatars/anna.jpg';
-const avatarVictor = 'https://example.com/avatars/victor.jpg';
-const bigImage = 'https://example.com/images/traveler-mountains.jpg';
+import { useReviewApi } from '../../hooks/useReviews';
 
 export const Reviews = () => {
+  const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { getReview } = useReviewApi();
+
+  useEffect(() => {
+    const fetchLatestReviews = async () => {
+      try {
+        const data = await getReview(); // последние 3 отзыва
+        setReviews(data || []);
+      } catch (err) {
+        console.error('Ошибка загрузки отзывов:', err);
+        setReviews([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLatestReviews();
+  }, []);
+
+  if (isLoading) {
+    return <div className="reviews reviews--loading">Загрузка отзывов...</div>;
+  }
+
+  if (reviews.length === 0) {
+    return <div className="reviews reviews--empty">Пока нет отзывов</div>;
+  }
+
   return (
-    <div className="reviews">
-      <div className="reviews__list">
-        <div className="reviews__item">
-          <img src={avatarAndrey} alt="Андрей" className="reviews__avatar" />
-          <div className="reviews__content">
-            <h4 className="reviews__name">Андрей</h4>
-            <p className="reviews__text">
-              Минус — вечером было шумно от гостей у бассейна
-            </p>
-          </div>
+    <section className="reviews">
+      <div className="reviews__container">
+        <div className="reviews__list">
+          {reviews.map((review) => (
+            <div key={review.id} className="reviews__bubble">
+              <div className="reviews__avatar">
+                <span className="reviews__avatar-letter">
+                  {review.users?.name?.[0]?.toUpperCase() || 'Г'}
+                </span>
+              </div>
+              <div className="reviews__bubble-content">
+                <h4 className="reviews__bubble-name">{review.users?.name || 'Гость'}</h4>
+                <p className="reviews__bubble-hotel">
+                  <strong>{review.hotels?.name}</strong>
+                </p>
+                <p className="reviews__bubble-text">{review.comment}</p>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="reviews__item">
-          <img src={avatarAnna} alt="Анна" className="reviews__avatar" />
-          <div className="reviews__content">
-            <h4 className="reviews__name">Анна</h4>
-            <p className="reviews__text">Хороший отель, удобное расположение</p>
-          </div>
-        </div>
-
-        <div className="reviews__item">
-          <img src={avatarVictor} alt="Виктор" className="reviews__avatar" />
-          <div className="reviews__content">
-            <h4 className="reviews__name">Виктор</h4>
-            <p className="reviews__text">
-              Отличное соотношение цены и качества. Однозначно рекомендую!
-            </p>
-          </div>
+        <div className="reviews__image-wrapper">
+          <img
+            src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            alt="Путешественники в горах"
+            className="reviews__image"
+          />
         </div>
       </div>
-
-      <div className="reviews__image-wrapper">
-        <img src={bigImage} alt="Путешественник в горах" className="reviews__image" />
-      </div>
-    </div>
+    </section>
   );
 };

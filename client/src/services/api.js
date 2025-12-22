@@ -65,7 +65,11 @@ export const reviewApi = {
   },
 
   getReview(hotel_id) {
-    return request(`/reviews/getReview?hotel_id=${hotel_id}`);
+    if (hotel_id) {
+      return request(`/reviews/getReview?hotel_id=${hotel_id}`);
+    } else {
+      return request('/reviews/getReview'); // ← без параметра — последние 3 отзыва
+    }
   },
 };
 
