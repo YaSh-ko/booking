@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { createContext } from 'react';
 import { authApi } from '../services/api';
+import toast from 'react-hot-toast';
 
 const UserContext = createContext();
 
@@ -45,11 +46,13 @@ export function UserProvider({ children }) {
 
   const login = (userData) => {
     setUser(userData);
+    toast.success('Добро пожаловать! Вы успешно вошли');
   };
 
   const logout = async () => {
     await authApi.logout();
     setUser(null);
+    toast.success('Вы успешно вышли из аккаунта'); // ← уведомление о выходе
   };
 
   return (

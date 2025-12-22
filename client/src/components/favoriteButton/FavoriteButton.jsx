@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Modal } from '../modal/Modal';
 import './favoriteButton.scss';
+import toast from 'react-hot-toast';
 import { useFavoriteHotels } from '../../hooks/useFavoriteHotels';
 
 export const FavoriteButton = ({ hotelId, user, color = '#5a86d6' }) => {
@@ -17,8 +18,16 @@ export const FavoriteButton = ({ hotelId, user, color = '#5a86d6' }) => {
 
     try {
       await toggleFavorite(hotelId);
+
+      // Успешно — показываем toast
+      if (isFavorite) {
+        toast.success('Отель удалён из избранного');
+      } else {
+        toast.success('Отель добавлен в избранное');
+      }
     } catch (err) {
       console.error('Ошибка при изменении избранного:', err);
+      toast.error('Ошибка при изменении избраного');
     }
   };
 

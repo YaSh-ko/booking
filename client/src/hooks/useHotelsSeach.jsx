@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { searchHotels } from '../services/api';
+import toast from 'react-hot-toast';
 import {
   BadRequestError,
   NetworkError,
@@ -19,13 +20,13 @@ export const useHotelsSearch = () => {
       setHotels(result);
     } catch (err) {
       if (err instanceof BadRequestError) {
-        alert('Проверьте параметры поиска');
+        toast.error('Проверьте параметры поиска');
       } else if (err instanceof NetworkError) {
-        alert('Проверьте интернет-соединение');
+        toast.error('Проверьте интернет-соединение');
       } else if (err instanceof NotFoundError) {
-        alert('По вашему запросу ничего не найдено');
+        toast.error('По вашему запросу ничего не найдено');
       } else if (err instanceof ServerError) {
-        alert('Проблемы на сервере, попробуйте позже');
+        toast.error('Проблемы на сервере, попробуйте позже');
       }
     } finally {
       setIsLoading(false);
