@@ -5,13 +5,16 @@ import { useEffect } from 'react';
 import { useSearch } from '../../context/searchContext';
 import { Loader } from '../../components/loader/Loader';
 import { BookingContent } from '../../components/BookingContent/BookingContent';
-
+import { PaymentForm } from '../../components/paymantForm/PaymantForm';
+import './bookingPage.scss';
 export function BookingPage() {
   const { room, handleRoomDetails, isLoading } = useRoomDetails();
   const { roomId } = useParams();
   const { searchData } = useSearch();
   const navigate = useNavigate();
-  console.log(searchData);
+  const liveTime = new Date(searchData.checkOut) - new Date(searchData.checkIn);
+  const daysCount = Math.ceil(liveTime / (1000 * 60 * 60 * 24));
+
   useEffect(() => {
     handleRoomDetails(roomId);
   }, [roomId]);
@@ -39,6 +42,7 @@ export function BookingPage() {
         room={room.room}
         searchData={searchData}
         onClick={handleItherPricesClick}
+        daysCount={daysCount}
       />
     );
   };

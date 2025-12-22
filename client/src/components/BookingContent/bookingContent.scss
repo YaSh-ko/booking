@@ -16,12 +16,7 @@
       'room  paymant-info'
       'booking-info booking-info';
   }
-  @include respond(lg) {
-    grid-template-areas:
-      'room hotel-info'
-      'booking-info booking-info'
-      'paymant-info paymant-info';
-  }
+
   @include respond(md) {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
@@ -63,6 +58,12 @@
 
   &__booking-info {
     grid-area: booking-info;
+  }
+
+  &__payment-form {
+    margin-top: 30px;
+    padding-inline: 120px;
+    margin-bottom: 30px;
   }
 }
 
@@ -108,7 +109,10 @@
     margin: 0;
     width: 100%;
     @include respond(xl) {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      justify-content: space-between;
     }
   }
 }

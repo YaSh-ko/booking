@@ -31,7 +31,7 @@ export const SearchForm = ({ onSearch, hotelName = null }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.city.trim()) {
+    if (!formData.city.trim() && !hotelName) {
       toast.error('Введите город для поиска');
       return;
     }

@@ -1,0 +1,93 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/breakpoints';
+.payment-card {
+  display: flex;
+  background-color: $color-white-background;
+  border-radius: $border-radius;
+  gap: 20px;
+  padding: 30px 20px;
+  &__user-data {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+  }
+
+  &__label {
+    position: absolute;
+    top: 20px;
+    transform: translateY(-50%);
+    left: 0;
+    transition: all 0.2s ease;
+
+    @include respond(lg) {
+      font-size: 1.1rem;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    margin-left: -3px;
+    padding-right: 5px;
+
+    padding-block: 6px;
+    border: 1px solid transparent;
+    border-radius: 18px;
+    background-color: #fff;
+    transition: all 0.2s ease;
+
+    @include respond(lg) {
+      font-size: 1.1rem;
+    }
+
+    &:focus {
+      padding-inline: 10px;
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+
+  &__amount {
+  }
+
+  &__price {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  &__button {
+    border-radius: $border-radius;
+    padding-block: 6px;
+    background-color: $color-button;
+    color: $color-text-secondary;
+
+    &:disabled {
+      background-color: $color-secondary;
+    }
+
+    &:hover {
+      background-color: #5a86d6;
+    }
+  }
+}
+
+.card-fields {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  background-color: #e2e8f0;
+  justify-content: space-between;
+  padding: 30px 20px;
+  border-radius: $border-radius;
+  &__add-data {
+    display: flex;
+  }
+
+  &__card-date {
+    width: 50%;
+  }
+
+  &__card-cvc {
+    width: 50%;
+  }
+}
