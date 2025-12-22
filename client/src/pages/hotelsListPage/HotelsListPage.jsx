@@ -8,6 +8,7 @@ import { HotelCard } from '../../components/hotelCard/HotelCard';
 import { Loader } from '../../components/loader/Loader';
 import { useSearch } from '../../context/searchContext';
 import { HotelFilters } from '../../components/hotelFilters/HotelFilters';
+import Footer from '../../components/footer/footer';
 import { useFilters } from '../../hooks/useFilters';
 import { filterHotels } from '../../utils/filterHotels';
 import { useUserContext } from '../../context/userContext';
@@ -95,6 +96,7 @@ export const HotelsListPage = () => {
           )}
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

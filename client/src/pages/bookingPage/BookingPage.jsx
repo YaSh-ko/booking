@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Header } from '../../components/navbar/Navbar';
 import { useRoomDetails } from '../../hooks/useRoom';
 import { useEffect } from 'react';
+import Footer from '../../components/footer/footer';
 import { useSearch } from '../../context/searchContext';
 import { Loader } from '../../components/loader/Loader';
 import { BookingContent } from '../../components/BookingContent/BookingContent';
@@ -51,6 +52,7 @@ export function BookingPage() {
       <Header />
 
       <div className="main-content">{bookingContent()}</div>
+      <Footer />
     </div>
   );
 }
