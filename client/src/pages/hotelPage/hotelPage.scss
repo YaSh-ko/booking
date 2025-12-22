@@ -49,9 +49,7 @@
   }
   &__header {
     margin-block: 20px;
-
     box-shadow: $shadow-default;
-
     padding-inline: 30px;
     padding-block: 20px;
     border-radius: $border-radius;
@@ -68,6 +66,9 @@
 
     &--mobile {
       display: none;
+      flex-direction: column;
+      width: 100%;
+      justify-content: space-between;
       @include respond(md) {
         display: block;
       }
@@ -75,6 +76,7 @@
   }
   &__booking-info {
     margin-bottom: 20px;
+    display: flex;
   }
   &__addit {
     display: flex;
@@ -85,6 +87,7 @@
       margin-top: 20px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
   }
 
@@ -93,6 +96,11 @@
     display: flex;
     gap: 10px;
     align-self: end;
+    align-items: center;
+
+    @include respond(md) {
+      font-size: 1.3rem;
+    }
   }
 
   &__price {

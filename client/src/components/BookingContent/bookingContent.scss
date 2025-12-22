@@ -2,30 +2,83 @@
 @import '../../assets/styles/variables';
 .booking-content {
   display: grid;
-  grid-template-columns: 3fr 5fr;
+  grid-template-columns: 1fr 2fr;
   grid-template-rows: 1fr 100px 100px;
-  gap: 40px;
+  grid-template-areas:
+    'room hotel-info'
+    'room booking-info'
+    'room paymant-info';
+
+  @include respond(xl) {
+    grid-template-columns: 3fr 7fr;
+    grid-template-areas:
+      'room hotel-info'
+      'room  paymant-info'
+      'booking-info booking-info';
+  }
+  @include respond(lg) {
+    grid-template-areas:
+      'room hotel-info'
+      'booking-info booking-info'
+      'paymant-info paymant-info';
+  }
+  @include respond(md) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      'hotel-info'
+      'room'
+      'booking-info'
+      'paymant-info';
+  }
+  gap: 30px;
   margin-top: 20px;
 
   &__paymant-info {
-    background-color: $color-primary;
+    grid-area: paymant-info;
+    display: flex;
+    justify-content: space-between;
+    background-color: #e2e8f0;
     border-radius: $border-radius;
-    color: $color-text-secondary;
+    box-shadow: $shadow-default;
+    align-items: center;
+
+    padding-inline: 30px;
+    padding-block: 20px;
+  }
+  &__paymant-amount {
+    font-size: 1.1rem;
+    @include respond(xl) {
+      font-size: 1rem;
+    }
+  }
+  &__price {
+    font-weight: bold;
+    font-size: 1.4rem;
+
+    @include respond(xl) {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__booking-info {
+    grid-area: booking-info;
   }
 }
 
 .room-card {
   &--booking {
-    grid-row: span 3;
+    grid-area: room;
     &:hover {
       transform: none;
-    }
-    @include respond(md) {
-      grid-row: span 1;
     }
   }
   &__image--booking {
     height: 260px;
+
+    @include respond(lg) {
+      height: 200px;
+    }
   }
 
   &__capacity--booking {
@@ -33,11 +86,29 @@
   }
   &__price--booking {
     font-size: 1.2rem;
+
+    @include respond(xl) {
+      font-size: 1rem;
+    }
+    @include respond(md) {
+      font-size: 1.2rem;
+    }
   }
 }
 
 .hotelpage__header {
-  &--booking {
+  &--desktop-booking {
+    grid-area: hotel-info;
     margin: 0;
+    @include respond(xl) {
+      display: none;
+    }
+  }
+  &--mobile-booking {
+    margin: 0;
+    width: 100%;
+    @include respond(xl) {
+      display: block;
+    }
   }
 }

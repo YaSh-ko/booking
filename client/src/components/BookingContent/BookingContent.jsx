@@ -33,7 +33,7 @@ export function BookingContent({ room, searchData, onClick }) {
         </div>
       </div>
 
-      <div className="hotelpage__header hotelpage__header--desktop hotelpage__header--booking">
+      <div className="hotelpage__header hotelpage__header--desktop hotelpage__header--desktop-booking">
         <div className="hotelpage__info">
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <h1 className="hotelpage__title">{hotels.name}</h1>
@@ -61,12 +61,49 @@ export function BookingContent({ room, searchData, onClick }) {
         </div>
       </div>
 
-      <BookingInfo city={hotels.city} searchData={searchData} daysCount={daysCount} />
+      <div className="hotelpage__header hotelpage__header--mobile hotelpage__header--mobile-booking">
+        <div className="hotelpage__info">
+          <div>
+            <h1 className="hotelpage__title">{hotels.name}</h1>
+          </div>
+          <div>
+            <p className="hotelpage__address">{hotels.description}</p>
+            <p className="hotelpage__address">{hotels.adress}</p>
+          </div>
+          <div style={{ marginTop: '10px' }}>
+            <AmenityList amenities={hotels.amenities} />
+          </div>
+        </div>
+
+        <div className="hotelpage__addit--mobile">
+          <div className="hotelpage__price-container">
+            <span className="hotelpage__price-label">от</span>
+            <span className="hotelpage__price">{formatPrice(hotels.price)}</span>
+          </div>
+          <div className="hotelpage__actions">
+            <button className="hotelpage__button" onClick={onClick}>
+              Еще номера
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="booking-content__booking-info">
+        <BookingInfo city={hotels.city} searchData={searchData} daysCount={daysCount} />
+      </div>
 
       <div className="booking-content__paymant-info">
         <div className="booking-content__paymant-amount">
-          <span>Предоплата составит {(daysCount / 2) * price_per_night}</span>
+          <span>
+            Предоплата составит{` `}
+            <span className="booking-content__price">
+              {formatPrice((daysCount / 2) * price_per_night)}
+            </span>
+          </span>
         </div>
+        <button className="hotelpage__button">
+          <a href="#rooms">Перейти к оплате</a>
+        </button>
       </div>
     </div>
   );
