@@ -28,9 +28,20 @@ export async function request(path, options = {}) {
   }
 
   let data;
-  try {
-    data = await response.json();
-  } catch {
+  const contentType = response.headers.get('content-type');
+  if (contentType && contentType.includes('application/json')) {
+    try {
+      data = await response.json();
+    } catch (error) {
+      // Если не удалось распарсить JSON, но статус OK, возвращаем null
+      if (response.ok) {
+        data = null;
+      } else {
+        // Если ошибка и не удалось распарсить, пробрасываем дальше
+        data = null;
+      }
+    }
+  } else {
     data = null;
   }
 

@@ -11,7 +11,7 @@ export const Header = () => {
   const [isUserMenuOPen, setIsUserMenuOpen] = useState(false);
   const { user } = useUserContext();
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
-
+  const { bookings } = useUserContext();
   return (
     <header className="header">
       <div className="header__container">
@@ -134,6 +134,11 @@ export const Header = () => {
                       stroke-linejoin="round"
                     />
                   </svg>
+                  {bookings && bookings.length > 0 && (
+                    <span className="user-actions__bookings-length">
+                      {bookings.length}
+                    </span>
+                  )}
                 </Link>
                 <button
                   className="user-actions__button user-actions__button--profile"

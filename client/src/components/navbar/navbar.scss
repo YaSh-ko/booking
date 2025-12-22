@@ -205,5 +205,23 @@
     &--profile {
       margin-left: 12px;
     }
+
+    &--bookings {
+      position: relative;
+    }
+  }
+
+  &__bookings-length {
+    position: absolute;
+    top: 0;
+    left: 56%;
+    bottom: 14%;
+    width: 16px;
+    color: $color-text-secondary;
+    text-align: center;
+    height: 16px;
+    font-size: 12px;
+    background-color: $color-primary;
+    border-radius: 50%;
   }
 }

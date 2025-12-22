@@ -72,3 +72,15 @@ export const reviewApi = {
 export function getRoomDetails(roomId) {
   return request(`/hotels/RoomDetails?room_id=${roomId}`);
 }
+
+export const bookingApi = {
+  createBooking(roomId, checkIn, checkOut) {
+    return request('/booking/', {
+      method: 'POST',
+      body: { room_id: roomId, check_in: checkIn, check_out: checkOut },
+    });
+  },
+  myBookings() {
+    return request('/booking/myBookings');
+  },
+};

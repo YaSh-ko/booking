@@ -47,7 +47,14 @@ export const createBooking = async (req, res) => {
       return res.status(404).json({ error: "Комната не найдена" });
     }
 
-    // ПРОВЕРКА ПЕРЕСЕЧЕНИЙ
+    // РАСЧЁТ
+    const nights = Math.ceil(
+      (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)
+    );
+    const total_price = room.price_per_night * nights;
+
+    // ПРОВЕРКА ПЕРЕСЕЧЕНИЙ И ВСТАВКА (проверяем прямо перед вставкой для минимизации race condition)
+    // В Supabase можно использовать уникальный индекс на (room_id, check_in, check_out) для предотвращения дублей
     const { data: overlappingBookings } = await supabase
       .from("bookings")
       .select("id")
@@ -58,12 +65,6 @@ export const createBooking = async (req, res) => {
     if (overlappingBookings?.length > 0) {
       return res.status(400).json({ error: "Комната занята в выбранные даты" });
     }
-
-    // РАСЧЁТ
-    const nights = Math.ceil(
-      (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)
-    );
-    const total_price = room.price_per_night * nights;
 
     // ВСТАВКА
     const { data: booking, error: bookingError } = await supabase
@@ -80,10 +81,16 @@ export const createBooking = async (req, res) => {
       .select()
       .single();
 
+    // Дополнительная проверка после вставки (на случай race condition)
     if (bookingError) {
+      // Проверяем, не была ли это ошибка уникальности (дубликат)
+      if (bookingError.code === '23505' || bookingError.message?.includes('duplicate')) {
+        return res.status(400).json({ error: "Комната уже забронирована на эти даты" });
+      }
       console.error("Booking error:", bookingError);
       return res.status(500).json({ error: "Ошибка при сохранении брони" });
     }
+
 
     // ОТВЕТ
     return res.status(201).json({
@@ -163,7 +170,7 @@ export const myBookings = async (req, res) => {
 
     const { data: bookings, error: bookingsError } = await supabase
       .from("bookings")
-      .select("hotel_id, room_id")
+      .select("id, hotel_id, room_id, check_in, check_out, total_price, created_at")
       .eq("user_id", userId)
       .order("id", { ascending: false });
 
