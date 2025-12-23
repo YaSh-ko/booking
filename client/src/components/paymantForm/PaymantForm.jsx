@@ -10,46 +10,71 @@ import {
 import './paymantForm.scss';
 import { formatPrice } from '../../utils/formatPrice';
 import { request } from '../../services/request';
-import { bookingApi } from '../../services/api';
 import toast from 'react-hot-toast';
 import { useUserContext } from '../../context/userContext';
+
 export function PaymentForm({ user, amount, handleCreateBooking }) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [name, setName] = useState(user.name || '');
-  const [email, setEmail] = useState(user.email || '');
+  const [name, setName] = useState(user?.name || '');
+  const [email, setEmail] = useState(user?.email || '');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [bookingId, setBookingId] = useState(null);
   const { updateBookings } = useUserContext();
+
   const handlePay = async () => {
     setIsSuccess(false);
-    if (!stripe || !elements) return;
+    if (!stripe || !elements) {
+      toast.error('Платежная система не загружена');
+      return;
+    }
     if (!name || !email) {
-      alert('Заполните имя и email');
+      toast.error('Заполните имя и email');
       return;
     }
 
     setIsLoading(true);
 
     try {
-      // 1. Создаём intent на сервере
+      // 1. Сначала создаем бронирование
+      let bookingResult;
+      try {
+        bookingResult = await handleCreateBooking();
+        if (!bookingResult || !bookingResult.id) {
+          throw new Error('Не удалось создать бронирование');
+        }
+        setBookingId(bookingResult.id);
+        toast.success('Бронирование создано');
+      } catch (bookingError) {
+        console.error('Ошибка при создании бронирования:', bookingError);
+        toast.error(
+          'Не удалось создать бронирование. Проверьте данные и попробуйте снова',
+        );
+        return;
+      }
+
+      // 2. Создаём платежный intent на сервере с ID бронирования
       const { clientSecret } = await request('/booking/Payment', {
         method: 'POST',
         body: {
           name,
           email,
-          amount: (amount / 2) * 100,
+          amount: Math.round((amount / 2) * 100), // Округляем до копеек
+          bookingId: bookingResult.id, // Передаем ID бронирования
         },
       });
 
       if (!clientSecret) {
-        toast.error('Не удалось создать платеж. Попробуйте еще раз');
+        toast.error('Не удалось создать платеж. Обратитесь в поддержку');
+        // Отменяем бронирование, если не удалось создать платеж
+        await cancelBooking(bookingResult.id);
         return;
       }
 
-      // 2. Подтверждаем платёж
-      const result = await stripe.confirmCardPayment(clientSecret, {
+      // 3. Подтверждаем платёж
+      const paymentResult = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardNumberElement),
           billing_details: {
@@ -59,28 +84,55 @@ export function PaymentForm({ user, amount, handleCreateBooking }) {
         },
       });
 
-      if (result.error) {
+      if (paymentResult.error) {
         setIsSuccess(false);
-        toast.error(result.error.message || 'Ошибка при оплате');
+        toast.error(paymentResult.error.message || 'Ошибка при оплате');
+        // Отменяем бронирование при ошибке оплаты
+        await cancelBooking(bookingResult.id);
       } else {
         setIsSuccess(true);
-        toast.success('Оплата прошла успешно 🎉');
+
         try {
-          await handleCreateBooking();
+          // Подтверждаем оплату бронирования на сервере
+          await confirmBookingPayment(bookingResult.id);
+          toast.success('Оплата прошла успешно! Бронирование подтверждено 🎉');
+
           // Обновляем список бронирований
           await updateBookings();
-        } catch (bookingError) {
-          console.error('Ошибка при создании бронирования после оплаты:', bookingError);
-          toast.error(
-            'Оплата прошла, но произошла ошибка при создании бронирования. Обратитесь в поддержку',
-          );
+        } catch (confirmError) {
+          console.error('Ошибка при подтверждении оплаты:', confirmError);
+          toast.error('Оплата прошла, но произошла ошибка. Обратитесь в поддержку');
         }
       }
     } catch (error) {
-      console.error('Ошибка при обработке платежа:', error);
+      console.error('Общая ошибка при обработке платежа:', error);
       toast.error('Произошла ошибка при обработке платежа. Попробуйте еще раз');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Функция для отмены бронирования при ошибке оплаты
+  const cancelBooking = async (id) => {
+    try {
+      await request(`/booking/${id}/cancel`, {
+        method: 'POST',
+      });
+      console.log('Бронирование отменено из-за ошибки оплаты');
+    } catch (error) {
+      console.error('Ошибка при отмене бронирования:', error);
+    }
+  };
+
+  // Функция для подтверждения оплаты бронирования
+  const confirmBookingPayment = async (id) => {
+    try {
+      await request(`/booking/${id}/confirm-payment`, {
+        method: 'POST',
+      });
+    } catch (error) {
+      console.error('Ошибка при подтверждении оплаты бронирования:', error);
+      throw error;
     }
   };
 
@@ -151,6 +203,16 @@ export function PaymentForm({ user, amount, handleCreateBooking }) {
           <p>
             К оплате{' '}
             <span className="payment-card__price">{formatPrice(amount / 2)}</span>
+            <small
+              style={{
+                fontSize: '12px',
+                color: '#666',
+                display: 'block',
+                marginTop: '5px',
+              }}
+            >
+              (50% предоплата от общей суммы {formatPrice(amount)})
+            </small>
           </p>
         </div>
       </div>
@@ -165,6 +227,7 @@ export function PaymentForm({ user, amount, handleCreateBooking }) {
           placeholder="Введите имя"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          disabled={isSuccess}
         />
 
         <label htmlFor="userEmail" className="payment__label">
@@ -177,15 +240,28 @@ export function PaymentForm({ user, amount, handleCreateBooking }) {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={isSuccess}
         />
 
         <button
           onClick={handlePay}
           disabled={!stripe || isLoading || isSuccess}
-          className={`payment-card__button ${isSuccess ? 'payment-card__button--success' : ''}`}
+          className={`payment-card__button ${isSuccess ? 'payment-card__button--success' : ''} ${!stripe ? 'payment-card__button--disabled' : ''}`}
         >
-          {!isSuccess ? (isLoading ? 'Оплата...' : 'Оплатить') : 'Оплачено'}
+          {!stripe
+            ? 'Загрузка...'
+            : !isSuccess
+              ? isLoading
+                ? 'Обработка...'
+                : 'Оплатить'
+              : 'Оплачено ✅'}
         </button>
+
+        {isSuccess && bookingId && (
+          <div style={{ marginTop: '10px', fontSize: '12px', color: '#666' }}>
+            Номер бронирования: <strong>{bookingId}</strong>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
 import './reviews.scss';
 import { useReviewApi } from '../../hooks/useReviews';
+import { useNavigate } from 'react-router-dom';
 
 export const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const navigate = useNavigate();
   const { getReview } = useReviewApi();
 
   useEffect(() => {
     const fetchLatestReviews = async () => {
       try {
         const data = await getReview(); // последние 3 отзыва
+        console.log(data);
         setReviews(data || []);
       } catch (err) {
         console.error('Ошибка загрузки отзывов:', err);
@@ -37,7 +39,11 @@ export const Reviews = () => {
       <div className="reviews__container">
         <div className="reviews__list">
           {reviews.map((review) => (
-            <div key={review.id} className="reviews__bubble">
+            <div
+              key={review.id}
+              className="reviews__bubble"
+              onClick={() => navigate(`/hotel/details/${review.hotel_id}`)}
+            >
               <div className="reviews__avatar">
                 <span className="reviews__avatar-letter">
                   {review.users?.name?.[0]?.toUpperCase() || 'Г'}
@@ -56,7 +62,7 @@ export const Reviews = () => {
 
         <div className="reviews__image-wrapper">
           <img
-            src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            src="/homePage/reviews.jpg"
             alt="Путешественники в горах"
             className="reviews__image"
           />

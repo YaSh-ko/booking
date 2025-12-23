@@ -29,7 +29,7 @@ export function useBooking() {
         logout();
         toast.error('Сессия истекла. Пожалуйста, войдите снова');
       } else if (err instanceof BadRequestError) {
-        toast.error('Проверьте параметры поиска');
+        toast.error(err.message);
       } else if (err instanceof NetworkError) {
         toast.error('Проверьте интернет-соединение');
       } else if (err instanceof NotFoundError) {
